@@ -12,8 +12,8 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 
 * Isabela lima
 * Luana Paula
-* Guilhertme Lanza
-* Gilberto Moodesto
+* Guilherme Lanza
+* Gilberto Modesto
 * Warley Martins
 * Victor Antoniel
 
