@@ -1,4 +1,4 @@
-# TÍTULO DO PROJETO
+# FOODTRACK
 
 `CURSO: Sistemas de Informação`
 
@@ -6,20 +6,21 @@
 
 `SEMESTRE: 6º`
 
-Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
+O projeto consiste no desenvolvimento de um sistema ERP voltado para restaurantes, com acesso via aplicativo e site, cujo objetivo é integrar de forma simples e eficiente as principais operações do negócio. A solução abrange desde a abertura de comandas pelo garçom, envio automático dos pedidos para a cozinha, acompanhamento do preparo e entrega ao cliente, até o fechamento da conta e realização do pagamento. Além disso, o sistema permitirá o controle básico de estoque e a geração de relatórios de vendas e atendimentos, oferecendo uma visão gerencial para os administradores do restaurante.
 
 ## Integrantes
 
-* Isabela lima
-* Luana Paula
-* Guilherme Lanza
 * Gilberto Modesto
-* Warley Martins
-* Victor Antoniel
+* Guilherme Lanza Japolino
+* Isabela Gomes Lima
+* Luana Paula Ramos de Souza
+* Maria Eduarda Sousa
+* Victor Antoniel Borges da Cruz
+* Warley Junio Martins Vieira
 
 ## Orientador
 
-* Kleber Souza
+* Kleber Jacques Ferreira de Souza
 
 # Planejamento
 
