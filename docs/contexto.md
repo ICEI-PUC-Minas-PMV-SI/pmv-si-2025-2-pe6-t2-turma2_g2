@@ -1,84 +1,102 @@
 # Introdução
 
-Texto descritivo com a visão geral do projeto abordado. Inclui o contexto, o problema, os objetivos, a justificativa e o público-alvo do projeto.
+ Com o avanço da tecnologia e a busca constante por praticidade, o setor de alimentação tem investido em soluções digitais para otimizar operações e fidelizar clientes. A agilidade no atendimento, o controle eficiente dos processos e a integração entre salão, cozinha e caixa tornaram-se fatores decisivos para a competitividade dos restaurantes. Nesse contexto, a adoção de sistemas de gestão integrados (ERP) surge como uma estratégia essencial. O aplicativo/site proposto centraliza todas as etapas do atendimento em uma única plataforma — da abertura da comanda ao pagamento — oferecendo maior eficiência, redução de falhas, insights gerenciais e uma experiência mais satisfatória para o cliente.
 
 ## Problema
-Nesse momento você deve apresentar o problema que a sua aplicação deve  resolver. No entanto, não é a hora de comentar sobre a aplicação.
-
-Descreva também o contexto em que essa aplicação será usada, se  houver: empresa, tecnologias, etc. Novamente, descreva apenas o que de  fato existir, pois ainda não é a hora de apresentar requisitos  detalhados ou projetos.
-
-Nesse momento, o grupo pode optar por fazer uso  de ferramentas como Design Thinking, que permite um olhar de ponta a ponta para o problema.
-
-> **Links Úteis**:
-> - [Objetivos, Problema de pesquisa e Justificativa](https://medium.com/@versioparole/objetivos-problema-de-pesquisa-e-justificativa-c98c8233b9c3)
-> - [Matriz Certezas, Suposições e Dúvidas](https://medium.com/educa%C3%A7%C3%A3o-fora-da-caixa/matriz-certezas-suposi%C3%A7%C3%B5es-e-d%C3%BAvidas-fa2263633655)
-> - [Brainstorming](https://www.euax.com.br/2018/09/brainstorming/)
+ Muitos restaurantes ainda enfrentam dificuldades operacionais por utilizarem processos manuais ou sistemas não integrados. Entre os principais problemas estão:
+  * Falta de integração entre salão, cozinha e caixa, resultando em atrasos nos pedidos.
+  * Erros de comunicação entre garçom e cozinha, que comprometem a entrega correta dos pratos.
+  * Ausência de controle efetivo de estoque e insumos, ocasionando desperdícios ou falta de produtos.
+  * Gestão financeira pouco precisa, dificultando tomadas de decisão.
+  * Carência de relatórios gerenciais que auxiliem na estratégia do negócio.
+  * Experiência do cliente prejudicada, marcada por esperas longas, pedidos incorretos, pagamentos pouco práticos e ausência de ferramentas de fidelização.
+ Essas falhas impactam não apenas a eficiência interna, mas também a satisfação e a fidelidade dos clientes, que cada vez mais buscam rapidez, conveniência e qualidade no atendimento.
 
 ## Objetivos
 
-Aqui você deve descrever os objetivos do trabalho indicando que o objetivo geral é desenvolver um software para solucionar o problema apresentado acima. 
-
-Apresente também alguns (pelo menos 2) objetivos específicos dependendo de onde você vai querer concentrar a sua prática investigativa, ou como você vai aprofundar no seu trabalho.
- 
-> **Links Úteis**:
-> - [Objetivo geral e objetivo específico: como fazer e quais verbos utilizar](https://blog.mettzer.com/diferenca-entre-objetivo-geral-e-objetivo-especifico/)
+ O aplicativo/site de ERP para restaurantes tem como principais objetivos:
+  * Automatizar e integrar processos do atendimento ao cliente, cozinha e caixa.
+  * Reduzir erros operacionais, garantindo que os pedidos sejam enviados corretamente e no tempo adequado.
+  * Controlar estoque e insumos em tempo real, evitando desperdícios e faltas.
+  * Oferecer relatórios gerenciais que apoiem na tomada de decisões estratégicas.
+  * Melhorar a experiência do cliente, com atendimento mais rápido, pagamentos simplificados e maior transparência.
 
 ## Justificativa
 
-Descreva a importância ou a motivação para trabalhar com esta aplicação que você escolheu. Indique as razões pelas quais você escolheu seus objetivos específicos ou as razões para aprofundar em certos aspectos do software.
-
-O grupo de trabalho pode fazer uso de questionários, entrevistas e dados estatísticos, que podem ser apresentados, com o objetivo de esclarecer detalhes do problema que será abordado pelo grupo.
-
-> **Links Úteis**:
-> - [Como montar a justificativa](https://guiadamonografia.com.br/como-montar-justificativa-do-tcc/)
+A implantação de um ERP voltado para restaurantes justifica-se pela necessidade crescente de modernização do setor, que demanda soluções práticas e integradas. Com a concorrência cada vez mais acirrada e a exigência dos clientes por agilidade e qualidade no atendimento, investir em tecnologia é essencial para garantir a sustentabilidade do negócio.
+Além disso, a centralização das informações em uma única plataforma permite maior controle gerencial, redução de custos operacionais e aumento da lucratividade. Dessa forma, o aplicativo/site não é apenas uma ferramenta de gestão, mas um diferencial estratégico que contribui para o crescimento e fortalecimento do restaurante no mercado.
 
 ## Público-Alvo
 
-Descreva quem serão as pessoas que usarão a sua aplicação indicando os diferentes perfis. O objetivo aqui não é definir quem serão os clientes ou quais serão os papéis dos usuários na aplicação. A ideia é, dentro do possível, conhecer um pouco mais sobre o perfil dos usuários: conhecimentos prévios, relação com a tecnologia, relações
-hierárquicas, etc.
+1. Perfil do Negócio
+ * Restaurantes de pequeno a médio porte que buscam digitalizar seus processos.
+ * Redes de restaurantes que necessitam de padronização e integração entre unidades.
+ * Bares, lanchonetes, cafés e pizzarias, que também compartilham as mesmas necessidades de controle de pedidos, estoque e caixa.
 
-Adicione informações sobre o público-alvo por meio de uma descrição textual, diagramas de personas e mapa de stakeholders.
+2. Perfil do Usuário
+ * Gestores e proprietários de restaurantes, que desejam ter controle financeiro, de estoque e relatórios gerenciais para tomada de decisão.
+ * Garçons e atendentes, que precisam de uma solução prática para abertura de comandas, anotações de pedidos e agilidade no atendimento.
+ * Equipe de cozinha, que depende da comunicação clara e rápida para preparação dos pedidos.
+ * Caixa e equipe administrativa, responsáveis pelo fechamento de contas, conciliação de pagamentos e emissão de notas fiscais.
 
-> **Links Úteis**:
-> - [Público-alvo](https://blog.hotmart.com/pt-br/publico-alvo/)
-> - [Como definir o público alvo](https://exame.com/pme/5-dicas-essenciais-para-definir-o-publico-alvo-do-seu-negocio/)
-> - [Público-alvo: o que é, tipos, como definir seu público e exemplos](https://klickpages.com.br/blog/publico-alvo-o-que-e/)
-> - [Qual a diferença entre público-alvo e persona?](https://rockcontent.com/blog/diferenca-publico-alvo-e-persona/)
+3. Necessidades do Público
+ * Reduzir erros em pedidos e pagamentos.
+ * Melhorar a experiência do cliente no atendimento.
+ * Integrar diferentes etapas do serviço (salão, cozinha, caixa).
+ * Obter relatórios claros para decisões estratégicas.
+ * Ter uma ferramenta intuitiva, de fácil uso e acessível em dispositivos móveis e web.
 
 # Especificações do Projeto
 
 ## Requisitos
 
-As tabelas que se seguem apresentam os requisitos funcionais e não funcionais que detalham o escopo do projeto. Para determinar a prioridade de requisitos, aplicar uma técnica de priorização de requisitos e detalhar como a técnica foi aplicada.
+Técnica Utilizada: MoSCoW
+Uma técnica é muito usada em projetos ágeis. Ela classifica os requisitos em quatro categorias:
+
+ * Must Have (Obrigatório) → Essenciais, sem eles o sistema não funciona.
+ * Should Have (Importante) → Muito relevante, mas o sistema pode operar sem eles no início.
+ * Could Have (Desejável) → São diferenciais, agregam valor, mas não são urgentes.
+ * Won’t Have (Não será incluído agora) → Fora do escopo da versão inicial, mas podem ser considerados futuramente.
 
 ### Requisitos Funcionais
 
 |ID    | Descrição do Requisito  | Prioridade |
 |------|-----------------------------------------|----|
-|RF-001| Permitir que o usuário cadastre tarefas | ALTA | 
-|RF-002| Emitir um relatório de tarefas no mês   | MÉDIA |
+|RF-001| O sistema deve permitir que sejam criados usuários com suas respectivas funções            | OBRIGATÓRIO | 
+|RF-002| O atendente deve conseguir registrar pedidos no aplicativo                                 | OBRIGATÓRIO |
+|RF-003| O sistema deve enviar os pedidos automaticamente para a cozinha em tempo real              | OBRIGATÓRIO |
+|RF-004| A cozinha deve visualizar os pedidos recebidos com detalhes (mesa, itens, observações)     | OBRIGATÓRIO |
+|RF-005| A cozinha deve poder marcar o pedido como “em preparo”, “pronto” ou “cancelado”            | OBRIGATÓRIO |
+|RF-006| O atendente deve receber uma notificação imediata quando o pedido estiver pronto           | OBRIGATÓRIO |
+|RF-007| O sistema deve permitir adicionar observações específicas (ex: sem cebola, ponto da carne) | OBRIGATÓRIO |
+|RF-008| O sistema deve permitir múltiplos atendentes e cozinheiros conectados simultaneamente      | IMPORTANTE |
+|RF-009| O sistema deve registrar o horário de entrada e finalização de cada pedido                 | IMPORTANTE |
+|RF-010| O sistema deve permitir visualizar o histórico de pedidos por mesa ou atendente            | IMPORTANTE |
+|RF-011| O sistema deve permitir integração com o sistema de pagamento ou fechamento de conta       | DESEJÁVEL |
+|RF-012| Emitir relatórios de vendas por período, prato, garçom ou canal de venda                   | IMPORTANTE |
+|RF-013| Gerar relatórios financeiros (contas a pagar/receber, fluxo de caixa)                      | DESEJÁVEL |
+|RF-014| Permitir exportação de relatórios em PDF/Excel                                             | DESEJÁVEL |
+|RF-015| Cadastrar clientes com dados básicos                                                       | DESEJÁVEL |
+|RF-016| Controlar programas de fidelidade (pontos, promoções, descontos)                           | DESEJÁVEL |
+|RF-017| Calcular automaticamente o valor total da comanda                                          | OBRIGATÓRIO |
+|RF-018| Permitir pagamento direto com o garçom (cartão, pix, dinheiro)                             | IMPORTANTE |
+|RF-019| Permitir pagamento no caixa via aplicação web                                              | OBRIGATÓRIO |
 
 ### Requisitos não Funcionais
 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-001| O sistema deve ser responsivo para rodar em um dispositivos móvel | MÉDIA | 
-|RNF-002| Deve processar requisições do usuário em no máximo 3s |  BAIXA | 
-
-Com base nas Histórias de Usuário, enumere os requisitos da sua solução. Classifique esses requisitos em dois grupos:
-
-- [Requisitos Funcionais
- (RF)](https://pt.wikipedia.org/wiki/Requisito_funcional):
- correspondem a uma funcionalidade que deve estar presente na
-  plataforma (ex: cadastro de usuário).
-- [Requisitos Não Funcionais
-  (RNF)](https://pt.wikipedia.org/wiki/Requisito_n%C3%A3o_funcional):
-  correspondem a uma característica técnica, seja de usabilidade,
-  desempenho, confiabilidade, segurança ou outro (ex: suporte a
-  dispositivos iOS e Android).
-Lembre-se que cada requisito deve corresponder à uma e somente uma
-característica alvo da sua solução. Além disso, certifique-se de que
-todos os aspectos capturados nas Histórias de Usuário foram cobertos.
+|RNF-001| A interface deve ser intuitiva e fácil de usar para usuários com pouca experiência digital                              | OBRIGATÓRIO | 
+|RNF-002| O tempo de resposta para envio e recebimento de pedidos deve ser inferior a 2 segundos                                  | IMPORTANTE | 
+|RNF-003| A tela da cozinha deve atualizar automaticamente sem necessidade de refresh manual                                      | OBRIGATÓRIO | 
+|RNF-004| O sistema deve garantir segurança dos dados dos clientes e pedidos                                                      | OBRIGATÓRIO | 
+|RNF-005| O sistema deve funcionar mesmo com conexão instável, sincronizando dados assim que possível                             | DESEJÁVEL | 
+|RNF-006| O sistema deve permitir operação offline com sincronização posterior                                                    | DESEJÁVEL | 
+|RNF-007| O sistema deve ter alta disponibilidade (mínimo de 99% de uptime)                                                       | DESEJÁVEL | 
+|RNF-008| O sistema deve ser escalável para atender restaurantes com diferentes tamanhos e fluxos                                 | DESEJÁVEL | 
+|RNF-009| O sistema deve registrar logs de operação para auditoria e suporte técnico                                              | IMPORTANTE | 
+|RNF-010| O sistema deve ser responsivo e funcionar em smartphones, tablets e desktops                                            | OBRIGATÓRIO | 
+|RNF-011| O código deve ser modular e seguir boas práticas de arquitetura, permitindo atualizações sem afetar o sistema existente | OBRIGATÓRIO | 
 
 ## Restrições
 
@@ -86,18 +104,39 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 
 |ID| Restrição                                             |
 |--|-------------------------------------------------------|
-|01| O projeto deverá ser entregue até o final do semestre |
-|02| Não pode ser desenvolvido um módulo de backend        |
-
-Enumere as restrições à sua solução. Lembre-se de que as restrições geralmente limitam a solução candidata.
-
-> **Links Úteis**:
-> - [O que são Requisitos Funcionais e Requisitos Não Funcionais?](https://codificar.com.br/requisitos-funcionais-nao-funcionais/)
-> - [O que são requisitos funcionais e requisitos não funcionais?](https://analisederequisitos.com.br/requisitos-funcionais-e-requisitos-nao-funcionais-o-que-sao/)
+|01| O sistema será desenvolvido apenas como protótipo funcional, sem necessidade de atender a todas as integrações fiscais e bancárias reais |
+|02| O banco de dados será limitado a uma solução acadêmica |
+|03| A infraestrutura de hospedagem pode ser local (localhost) |
+|04| Recursos avançados de segurança não serão implementados, apenas boas práticas básicas        |
+|05| As funcionalidades serão priorizadas para demonstração didática, não necessariamente cobrindo todas as exigências legais de um restaurante real |
+|06| O escopo deve ser limitado ao que é possível implementar no período do projeto |
+|07| O projeto deve ser entregue no prazo estipulado pelo cronograma da disciplina (até o fim do semestre) |
+|08| O tempo de desenvolvimento é limitado ao calendário acadêmico |
+|09| A equipe de desenvolvimento será composta apenas pelos integrantes do grupo da disciplina |
+|10| O sistema deve ser simples e intuitivo, já que o tempo para treinar e demonstrar é curto |
+|11| A prioridade é a apresentação visual e a prova de conceito, não a robustez total do sistema |
 
 # Catálogo de Serviços
 
-Descreva aqui todos os serviços que serão disponibilizados pelo seu projeto, detalhando suas características e funcionalidades.
+ * Gestão de Comandas: Abertura, edição e fechamento de comandas pelo garçom, com registro/alteração de itens e envio automático à cozinha (KDS). Exibe o retorno de pratos prontos para entrega e permite divisão de conta no fechamento.
+    * Abrir/fechar comanda (por mesa, balcão).
+    * Adicionar, editar e remover itens (quantidade, observações, substituições).
+    * Envio dos pedidos/itens ao KDS por estação (cozinha, bar, sobremesas).
+    * Atualização de status: em preparo → pronto → entregue.
+    * Divisão de conta (igual, por item, por valor ou por pessoa).
+    * Visualização de “pratos prontos” pendentes de entrega.
+     
+ * KDS – Tela da Cozinha: Exibição em tempo real dos pedidos na cozinha. Recebe itens enviados pelo salão, organiza por prioridade/estação, permite mudar status (em preparo → pronto) e integra com o fluxo de entrega pelo garçom.
+   * Visualização de pedidos por fila/estação (grelha, fritura, massas, bar, sobremesas).
+   * Ações rápidas por item/comanda: aceitar, iniciar preparo, marcar como pronto, anexar observações.
+   * Feedback ao salão: quando item/comanda fica pronto para entrega.
+    
+ * Pagamentos: Fechamento da comanda e registro do pagamento, permitindo múltiplos métodos (dinheiro, cartão, PIX), divisão de conta e emissão de comprovantes. Pode ser realizado diretamente com o garçom (via app/maquininha) ou no caixa (via aplicação web).
+   * Cálculo automático do valor total da comanda, incluindo descontos e taxas.
+   * Pagamento com múltiplos métodos (dinheiro, cartão, PIX).
+   * Divisão de conta (igual, por item, por valor ou por pessoa).
+   * Registro do pagamento no sistema, com histórico por comanda.
+   * Cancelamento/estorno de pagamentos (com motivo e usuário registrado).
 
 # Arquitetura da Solução
 
