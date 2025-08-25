@@ -142,10 +142,11 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 
 Definição de como o software é estruturado em termos dos componentes que fazem parte da solução e do ambiente de hospedagem da aplicação.
 
-![arq](https://github.com/user-attachments/assets/b9402e05-8445-47c3-9d47-f11696e38a3d)
-
+![Arquitetura](img/Diagrama-Arquitetura.png)
 
 ## Tecnologias Utilizadas
+
+O FoodTrack é composto por um backend em .NET 8 (APIs REST), um frontend SPA em Vue 3, e um banco relacional MySQL. Integra-se a módulos internos (KDS/cozinha, comanda, pagamentos) e serviços externos (provedor de pagamentos, mensageria). Usuários: atendente, cozinha, caixa, gerente.
 
 Descreva aqui qual(is) tecnologias você vai usar para resolver o seu problema, ou seja, implementar a sua solução. Liste todas as tecnologias envolvidas, linguagens a serem utilizadas, serviços web, frameworks, bibliotecas, IDEs de desenvolvimento, e ferramentas.
 
