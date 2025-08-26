@@ -64,39 +64,23 @@ Uma técnica é muito usada em projetos ágeis. Ela classifica os requisitos em 
 |------|-----------------------------------------|----|
 |RF-001| O sistema deve permitir que sejam criados usuários com suas respectivas funções            | OBRIGATÓRIO | 
 |RF-002| O atendente deve conseguir registrar pedidos no aplicativo                                 | OBRIGATÓRIO |
-|RF-003| O sistema deve enviar os pedidos automaticamente para a cozinha em tempo real              | OBRIGATÓRIO |
-|RF-004| A cozinha deve visualizar os pedidos recebidos com detalhes (mesa, itens, observações)     | OBRIGATÓRIO |
-|RF-005| A cozinha deve poder marcar o pedido como “em preparo”, “pronto” ou “cancelado”            | OBRIGATÓRIO |
-|RF-006| O atendente deve receber uma notificação imediata quando o pedido estiver pronto           | OBRIGATÓRIO |
-|RF-007| O sistema deve permitir adicionar observações específicas (ex: sem cebola, ponto da carne) | OBRIGATÓRIO |
-|RF-008| O sistema deve permitir múltiplos atendentes e cozinheiros conectados simultaneamente      | IMPORTANTE |
-|RF-009| O sistema deve registrar o horário de entrada e finalização de cada pedido                 | IMPORTANTE |
-|RF-010| O sistema deve permitir visualizar o histórico de pedidos por mesa ou atendente            | IMPORTANTE |
-|RF-011| O sistema deve permitir integração com o sistema de pagamento ou fechamento de conta       | DESEJÁVEL |
-|RF-012| Emitir relatórios de vendas por período, prato, garçom ou canal de venda                   | IMPORTANTE |
-|RF-013| Gerar relatórios financeiros (contas a pagar/receber, fluxo de caixa)                      | DESEJÁVEL |
-|RF-014| Permitir exportação de relatórios em PDF/Excel                                             | DESEJÁVEL |
-|RF-015| Cadastrar clientes com dados básicos                                                       | DESEJÁVEL |
-|RF-016| Controlar programas de fidelidade (pontos, promoções, descontos)                           | DESEJÁVEL |
-|RF-017| Calcular automaticamente o valor total da comanda                                          | OBRIGATÓRIO |
-|RF-018| Permitir pagamento direto com o garçom (cartão, pix, dinheiro)                             | IMPORTANTE |
-|RF-019| Permitir pagamento no caixa via aplicação web                                              | OBRIGATÓRIO |
+|RF-003| A cozinha deve visualizar os pedidos recebidos com detalhes (mesa, itens, observações)     | OBRIGATÓRIO |
+|RF-004| A cozinha deve poder marcar o pedido como “em preparo”, “pronto” ou “cancelado”            | OBRIGATÓRIO |
+|RF-005| O atendente deve receber uma notificação imediata quando o pedido estiver pronto           | OBRIGATÓRIO |
+|RF-006| O sistema deve permitir integração com o sistema de pagamento ou fechamento de conta       | DESEJÁVEL   |
+|RF-007| Emitir relatórios de vendas por período, prato, garçom ou canal de venda                   | IMPORTANTE  |
+|RF-008| Controlar programas de fidelidade (pontos, promoções, descontos)                           | DESEJÁVEL   |
 
 ### Requisitos não Funcionais
 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-001| A interface deve ser intuitiva e fácil de usar para usuários com pouca experiência digital                              | OBRIGATÓRIO | 
-|RNF-002| O tempo de resposta para envio e recebimento de pedidos deve ser inferior a 2 segundos                                  | IMPORTANTE | 
-|RNF-003| A tela da cozinha deve atualizar automaticamente sem necessidade de refresh manual                                      | OBRIGATÓRIO | 
-|RNF-004| O sistema deve garantir segurança dos dados dos clientes e pedidos                                                      | OBRIGATÓRIO | 
-|RNF-005| O sistema deve funcionar mesmo com conexão instável, sincronizando dados assim que possível                             | DESEJÁVEL | 
-|RNF-006| O sistema deve permitir operação offline com sincronização posterior                                                    | DESEJÁVEL | 
-|RNF-007| O sistema deve ter alta disponibilidade (mínimo de 99% de uptime)                                                       | DESEJÁVEL | 
-|RNF-008| O sistema deve ser escalável para atender restaurantes com diferentes tamanhos e fluxos                                 | DESEJÁVEL | 
-|RNF-009| O sistema deve registrar logs de operação para auditoria e suporte técnico                                              | IMPORTANTE | 
-|RNF-010| O sistema deve ser responsivo e funcionar em smartphones, tablets e desktops                                            | OBRIGATÓRIO | 
-|RNF-011| O código deve ser modular e seguir boas práticas de arquitetura, permitindo atualizações sem afetar o sistema existente | OBRIGATÓRIO | 
+|RNF-001| O tempo de resposta para envio e recebimento de pedidos deve ser inferior a 2 segundos                                  | IMPORTANTE  |
+|RNF-002| O sistema deve garantir segurança dos dados                                                                             | OBRIGATÓRIO |
+|RNF-003| O sistema deve ter alta disponibilidade (mínimo de 99% de uptime)                                                       | DESEJÁVEL   | 
+|RNF-004| O sistema deve registrar logs de operação para auditoria e suporte técnico                                              | IMPORTANTE  | 
+|RNF-005| O sistema deve ser responsivo e funcionar em smartphones, tablets e desktops                                            | OBRIGATÓRIO | 
+|RNF-006| O código deve ser modular e seguir boas práticas de arquitetura, permitindo atualizações sem afetar o sistema existente | OBRIGATÓRIO | 
 
 ## Restrições
 
@@ -104,17 +88,8 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 
 |ID| Restrição                                             |
 |--|-------------------------------------------------------|
-|01| O sistema será desenvolvido apenas como protótipo funcional, sem necessidade de atender a todas as integrações fiscais e bancárias reais |
-|02| O banco de dados será limitado a uma solução acadêmica |
-|03| A infraestrutura de hospedagem pode ser local (localhost) |
-|04| Recursos avançados de segurança não serão implementados, apenas boas práticas básicas        |
-|05| As funcionalidades serão priorizadas para demonstração didática, não necessariamente cobrindo todas as exigências legais de um restaurante real |
-|06| O escopo deve ser limitado ao que é possível implementar no período do projeto |
-|07| O projeto deve ser entregue no prazo estipulado pelo cronograma da disciplina (até o fim do semestre) |
-|08| O tempo de desenvolvimento é limitado ao calendário acadêmico |
-|09| A equipe de desenvolvimento será composta apenas pelos integrantes do grupo da disciplina |
-|10| O sistema deve ser simples e intuitivo, já que o tempo para treinar e demonstrar é curto |
-|11| A prioridade é a apresentação visual e a prova de conceito, não a robustez total do sistema |
+|01| O projeto deve ser entregue no prazo estipulado pelo cronograma da disciplina (até o fim do semestre) |
+|02| O projeto não possui orçamento financeiro |
 
 # Catálogo de Serviços
 
