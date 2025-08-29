@@ -117,7 +117,7 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 
 Definição de como o software é estruturado em termos dos componentes que fazem parte da solução e do ambiente de hospedagem da aplicação.
 
-![Arquitetura](img/Diagrama-Arquitetura.png)
+![Arquitetura](img/Diagrama-Arquitetura2.png)
 
 ## Tecnologias Utilizadas
 
