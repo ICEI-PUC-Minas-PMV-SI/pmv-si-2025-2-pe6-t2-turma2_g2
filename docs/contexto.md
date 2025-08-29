@@ -135,25 +135,31 @@ O ERP será hospedado na Amazon Web Services (AWS), utilizando serviços gerenci
 
 ### Semana 1
 
-Atualizado em: 21/04/2024
+Atualizado em: 24/08/2025
 
-| Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
-| :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
-| AlunaX        | Introdução | 01/02/2024     | 07/02/2024 | ✔️    | 05/02/2024      |
-| AlunaZ        | Objetivos    | 03/02/2024     | 10/02/2024 | 📝    |                 |
-| AlunoY        | Histórias de usuário  | 01/01/2024     | 07/01/2005 | ⌛     |                 |
-| AlunoK        | Personas 1  |    01/01/2024        | 12/02/2005 | ❌    |       |
+| Responsável       | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
+| :----             |    :----         |      :----:    | :----:     | :----: | :----:          |
+| Gilberto Modesto  | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
+| Guilherme Lanza   | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
+| Isabela Gomes     | Definição das linguagens e tecnologias utilizadas, preenchimento e revisão da documentação do projeto, commits e atualização da documentação no GitHub | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
+| Luana Paula       | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
+| Maria Eduarda     | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
+| Victor Antoniel   | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
+| Warley Junio      | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
 
 #### Semana 2
 
-Atualizado em: 21/04/2024
+Atualizado em: 29/08/2025
 
-| Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
-| :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
-| AlunaX        | Página inicial   | 01/02/2024     | 07/03/2024 | ✔️    | 05/02/2024      |
-| AlunaZ        | CSS unificado    | 03/02/2024     | 10/03/2024 | 📝    |                 |
-| AlunoY        | Página de login  | 01/02/2024     | 07/03/2024 | ⌛     |                 |
-| AlunoK        | Script de login  |  01/01/2024    | 12/03/2024 | ❌    |       |
+| Responsável       | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
+| :----             |    :----         |      :----:    | :----:     | :----: | :----:          |
+| Gilberto Modesto  | Criação do protótipo da solução | 24/08/2025  | 31/08/2024 | ✔️ | 29/08/2025 |
+| Guilherme Lanza   | Definição dos processos e funcionalidades essenciais para o desenvolvimento da solução | 24/08/2025  | 31/08/2024 | ✔️ | 29/08/2025 |
+| Isabela Gomes     | Revisão e ajustes da documentação no GitHub, organização do grupo para a próxima etapa, definição das APIs e arquitetura da solução | 29/08/2025  | 31/08/2025 | ✔️ | 29/08/2025 |
+| Luana Paula       | Criação do protótipo da solução | 24/08/2025  | 31/08/2005 | ✔️ | 29/08/2025 |
+| Maria Eduarda     | Definição dos processos e funcionalidades essenciais para o desenvolvimento da solução | 24/08/2025  | 31/08/2005 | ✔️ | 29/08/2025 |
+| Victor Antoniel   | Definição das APIs e arquitetura da solução | 24/08/2025  | 31/08/2005 | ✔️ | 29/08/2025 |
+| Warley Junio      | Definição das APIs e arquitetura da solução | 24/08/2025  | 31/08/2005 | ✔️ | 29/08/2025 |
 
 Legenda:
 - ✔️: terminado
