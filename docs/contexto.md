@@ -14,7 +14,7 @@
 
 ## Objetivos
 
- O aplicativo/site de ERP para restaurantes tem como principais objetivos:
+ O objetivo geral deste projeto é o desenvolvimento de aplicação distribuída para gerenciar ou automatizar as tarefas de um restaurante, tendo como objetivos específicos:
   * Automatizar e integrar processos do atendimento ao cliente, cozinha e caixa.
   * Reduzir erros operacionais, garantindo que os pedidos sejam enviados corretamente e no tempo adequado.
   * Controlar estoque e insumos em tempo real, evitando desperdícios e faltas.
