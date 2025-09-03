@@ -76,7 +76,7 @@ Uma técnica é muito usada em projetos ágeis. Ela classifica os requisitos em 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
 |RNF-001| O tempo de resposta para envio e recebimento de pedidos deve ser inferior a 2 segundos                                  | IMPORTANTE  |
-|RNF-002| O sistema deve garantir segurança dos dados                                                                             | OBRIGATÓRIO |
+|RNF-002| O sistema deve garantir segurança dos dados, realizando a criptografia das senhas no processo de autenticação                                                                             | OBRIGATÓRIO |
 |RNF-003| O sistema deve ter alta disponibilidade (mínimo de 99% de uptime)                                                       | DESEJÁVEL   | 
 |RNF-004| O sistema deve registrar logs de operação para auditoria e suporte técnico                                              | IMPORTANTE  | 
 |RNF-005| O sistema deve ser responsivo e funcionar em smartphones, tablets e desktops                                            | OBRIGATÓRIO | 
