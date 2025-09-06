@@ -60,16 +60,15 @@ Uma técnica é muito usada em projetos ágeis. Ela classifica os requisitos em 
 
 ### Requisitos Funcionais
 
-|ID    | Descrição do Requisito  | Prioridade |
-|------|-----------------------------------------|----|
-|RF-001| O sistema deve permitir que sejam criados usuários com suas respectivas funções            | OBRIGATÓRIO | 
-|RF-002| O atendente deve conseguir registrar pedidos no aplicativo                                 | OBRIGATÓRIO |
-|RF-003| A cozinha deve visualizar os pedidos recebidos com detalhes (mesa, itens, observações)     | OBRIGATÓRIO |
-|RF-004| A cozinha deve poder marcar o pedido como “em preparo”, “pronto” ou “cancelado”            | OBRIGATÓRIO |
-|RF-005| O atendente deve receber uma notificação imediata quando o pedido estiver pronto           | OBRIGATÓRIO |
-|RF-006| O sistema deve permitir integração com o sistema de pagamento ou fechamento de conta       | DESEJÁVEL   |
-|RF-007| Emitir relatórios de vendas por período, prato, garçom ou canal de venda                   | IMPORTANTE  |
-|RF-008| Controlar programas de fidelidade (pontos, promoções, descontos)                           | DESEJÁVEL   |
+| ID     | Descrição do Requisito                                                                                      | Prioridade                                                   |
+|--------|--------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| RF-001 | Autenticar usuário e aplicar acesso por papéis                                                               | OBRIGATÓRIO                                                  |
+| RF-002 | Atendente registra pedidos: abrir comanda, incluir itens, editar antes do envio e enviar para a cozinha      | OBRIGATÓRIO                                                  |
+| RF-003 | KDS Cozinha visualiza a fila por estação e atualiza status de itens (pendente, em preparo, pronto, cancelado) | OBRIGATÓRIO                                                  |
+| RF-004 | Atendente recebe notificação de item pronto e pode marcar como entregue                                      | OBRIGATÓRIO                                                  |
+| RF-005 | Pagamentos e fechamento de conta com divisão simples                                                          | IMPORTANTE (sugestão: integração de pagamento simulada nesta versão) |
+| RF-006 | Relatórios de vendas por período com filtros de garçom e canal                                               | IMPORTANTE                                                   |
+| RF-007 | Gerente administra usuários: criar, editar, desativar e definir papéis                                       | OBRIGATÓRIO                                                  |
 
 ### Requisitos não Funcionais
 
