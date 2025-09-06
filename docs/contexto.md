@@ -92,25 +92,37 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 
 # Catálogo de Serviços
 
- * Gestão de Comandas: Abertura, edição e fechamento de comandas pelo garçom, com registro/alteração de itens e envio automático à cozinha (KDS). Exibe o retorno de pratos prontos para entrega e permite divisão de conta no fechamento.
-    * Abrir/fechar comanda (por mesa, balcão).
-    * Adicionar, editar e remover itens (quantidade, observações, substituições).
-    * Envio dos pedidos/itens ao KDS por estação (cozinha, bar, sobremesas).
-    * Atualização de status: em preparo → pronto → entregue.
-    * Divisão de conta (igual, por item, por valor ou por pessoa).
-    * Visualização de “pratos prontos” pendentes de entrega.
-     
- * KDS – Tela da Cozinha: Exibição em tempo real dos pedidos na cozinha. Recebe itens enviados pelo salão, organiza por prioridade/estação, permite mudar status (em preparo → pronto) e integra com o fluxo de entrega pelo garçom.
-   * Visualização de pedidos por fila/estação (grelha, fritura, massas, bar, sobremesas).
-   * Ações rápidas por item/comanda: aceitar, iniciar preparo, marcar como pronto, anexar observações.
-   * Feedback ao salão: quando item/comanda fica pronto para entrega.
-    
- * Pagamentos: Fechamento da comanda e registro do pagamento, permitindo múltiplos métodos (dinheiro, cartão, PIX), divisão de conta e emissão de comprovantes. Pode ser realizado diretamente com o garçom (via app/maquininha) ou no caixa (via aplicação web).
-   * Cálculo automático do valor total da comanda, incluindo descontos e taxas.
-   * Pagamento com múltiplos métodos (dinheiro, cartão, PIX).
-   * Divisão de conta (igual, por item, por valor ou por pessoa).
-   * Registro do pagamento no sistema, com histórico por comanda.
-   * Cancelamento/estorno de pagamentos (com motivo e usuário registrado).
+- **Autenticação e Acesso (RF-001)**
+  - Login com aplicação de papéis de acesso.
+  - Permissões de navegação conforme papel.
+
+- **Gestão de Comandas (RF-002)**
+  - Abrir comanda por mesa ou balcão.
+  - Incluir e editar itens **antes do envio** à cozinha.
+  - Enviar itens para a cozinha.
+  - Visualizar retorno de itens prontos para entrega.
+
+- **KDS Cozinha (RF-003)**
+  - Visualizar fila por estação.
+  - Ver detalhes do pedido com mesa, itens e observações.
+  - Atualizar status de itens: pendente, em preparo, pronto, cancelado.
+
+- **Notificações e Entrega (RF-004)**
+  - Listar itens prontos para o atendente com alerta imediato.
+  - Marcar item como entregue.
+
+- **Pagamentos e Fechamento (RF-005)**
+  - Calcular total da comanda.
+  - Registrar pagamento em dinheiro, cartão ou PIX.
+  - Fechamento da comanda com **divisão simples**.
+  - Integração de pagamento **simulada** nesta versão.
+
+- **Relatórios de Vendas (RF-006)**
+  - Relatórios por período com filtros de garçom e canal.
+
+- **Administração de Usuários (RF-007)**
+  - Criar, editar e desativar usuários.
+  - Definir papéis dos usuários.
 
 # Arquitetura da Solução
 
