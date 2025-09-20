@@ -1,29 +1,29 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
-title:
+title: Foodtrack
 authors:
-  - family-names:
-    given-names:
-  - family-names:
-    given-names:
-  - family-names:
-    given-names:
-  - family-names:
-    given-names:
-  - family-names:
-    given-names:
-  - family-names:
-    given-names:
-  - family-names:
-    given-names:
-  - name-suffix: Professor XXXX
+  - family-names: Lanza Japolino
+    given-names: Guilherme
+  - family-names: Modesto
+    given-names: Gilberto
+  - family-names: Gomes Lima
+    given-names: Izabela
+  - family-names: Paula Ramos de Souza
+    given-names: Luana
+  - family-names: Eduarda Sousa
+    given-names: Maria
+  - family-names: Antoniel Boorges da Cruz
+    given-names: Victor
+  - family-names: Júnio Martins Vieira
+    given-names: Warley
+  - name-suffix: Professor 
     affiliation: PUC Minas
-    family-names:
-    given-names:
+    family-names: Jaques Ferreira de Souza
+    given-names: Kléber
 keywords:
   -
   -
 repository-code:
 license: CC-BY-4.0
 version: 1.0.0
-date-released: 2023-06-30
+date-released: 2025-11-30
