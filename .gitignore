@@ -1,0 +1,49 @@
+﻿# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.ncb
+*.opendb
+*.cache
+*.config
+*.dbmdl
+
+# Arquivos de pacotes
+*.nuget/
+*.nupkg
+packages/
+
+# Arquivos de publicação
+publish/
+*.Publish.xml
+
+# Test results
+TestResult*/
+*.trx
+*.coverage
+*.coveragexml
+
+# Backup e outros
+*.db
+*.mdf
+*.ldf
+*.sqlite
