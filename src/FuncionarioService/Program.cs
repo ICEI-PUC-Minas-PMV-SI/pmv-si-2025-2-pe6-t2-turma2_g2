@@ -16,7 +16,7 @@ var SigningKey = new SymmetricSecurityKey(KeyBytes);
 
 builder.Services.AddHttpClient("FuncionarioService", client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5182/swagger");
+    client.BaseAddress = new Uri("http://localhost:5182/");
 });
 
 builder.Services.AddAuthentication(options =>
