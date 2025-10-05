@@ -1,15 +1,3 @@
-    /// <summary>
-    /// Controller responsável pelo CRUD de acréscimos opcionais para pratos.
-    /// </summary>
-    /// <remarks>
-    /// Endpoints:
-    /// - GET /api/acressimo: Lista todos os acréscimos
-    /// - GET /api/acressimo/{id}: Consulta acréscimo por ID
-    /// - POST /api/acressimo: Cria novo acréscimo
-    /// - PUT /api/acressimo/{id}: Atualiza acréscimo
-    /// - DELETE /api/acressimo/{id}: Remove acréscimo
-    /// </remarks>
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PratoService.Models;
@@ -22,9 +10,6 @@ namespace PratoService.Controllers
     [Authorize]
     public class AcressimoController(QueryFactory db) : ControllerBase
     {
-        /// <summary>
-        /// Lista todos os acréscimos opcionais.
-        /// </summary>
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -32,10 +17,6 @@ namespace PratoService.Controllers
             return Ok(acressimos);
         }
 
-        /// <summary>
-        /// Consulta um acréscimo pelo ID.
-        /// </summary>
-        /// <param name="id">ID do acréscimo</param>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -44,10 +25,6 @@ namespace PratoService.Controllers
             return Ok(acressimo);
         }
 
-        /// <summary>
-        /// Cria um novo acréscimo.
-        /// </summary>
-        /// <param name="acressimo">Dados do acréscimo</param>
         [HttpPost]
         public IActionResult Create([FromBody] Acressimo acressimo)
         {
@@ -61,11 +38,6 @@ namespace PratoService.Controllers
             return CreatedAtAction(nameof(GetById), new { id = acressimo.Id }, acressimo);
         }
 
-        /// <summary>
-        /// Atualiza um acréscimo existente.
-        /// </summary>
-        /// <param name="id">ID do acréscimo</param>
-        /// <param name="acressimo">Dados do acréscimo</param>
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Acressimo acressimo)
         {
@@ -80,10 +52,6 @@ namespace PratoService.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Remove um acréscimo pelo ID.
-        /// </summary>
-        /// <param name="id">ID do acréscimo</param>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

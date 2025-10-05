@@ -1,15 +1,3 @@
-    /// <summary>
-    /// Controller responsável pelo CRUD dos status possíveis para um pedido.
-    /// </summary>
-    /// <remarks>
-    /// Endpoints:
-    /// - GET /api/statuspedido: Lista todos os status
-    /// - GET /api/statuspedido/{id}: Consulta status por ID
-    /// - POST /api/statuspedido: Cria novo status
-    /// - PUT /api/statuspedido/{id}: Atualiza status
-    /// - DELETE /api/statuspedido/{id}: Remove status
-    /// </remarks>
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PedidoService.Models;
@@ -22,9 +10,6 @@ namespace PedidoService.Controllers
     [Authorize]
     public class StatusPedidoController(QueryFactory db) : ControllerBase
     {
-        /// <summary>
-        /// Lista todos os status possíveis para um pedido.
-        /// </summary>
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -32,10 +17,6 @@ namespace PedidoService.Controllers
             return Ok(status);
         }
 
-        /// <summary>
-        /// Consulta um status pelo ID.
-        /// </summary>
-        /// <param name="id">ID do status</param>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -44,10 +25,6 @@ namespace PedidoService.Controllers
             return Ok(item);
         }
 
-        /// <summary>
-        /// Cria um novo status de pedido.
-        /// </summary>
-        /// <param name="item">Dados do status</param>
         [HttpPost]
         public IActionResult Create([FromBody] StatusPedido item)
         {
@@ -60,11 +37,6 @@ namespace PedidoService.Controllers
             return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
         }
 
-        /// <summary>
-        /// Atualiza um status de pedido existente.
-        /// </summary>
-        /// <param name="id">ID do status</param>
-        /// <param name="item">Dados do status</param>
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] StatusPedido item)
         {
@@ -78,10 +50,6 @@ namespace PedidoService.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Remove um status pelo ID.
-        /// </summary>
-        /// <param name="id">ID do status</param>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

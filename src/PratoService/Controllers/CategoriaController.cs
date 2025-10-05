@@ -1,15 +1,3 @@
-    /// <summary>
-    /// Controller responsável pelo CRUD de categorias de pratos.
-    /// </summary>
-    /// <remarks>
-    /// Endpoints:
-    /// - GET /api/categoria: Lista todas as categorias
-    /// - GET /api/categoria/{id}: Consulta categoria por ID
-    /// - POST /api/categoria: Cria nova categoria
-    /// - PUT /api/categoria/{id}: Atualiza categoria
-    /// - DELETE /api/categoria/{id}: Remove categoria
-    /// </remarks>
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PratoService.Models;
@@ -22,9 +10,6 @@ namespace PratoService.Controllers
     [Authorize]
     public class CategoriaController(QueryFactory db) : ControllerBase
     {
-        /// <summary>
-        /// Lista todas as categorias de pratos.
-        /// </summary>
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -32,10 +17,6 @@ namespace PratoService.Controllers
             return Ok(categorias);
         }
 
-        /// <summary>
-        /// Consulta uma categoria pelo ID.
-        /// </summary>
-        /// <param name="id">ID da categoria</param>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -44,10 +25,6 @@ namespace PratoService.Controllers
             return Ok(categoria);
         }
 
-        /// <summary>
-        /// Cria uma nova categoria de prato.
-        /// </summary>
-        /// <param name="categoria">Dados da categoria</param>
         [HttpPost]
         public IActionResult Create([FromBody] Categoria categoria)
         {
@@ -60,11 +37,6 @@ namespace PratoService.Controllers
             return CreatedAtAction(nameof(GetById), new { id = categoria.Id }, categoria);
         }
 
-        /// <summary>
-        /// Atualiza uma categoria existente.
-        /// </summary>
-        /// <param name="id">ID da categoria</param>
-        /// <param name="categoria">Dados da categoria</param>
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Categoria categoria)
         {
@@ -78,10 +50,6 @@ namespace PratoService.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Remove uma categoria pelo ID.
-        /// </summary>
-        /// <param name="id">ID da categoria</param>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
