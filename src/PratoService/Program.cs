@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MySqlConnector;
@@ -73,4 +73,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("http://localhost:5099");
+app.Run("http://localhost:5014");
