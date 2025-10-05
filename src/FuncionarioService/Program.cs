@@ -73,4 +73,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("http://localhost:5099");
+app.Run();

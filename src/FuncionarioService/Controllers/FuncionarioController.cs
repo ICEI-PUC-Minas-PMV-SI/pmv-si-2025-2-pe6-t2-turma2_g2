@@ -25,7 +25,7 @@ namespace FuncionarioService.Controllers
         {
             var funcionario = db
                 .Query("Funcionario")
-                .Where("Id", id)
+                .Where("IdFuncionario", id)
                 .FirstOrDefault<Funcionario>();
 
             if (funcionario == null)
@@ -64,14 +64,16 @@ namespace FuncionarioService.Controllers
                     new
                     {
                         funcionario.Nome,
-                        funcionario.Usuario
+                        funcionario.Usuario,
+                        funcionario.Senha,
+                        funcionario.Funcao
                     });
 
-            funcionario.Id = id;
+            funcionario.IdFuncionario = id;
 
             return CreatedAtAction(
                 nameof(this.GetById),
-                new { id = funcionario.Id },
+                new { id = funcionario.IdFuncionario },
                 funcionario);
         }
 
@@ -82,7 +84,7 @@ namespace FuncionarioService.Controllers
         {
             var exists = db
                 .Query("funcionario")
-                .Where("Id", id)
+                .Where("IdFuncionario", id)
                 .FirstOrDefault();
 
             if (exists == null)
@@ -92,12 +94,14 @@ namespace FuncionarioService.Controllers
 
             db
                 .Query("funcionario")
-                .Where("Id", id)
+                .Where("IdFuncionario", id)
                 .Update(
                     new
                     {
                         funcionario.Nome,
-                        funcionario.Usuario
+                        funcionario.Usuario,
+                        funcionario.Senha,
+                        funcionario.Funcao
                     });
 
             return NoContent();
@@ -108,7 +112,7 @@ namespace FuncionarioService.Controllers
         {
             var exists = db
                 .Query("funcionario")
-                .Where("Id", id)
+                .Where("IdFuncionario", id)
                 .FirstOrDefault();
 
             if (exists == null)
@@ -118,7 +122,7 @@ namespace FuncionarioService.Controllers
 
             db
                 .Query("funcionario")
-                .Where("Id", id)
+                .Where("IdFuncionario", id)
                 .Delete();
 
             return NoContent();
