@@ -8,6 +8,7 @@ namespace FuncionarioService.Controllers
     [ApiController]
     [Route("api/funcionario")]
     [Authorize]
+
     public class FuncionarioController(QueryFactory db) : ControllerBase
     {
         [HttpGet]

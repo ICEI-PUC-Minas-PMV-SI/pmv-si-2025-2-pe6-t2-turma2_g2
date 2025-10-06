@@ -8,8 +8,22 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+var KeyBase64 = builder.Configuration["Jwt:Key"];
+var KeyBytes = Convert.FromBase64String(KeyBase64);
+var SigningKey = new SymmetricSecurityKey(KeyBytes);
+
+
+builder.Services.AddHttpClient("FuncionarioService", client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5182/");
+});
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+
     .AddJwtBearer(options =>
     {
         options.RequireHttpsMetadata = false;
