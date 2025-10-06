@@ -6,51 +6,51 @@ using SqlKata.Execution;
 namespace PedidoService.Controllers
 {
     [ApiController]
-    [Route("api/itempedidoacressimo")]
+    [Route("api/itempedidoacrescimo")]
     [Authorize]
-    public class ItemPedidoAcressimoController(QueryFactory db) : ControllerBase
+    public class ItemPedidoAcrescimoController(QueryFactory db) : ControllerBase
     {
         [HttpGet]
         public IActionResult GetAll()
         {
-            var itens = db.Query("ItemPedidoAcressimo").Get<ItemPedidoAcressimo>();
+            var itens = db.Query("ItemPedidoAcrescimo").Get<ItemPedidoAcrescimo>();
             return Ok(itens);
         }
 
-        [HttpGet("{idItemPedido}/{idAcressimo}")]
-        public IActionResult GetById(int idItemPedido, int idAcressimo)
+        [HttpGet("{idItemPedido}/{idAcrescimo}")]
+        public IActionResult GetById(int idItemPedido, int idAcrescimo)
         {
-            var item = db.Query("ItemPedidoAcressimo")
+            var item = db.Query("ItemPedidoAcrescimo")
                 .Where("IdItemPedido", idItemPedido)
-                .Where("IdAcressimo", idAcressimo)
-                .FirstOrDefault<ItemPedidoAcressimo>();
+                .Where("IdAcrescimo", idAcrescimo)
+                .FirstOrDefault<ItemPedidoAcrescimo>();
             if (item == null) return NotFound();
             return Ok(item);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] ItemPedidoAcressimo item)
+        public IActionResult Create([FromBody] ItemPedidoAcrescimo item)
         {
-            db.Query("ItemPedidoAcressimo").Insert(new
+            db.Query("ItemPedidoAcrescimo").Insert(new
             {
                 item.IdItemPedido,
-                item.IdAcressimo,
+                item.IdAcrescimo,
                 item.Quantidade
             });
-            return CreatedAtAction(nameof(GetById), new { idItemPedido = item.IdItemPedido, idAcressimo = item.IdAcressimo }, item);
+            return CreatedAtAction(nameof(GetById), new { idItemPedido = item.IdItemPedido, idAcrescimo = item.IdAcrescimo }, item);
         }
 
-        [HttpPut("{idItemPedido}/{idAcressimo}")]
-        public IActionResult Update(int idItemPedido, int idAcressimo, [FromBody] ItemPedidoAcressimo item)
+        [HttpPut("{idItemPedido}/{idAcrescimo}")]
+        public IActionResult Update(int idItemPedido, int idAcrescimo, [FromBody] ItemPedidoAcrescimo item)
         {
-            var exists = db.Query("ItemPedidoAcressimo")
+            var exists = db.Query("ItemPedidoAcrescimo")
                 .Where("IdItemPedido", idItemPedido)
-                .Where("IdAcressimo", idAcressimo)
+                .Where("IdAcrescimo", idAcrescimo)
                 .FirstOrDefault();
             if (exists == null) return NotFound();
-            db.Query("ItemPedidoAcressimo")
+            db.Query("ItemPedidoAcrescimo")
                 .Where("IdItemPedido", idItemPedido)
-                .Where("IdAcressimo", idAcressimo)
+                .Where("IdAcrescimo", idAcrescimo)
                 .Update(new
                 {
                     item.Quantidade
@@ -58,17 +58,17 @@ namespace PedidoService.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{idItemPedido}/{idAcressimo}")]
-        public IActionResult Delete(int idItemPedido, int idAcressimo)
+        [HttpDelete("{idItemPedido}/{idAcrescimo}")]
+        public IActionResult Delete(int idItemPedido, int idAcrescimo)
         {
-            var exists = db.Query("ItemPedidoAcressimo")
+            var exists = db.Query("ItemPedidoAcrescimo")
                 .Where("IdItemPedido", idItemPedido)
-                .Where("IdAcressimo", idAcressimo)
+                .Where("IdAcrescimo", idAcrescimo)
                 .FirstOrDefault();
             if (exists == null) return NotFound();
-            db.Query("ItemPedidoAcressimo")
+            db.Query("ItemPedidoAcrescimo")
                 .Where("IdItemPedido", idItemPedido)
-                .Where("IdAcressimo", idAcressimo)
+                .Where("IdAcrescimo", idAcrescimo)
                 .Delete();
             return NoContent();
         }

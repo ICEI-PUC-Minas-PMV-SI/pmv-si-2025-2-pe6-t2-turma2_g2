@@ -13,14 +13,14 @@ namespace PratoService.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var ingredientes = db.Query("Ingrediente").Get<Ingrediente>();
+            var ingredientes = db.Query("Ingredientes").Get<Ingrediente>();
             return Ok(ingredientes);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var ingrediente = db.Query("Ingrediente").Where("Id", id).FirstOrDefault<Ingrediente>();
+            var ingrediente = db.Query("Ingredientes").Where("Id", id).FirstOrDefault<Ingrediente>();
             if (ingrediente == null) return NotFound();
             return Ok(ingrediente);
         }
@@ -28,7 +28,7 @@ namespace PratoService.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Ingrediente ingrediente)
         {
-            var id = db.Query("Ingrediente").InsertGetId<int>(new
+            var id = db.Query("Ingredientes").InsertGetId<int>(new
             {
                 ingrediente.Nome,
                 ingrediente.Descricao
@@ -40,9 +40,9 @@ namespace PratoService.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Ingrediente ingrediente)
         {
-            var exists = db.Query("Ingrediente").Where("Id", id).FirstOrDefault();
+            var exists = db.Query("Ingredientes").Where("Id", id).FirstOrDefault();
             if (exists == null) return NotFound();
-            db.Query("Ingrediente").Where("Id", id).Update(new
+            db.Query("Ingredientes").Where("Id", id).Update(new
             {
                 ingrediente.Nome,
                 ingrediente.Descricao
@@ -53,9 +53,9 @@ namespace PratoService.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var exists = db.Query("Ingrediente").Where("Id", id).FirstOrDefault();
+            var exists = db.Query("Ingredientes").Where("Id", id).FirstOrDefault();
             if (exists == null) return NotFound();
-            db.Query("Ingrediente").Where("Id", id).Delete();
+            db.Query("Ingredientes").Where("Id", id).Delete();
             return NoContent();
         }
     }

@@ -6,48 +6,48 @@ using SqlKata.Execution;
 namespace PratoService.Controllers
 {
     [ApiController]
-    [Route("api/acressimo")]
+    [Route("api/acrescimo")]
     [Authorize]
     public class AcressimoController(QueryFactory db) : ControllerBase
     {
         [HttpGet]
         public IActionResult GetAll()
         {
-            var acressimos = db.Query("Acressimo").Get<Acressimo>();
+            var acressimos = db.Query("Acrescimo").Get<Acrescimo>();
             return Ok(acressimos);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var acressimo = db.Query("Acressimo").Where("Id", id).FirstOrDefault<Acressimo>();
-            if (acressimo == null) return NotFound();
-            return Ok(acressimo);
+            var acrescimo = db.Query("Acrescimo").Where("Id", id).FirstOrDefault<Acrescimo>();
+            if (acrescimo == null) return NotFound();
+            return Ok(acrescimo);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Acressimo acressimo)
+        public IActionResult Create([FromBody] Acrescimo acrescimo)
         {
-            var id = db.Query("Acressimo").InsertGetId<int>(new
+            var id = db.Query("Acrescimo").InsertGetId<int>(new
             {
-                acressimo.Nome,
-                acressimo.Descricao,
-                acressimo.Valor
+                acrescimo.Nome,
+                acrescimo.Descricao,
+                acrescimo.Valor
             });
-            acressimo.Id = id;
-            return CreatedAtAction(nameof(GetById), new { id = acressimo.Id }, acressimo);
+            acrescimo.Id = id;
+            return CreatedAtAction(nameof(GetById), new { id = acrescimo.Id }, acrescimo);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Acressimo acressimo)
+        public IActionResult Update(int id, [FromBody] Acrescimo acrescimo)
         {
-            var exists = db.Query("Acressimo").Where("Id", id).FirstOrDefault();
+            var exists = db.Query("Acrescimo").Where("Id", id).FirstOrDefault();
             if (exists == null) return NotFound();
-            db.Query("Acressimo").Where("Id", id).Update(new
+            db.Query("Acrescimo").Where("Id", id).Update(new
             {
-                acressimo.Nome,
-                acressimo.Descricao,
-                acressimo.Valor
+                acrescimo.Nome,
+                acrescimo.Descricao,
+                acrescimo.Valor
             });
             return NoContent();
         }
@@ -55,9 +55,9 @@ namespace PratoService.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var exists = db.Query("Acressimo").Where("Id", id).FirstOrDefault();
+            var exists = db.Query("Acrescimo").Where("Id", id).FirstOrDefault();
             if (exists == null) return NotFound();
-            db.Query("Acressimo").Where("Id", id).Delete();
+            db.Query("Acrescimo").Where("Id", id).Delete();
             return NoContent();
         }
     }

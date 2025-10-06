@@ -28,13 +28,19 @@ namespace PedidoService.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] ItemPedido item)
         {
+            var prato = db.Query("pratos").Where("id", item.PratoId).FirstOrDefault();
+            if (prato == null)
+                return BadRequest("Prato não encontrado.");
+            item.Valor = prato.preco;
+
             var id = db.Query("ItemPedido").InsertGetId<int>(new
             {
                 item.DataHora,
                 item.PratoId,
                 item.StatusId,
                 item.Valor,
-                item.Especificacoes
+                item.Especificacoes,
+                item.ComandaId
             });
             item.Id = id;
             return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
