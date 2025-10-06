@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MySqlConnector;
-using SqlKata.Compilers;
-using SqlKata.Execution;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using RelatorioService.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// JWT
 var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -23,10 +23,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Swagger
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TESTE", Version = "v1" });
-
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "RelatorioService", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "Insira o token JWT desta forma: Bearer {seu_token}",
@@ -52,12 +52,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var connection = new MySqlConnection(connectionString);
-var compiler = new MySqlCompiler();
-var db = new QueryFactory(connection, compiler);
-builder.Services.AddSingleton(db);
+// Banco de dados MySQL
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 30))
+    )
+);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
