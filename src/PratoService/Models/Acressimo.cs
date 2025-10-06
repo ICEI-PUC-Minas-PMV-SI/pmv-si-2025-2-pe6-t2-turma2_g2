@@ -1,6 +1,6 @@
 namespace PratoService.Models
 {
-    public class Acressimo
+    public class Acrescimo
     {
         public int Id { get; set; }
         public string Nome { get; set; }

@@ -1,15 +1,3 @@
-    /// <summary>
-    /// Controller responsável pelo CRUD de pratos do cardápio.
-    /// </summary>
-    /// <remarks>
-    /// Endpoints:
-    /// - GET /api/prato: Lista todos os pratos
-    /// - GET /api/prato/{id}: Consulta prato por ID
-    /// - POST /api/prato: Cria novo prato
-    /// - PUT /api/prato/{id}: Atualiza prato
-    /// - DELETE /api/prato/{id}: Remove prato
-    /// </remarks
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PratoService.Models;
@@ -22,9 +10,6 @@ namespace PratoService.Controllers
     [Authorize]
     public class PratoController(QueryFactory db) : ControllerBase
     {
-        /// <summary>
-        /// Lista todos os pratos cadastrados.
-        /// </summary>
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -32,10 +17,6 @@ namespace PratoService.Controllers
             return Ok(pratos);
         }
 
-        /// <summary>
-        /// Consulta um prato pelo ID.
-        /// </summary>
-        /// <param name="id">ID do prato</param>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -44,10 +25,6 @@ namespace PratoService.Controllers
             return Ok(prato);
         }
 
-        /// <summary>
-        /// Cria um novo prato.
-        /// </summary>
-        /// <param name="prato">Dados do prato</param>
         [HttpPost]
         public IActionResult Create([FromBody] Prato prato)
         {
@@ -63,11 +40,6 @@ namespace PratoService.Controllers
             return CreatedAtAction(nameof(GetById), new { id = prato.Id }, prato);
         }
 
-        /// <summary>
-        /// Atualiza um prato existente.
-        /// </summary>
-        /// <param name="id">ID do prato</param>
-        /// <param name="prato">Dados do prato</param>
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Prato prato)
         {
@@ -84,10 +56,6 @@ namespace PratoService.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Remove um prato pelo ID.
-        /// </summary>
-        /// <param name="id">ID do prato</param>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
