@@ -4,113 +4,189 @@ O planejamento de uma aplicação de APIS Web é uma etapa fundamental para o su
 
 Aqui estão algumas etapas importantes que devem ser consideradas no planejamento de uma aplicação de APIS Web.
 
-[Inclua uma breve descrição do projeto.]
+**Descrição do projeto:**  
+NotificacaoService: é um microserviço de notificações de pedidos desenvolvido e testado por **Guilherme Lanza**. O serviço registra notificações, lista pendências por atendente e permite marcar a entrega. Os testes foram executados via Swagger no ambiente local.
+
+- Base local: `http://localhost:5034`  
+- Swagger: `http://localhost:5034/swagger`
 
 ## Objetivos da API
 
-O primeiro passo é definir os objetivos da sua API. O que você espera alcançar com ela? Você quer que ela seja usada por clientes externos ou apenas por aplicações internas? Quais são os recursos que a API deve fornecer?
-
-[Inclua os objetivos da sua api.]
-
+- Criar uma notificação ligada a um pedido e direcionada a um atendente.  
+- Listar notificações com status **Pendente** filtradas por `atendenteId`.  
+- Marcar a entrega de uma notificação e retirá-la da lista de pendentes.  
 
 ## Modelagem da Aplicação
-[Descreva a modelagem da aplicação, incluindo a estrutura de dados, diagramas de classes ou entidades, e outras representações visuais relevantes.]
 
+Estrutura observada nas respostas e parâmetros dos endpoints.
+
+- `idNotificacao` inteiro  
+- `idPedido` inteiro  
+- `mensagem` string  
+- `status` string com valor observado: `Pendente`  
+- `dataCriacao` string em formato ISO 8601  
+- A consulta de pendências recebe `atendenteId` como parâmetro de query
+
+Exemplo de item retornado em pendentes:
+~~~json
+{
+  "idNotificacao": 1,
+  "idPedido": 1,
+  "mensagem": "Pedido #1 está pronto para retirada!",
+  "status": "Pendente",
+  "dataCriacao": "2025-10-05T14:30:00Z"
+}
+~~~
 
 ## Tecnologias Utilizadas
 
-Existem muitas tecnologias diferentes que podem ser usadas para desenvolver APIs Web. A tecnologia certa para o seu projeto dependerá dos seus objetivos, dos seus clientes e dos recursos que a API deve fornecer.
+- API REST com **JSON**
+- **Swagger UI** para documentação e testes manuais no ambiente local
 
-[Lista das tecnologias principais que serão utilizadas no projeto.]
+---
 
 ## API Endpoints
 
-[Liste os principais endpoints da API, incluindo as operações disponíveis, os parâmetros esperados e as respostas retornadas.]
+### Endpoint 1: Criar notificação
 
-### Endpoint 1
-- Método: GET
-- URL: /endpoint1
+- Método: **POST**  
+- URL: `/api/Notificacoes`  
 - Parâmetros:
-  - param1: [descrição]
+  - Corpo (JSON):
+    ~~~json
+    {
+      "idPedido": 1,
+      "idAtendente": 1,
+      "mensagem": "Pedido #1 está pronto para retirada!"
+    }
+    ~~~
 - Resposta:
-  - Sucesso (200 OK)
-    ```
+  - Sucesso
+    ~~~json
     {
-      "message": "Success",
-      "data": {
-        ...
-      }
+      "idNotificacao": 1
     }
-    ```
-  - Erro (4XX, 5XX)
-    ```
-    {
-      "message": "Error",
-      "error": {
-        ...
+    ~~~
+- Observação  
+  O status HTTP exato na criação não aparece nas evidências. O corpo acima foi retornado no teste manual.
+
+---
+
+### Endpoint 2: Listar notificações pendentes por atendente
+
+- Método: **GET**  
+- URL: `/api/Notificacoes/pendentes`  
+- Parâmetros:
+  - Query:
+    - `atendenteId` inteiro obrigatório
+- Resposta:
+  - Sucesso
+    ~~~json
+    [
+      {
+        "idNotificacao": 1,
+        "idPedido": 1,
+        "mensagem": "Pedido #1 está pronto para retirada!",
+        "status": "Pendente",
+        "dataCriacao": "2025-10-05T14:30:00Z"
       }
-    }
-    ```
+    ]
+    ~~~
+
+---
+
+### Endpoint 3: Marcar notificação como entregue
+
+- Método: **PATCH**  
+- URL: `/api/Notificacoes/{id}/entregar`  
+- Parâmetros:
+  - Rota:
+    - `id` inteiro obrigatório
+- Resposta:
+  - Sucesso  
+    `204 No Content`
+
+Após a entrega, uma nova chamada a `/api/Notificacoes/pendentes?atendenteId=1` retorna **lista vazia**.
+
+---
 
 ## Considerações de Segurança
 
-[Discuta as considerações de segurança relevantes para a aplicação distribuída, como autenticação, autorização, proteção contra ataques, etc.]
+No fluxo testado via Swagger não foi exigida autenticação. Outras políticas de segurança não constam nas evidências fornecidas.
+
+---
 
 ## Implantação
 
-[Instruções para implantar a aplicação distribuída em um ambiente de produção.]
+Execução local utilizada nos testes.
 
-1. Defina os requisitos de hardware e software necessários para implantar a aplicação em um ambiente de produção.
-2. Escolha uma plataforma de hospedagem adequada, como um provedor de nuvem ou um servidor dedicado.
-3. Configure o ambiente de implantação, incluindo a instalação de dependências e configuração de variáveis de ambiente.
-4. Faça o deploy da aplicação no ambiente escolhido, seguindo as instruções específicas da plataforma de hospedagem.
-5. Realize testes para garantir que a aplicação esteja funcionando corretamente no ambiente de produção.
+1. Iniciar a aplicação ouvindo na porta `5034`.  
+2. Acessar `http://localhost:5034/swagger`.  
+3. Em `POST /api/Notificacoes` enviar o corpo de exemplo para criar a notificação.  
+4. Em `GET /api/Notificacoes/pendentes` informar `atendenteId=1` para visualizar pendências.  
+5. Em `PATCH /api/Notificacoes/{id}/entregar` informar `id=1` para marcar a entrega.  
+6. Repetir o GET de pendentes para confirmar que a lista está vazia.
+
+---
 
 ## Testes
 
-[Descreva a estratégia de teste, incluindo os tipos de teste a serem realizados (unitários, integração, carga, etc.) e as ferramentas a serem utilizadas.]
+Fluxo funcional executado manualmente no Swagger.
 
-1. Crie casos de teste para cobrir todos os requisitos funcionais e não funcionais da aplicação.
-2. Implemente testes unitários para testar unidades individuais de código, como funções e classes.
-3. Realize testes de integração para verificar a interação correta entre os componentes da aplicação.
-4. Execute testes de carga para avaliar o desempenho da aplicação sob carga significativa.
-5. Utilize ferramentas de teste adequadas, como frameworks de teste e ferramentas de automação de teste, para agilizar o processo de teste.
+1. Criação retornou objeto com `idNotificacao`.  
+2. Consulta de pendentes retornou a notificação criada com `status` igual a `Pendente`.  
+3. Entrega da notificação retornou `204 No Content`.  
+4. Nova consulta de pendentes retornou lista vazia para `atendenteId=1`.
 
-# Referências
+---
 
-Inclua todas as referências (livros, artigos, sites, etc) utilizados no desenvolvimento do trabalho.
+## Referências
 
-# Planejamento
+- Swagger UI do serviço  
+- Evidências e prints fornecidos
 
-##  Quadro de tarefas
+---
 
-> Apresente a divisão de tarefas entre os membros do grupo e o acompanhamento da execução, conforme o exemplo abaixo.
+## Planejamento
 
-### Semana 1
+### Quadro de tarefas
 
-Atualizado em: 21/04/2024
+A divisão abaixo reflete somente o que foi realizado por **Guilherme Lanza** conforme os prints enviados.
 
-| Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
-| :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
-| AlunaX        | Introdução | 01/02/2024     | 07/02/2024 | ✔️    | 05/02/2024      |
-| AlunaZ        | Objetivos    | 03/02/2024     | 10/02/2024 | 📝    |                 |
-| AlunoY        | Histórias de usuário  | 01/01/2024     | 07/01/2005 | ⌛     |                 |
-| AlunoK        | Personas 1  |    01/01/2024        | 12/02/2005 | ❌    |       |
+#### Semana 1
+
+Atualizado em: 06/10
+
+| Responsável     | Tarefa/Requisito                          | Iniciado em | Prazo | Status | Terminado em |
+| :-------------- | :---------------------------------------- | :---------: | :---: | :----: | :----------: |
+| Guilherme Lanza | Desenvolvimento de Funcionalidades - API |   08/09     | 15/09 |   ✔️   |    15/09     |
 
 #### Semana 2
 
-Atualizado em: 21/04/2024
+Atualizado em: 06/10
 
-| Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
-| :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
-| AlunaX        | Página inicial   | 01/02/2024     | 07/03/2024 | ✔️    | 05/02/2024      |
-| AlunaZ        | CSS unificado    | 03/02/2024     | 10/03/2024 | 📝    |                 |
-| AlunoY        | Página de login  | 01/02/2024     | 07/03/2024 | ⌛     |                 |
-| AlunoK        | Script de login  |  01/01/2024    | 12/03/2024 | ❌    |       |
+| Responsável     | Tarefa/Requisito                          | Iniciado em | Prazo | Status | Terminado em |
+| :-------------- | :---------------------------------------- | :---------: | :---: | :----: | :----------: |
+| Guilherme Lanza | Desenvolvimento de Funcionalidades - API |   15/09     | 22/09 |   ✔️   |    22/09     |
 
-Legenda:
-- ✔️: terminado
-- 📝: em execução
-- ⌛: atrasado
+#### Semana 3
+
+Atualizado em: 06/10
+
+| Responsável     | Tarefa/Requisito                          | Iniciado em | Prazo | Status | Terminado em |
+| :-------------- | :---------------------------------------- | :---------: | :---: | :----: | :----------: |
+| Guilherme Lanza | Desenvolvimento de Funcionalidades - API |   22/09     | 29/09 |   ✔️   |    29/09     |
+
+#### Semana 4
+
+Atualizado em: 06/10
+
+| Responsável     | Tarefa/Requisito | Iniciado em | Prazo | Status | Terminado em |
+| :-------------- | :--------------- | :---------: | :---: | :----: | :----------: |
+| Guilherme Lanza | Testes - API     |   29/09     | 06/10 |   ✔️   |    06/10     |
+
+**Legenda**  
+- ✔️: terminado  
+- 📝: em execução  
+- ⌛: atrasado  
 - ❌: não iniciado
-
