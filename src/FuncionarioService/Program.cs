@@ -1,4 +1,7 @@
+using FuncionarioService.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MySqlConnector;
@@ -7,6 +10,13 @@ using SqlKata.Execution;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 33)) // ajuste para sua versão
+    ));
+
 
 
 var KeyBase64 = builder.Configuration["Jwt:Key"];
