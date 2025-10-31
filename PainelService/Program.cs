@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using PainelService.Data;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MySqlConnector;
@@ -10,12 +8,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// JWT Authentication
-var jwtKey = builder.Configuration["Jwt:Key"]
-             ?? throw new InvalidOperationException("JWT Key não configurada");
-var key = Encoding.ASCII.GetBytes(jwtKey);
-
-
+var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -30,7 +23,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Swagger
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Painel", Version = "v1" });
@@ -55,24 +47,18 @@ builder.Services.AddSwaggerGen(c =>
                     Id = "Bearer"
                 }
             },
-           Array.Empty<string>()
+            new string[] { }
         }
     });
 });
 
-// EF Core
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-
-
-// SqlKata (opcional)
 var connection = new MySqlConnection(connectionString);
 var compiler = new MySqlCompiler();
 var db = new QueryFactory(connection, compiler);
 builder.Services.AddSingleton(db);
 
-// Controllers & Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

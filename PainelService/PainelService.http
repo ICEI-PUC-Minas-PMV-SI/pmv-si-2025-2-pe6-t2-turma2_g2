@@ -1,4 +1,4 @@
-@PainelService_HostAddress = http://localhost:5136
+@PainelService_HostAddress = http://localhost:5254
 
 GET {{PainelService_HostAddress}}/weatherforecast/
 Accept: application/json
