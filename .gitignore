@@ -48,3 +48,42 @@ TestResult*/
 *.mdf
 *.ldf
 *.sqlite
+
+# dependências
+node_modules/
+
+# build e cache
+.expo/
+.expo-shared/
+dist/
+build/
+web-build/
+android/
+ios/
+*.apk
+*.aab
+
+# arquivos de configuração locais
+.env
+.env.local
+.env.*.local
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+expo-error.log
+
+# sistema operacional
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+*.swp
+
+# backups temporários
+*.tmp
+*.bak
+
