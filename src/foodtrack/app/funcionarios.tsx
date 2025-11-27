@@ -1,5 +1,12 @@
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList, Modal, Pressable, Text, TextInput, View } from 'react-native';
+import {
+  Alert, FlatList, Modal, Pressable,
+  StyleSheet,
+  Text, TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import { addFuncionario, deleteFuncionario, Funcionario, getFuncionarios, updateFuncionario } from '../services/funcionariosService';
 import { sharedStyles } from '../theme/styles';
 
@@ -11,6 +18,7 @@ export default function FuncionariosScreen() {
   const [funcao, setCargo] = useState('');
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
+  const router = useRouter();
 
   const loadFuncionarios = async () => {
     try {
@@ -89,23 +97,33 @@ export default function FuncionariosScreen() {
   };
 
   return (
-    <View style={sharedStyles.container}>
-      <Pressable style={sharedStyles.buttonPrimary} onPress={() => openModal()}>
-        <Text style={sharedStyles.buttonTextPrimary}>Adicionar Funcionário</Text>
+    <View style={styles.card}>
+      <TouchableOpacity
+        style={styles.botaoVoltar}
+        onPress={() => router.replace("/dashboard")}
+      >
+        <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.titulo}>Funcionários</Text>
+      
+      <Pressable style={styles.botaoNovo} onPress={() => openModal()}>
+        <Text style={styles.botaoNovoTexto}>+ Novo Funcionário</Text>
       </Pressable>
 
       <FlatList
         data={funcionarios}
         keyExtractor={(item) => item.idFuncionario!.toString()}
+        contentContainerStyle={{ paddingBottom: 40 }}
         renderItem={({ item }) => (
           <View style={sharedStyles.funcionarioItem}>
             <Text style={sharedStyles.funcionarioText}>{item.nome} - {item.funcao}</Text>
-            <View style={sharedStyles.actions}>
-              <Pressable onPress={() => handleEdit(item)} style={sharedStyles.editButton}>
-                <Text style={sharedStyles.editButtonText}>Editar</Text>
+            <View style={styles.actions}>
+              <Pressable onPress={() => handleEdit(item)} style={[styles.botao, styles.botaoEditar]}>
+                <Text style={styles.botaoTexto}>Editar</Text>
               </Pressable>
-              <Pressable onPress={() => handleDelete(item.idFuncionario!)} style={sharedStyles.deleteButton}>
-                <Text style={sharedStyles.deleteButtonText}>Excluir</Text>
+              <Pressable onPress={() => handleDelete(item.idFuncionario!)} style={[styles.botao, styles.botaoExcluir]}>
+                <Text style={styles.botaoTexto}>Excluir</Text>
               </Pressable>
             </View>
           </View>
@@ -135,3 +153,86 @@ export default function FuncionariosScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#fff9f4", padding: 16 },
+  titulo: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#d46a00",
+    marginBottom: 10,
+  },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  headerCard: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+  cliente: { fontSize: 18, fontWeight: "600", color: "#333" },
+  status: { fontSize: 14, fontWeight: "bold" },
+  statusPendente: { color: "#d46a00" },
+  statusPronto: { color: "green" },
+  statusPago: { color: "blue" },
+  statusCancelado: { color: "red" },
+  itensContainer: { marginBottom: 6 },
+  itemTexto: { color: "#555", fontSize: 14 },
+  footerCard: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 8,
+  },
+  valorTotal: { fontWeight: "bold", color: "#000" },
+  pagamento: { color: "#666" },  
+  actions: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginTop: 10,
+    gap: 10,
+  },
+  botao: {
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+  },
+  botaoEditar: { backgroundColor: "#d46a00" },
+  botaoCancelar: { backgroundColor: "#999" },
+  textoBotao: { color: "#fff", fontWeight: "bold" },
+  botaoNovo: {
+    backgroundColor: "#d46a00",
+    padding: 10,
+    borderRadius: 10,
+    alignSelf: "flex-start",
+    marginBottom: 10,
+  },
+  botaoNovoTexto: { color: "#fff", fontWeight: "bold", fontSize: 16 },
+  vazio: { textAlign: "center", color: "#999", marginTop: 40 },
+  botaoVoltar: {
+    alignSelf: "flex-start",
+    backgroundColor: "#E67E22",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+    shadowColor: "#BF6510",
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+  },
+  botaoVoltarTexto: {
+    color: "#FFF8F1",
+    fontWeight: "bold",
+    fontSize: 16,
+  },  
+  botaoTexto: { color: "#FFF8F1", fontWeight: "bold" },
+  botaoExcluir: { backgroundColor: "#C0392B" },
+});

@@ -10,11 +10,11 @@ interface Tela {
 
 const telas: Tela[] = [
   { key: 'funcionarios', nome: 'Funcionários', route: '/funcionarios' },
+  { key: 'produtos', nome: 'Produtos', route: '/produtos' },
   { key: 'pedidos', nome: 'Pedidos', route: '/pedidos' },
-  { key: 'pagamento', nome: 'Pagamento', route: '/pagamento' },
-  { key: 'comanda', nome: 'Comanda', route: '/comanda' },
-  { key: 'kds', nome: 'KDS', route: '/kds' },
-  { key: 'relatorio', nome: 'Relatório Financeiro', route: '/relatorio' }
+  { key: 'kds', nome: 'KDS - Estações', route: '/kds' },
+  { key: 'relatorio', nome: 'Relatório de Vendas', route: '/relatorio' },
+  { key: 'pagamento', nome: 'Pagamentos', route: '/pagamento' }
 ];
 
 export default function Dashboard() {
@@ -23,7 +23,7 @@ export default function Dashboard() {
   const renderItem = ({ item }: { item: typeof telas[0] }) => (
     <Pressable
       style={styles.card}
-      onPress={() => router.push(item.route)}
+      onPress={() => router.push(item.route as any)}
     >
       <Text style={styles.cardText}>{item.nome}</Text>
     </Pressable>
