@@ -64,10 +64,10 @@ Uma técnica é muito usada em projetos ágeis. Ela classifica os requisitos em 
 |--------|--------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
 | RF-001 | Autenticar usuário e aplicar acesso por papéis                                                               | OBRIGATÓRIO                                                  |
 | RF-002 | Atendente registra pedidos: abrir comanda, incluir itens, editar antes do envio e enviar para a cozinha      | OBRIGATÓRIO                                                  |
-| RF-003 | KDS Cozinha visualiza a fila por estação e atualiza status de itens (pendente, em preparo, pronto, cancelado) | OBRIGATÓRIO                                                  |
+| RF-003 | KDS Cozinha visualiza a fila por estação e atualiza status de itens (pendente, em preparo, pronto, cancelado)| OBRIGATÓRIO                                                  |
 | RF-004 | Atendente recebe notificação de item pronto e pode marcar como entregue                                      | OBRIGATÓRIO                                                  |
-| RF-005 | Pagamentos e fechamento de conta com divisão simples                                                          | IMPORTANTE (sugestão: integração de pagamento simulada nesta versão) |
-| RF-006 | Relatórios de vendas por período com filtros de garçom e canal                                               | IMPORTANTE                                                   |
+| RF-005 | Pagamentos e fechamento de conta com divisão simples                                                         | IMPORTANTE (sugestão: integração de pagamento simulada nesta versão) |
+| RF-006 | Relatórios de vendas por período                                                                             | IMPORTANTE                                                   |
 | RF-007 | Gerente administra usuários: criar, editar, desativar e definir papéis                                       | OBRIGATÓRIO                                                  |
 
 ### Requisitos não Funcionais
@@ -75,9 +75,8 @@ Uma técnica é muito usada em projetos ágeis. Ela classifica os requisitos em 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
 |RNF-001| O tempo de resposta para envio e recebimento de pedidos deve ser inferior a 2 segundos                                  | IMPORTANTE  |
-|RNF-002| O sistema deve garantir segurança dos dados, realizando a criptografia das senhas no processo de autenticação                                                                             | OBRIGATÓRIO |
-|RNF-003| O sistema deve ter alta disponibilidade (mínimo de 99% de uptime)                                                       | DESEJÁVEL   | 
-|RNF-004| O sistema deve registrar logs de operação para auditoria e suporte técnico                                              | IMPORTANTE  | 
+|RNF-002| O sistema deve garantir segurança dos dados, realizando a criptografia das senhas no processo de autenticação           | OBRIGATÓRIO |
+|RNF-004| O sistema deve registrar logs de operação                                                                               | IMPORTANTE  | 
 |RNF-005| O sistema deve ser responsivo e funcionar em smartphones, tablets e desktops                                            | OBRIGATÓRIO | 
 |RNF-006| O código deve ser modular e seguir boas práticas de arquitetura, permitindo atualizações sem afetar o sistema existente | OBRIGATÓRIO | 
 
@@ -117,8 +116,8 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
   - Fechamento da comanda com **divisão simples**.
   - Integração de pagamento **simulada** nesta versão.
 
-- **Relatórios de Vendas (RF-006)**
-  - Relatórios por período com filtros de garçom e canal.
+- **Relatório de Vendas (RF-006)**
+  - Relatório por período.
 
 - **Administração de Usuários (RF-007)**
   - Criar, editar e desativar usuários.
@@ -132,7 +131,7 @@ Definição de como o software é estruturado em termos dos componentes que faze
 
 ## Tecnologias Utilizadas
 
-O FoodTrack é composto por um backend em .NET 8 (APIs REST), um frontend SPA em Vue 3, e um banco relacional MySQL. Integra-se a módulos internos (KDS/cozinha, comanda, pagamentos) e serviços externos (provedor de pagamentos, mensageria). Usuários: atendente, cozinha, caixa, gerente.
+O FoodTrack é composto por um backend em .NET 9 (APIs REST), um frontend em Reactive Native, e um banco relacional MySQL. Integra-se a módulos internos (KDS/cozinha, comanda, pagamentos) e serviços externos (provedor de pagamentos, mensageria). Usuários: atendente, cozinha, caixa, gerente.
 
 ## Hospedagem
 
