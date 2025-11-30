@@ -1,10 +1,15 @@
 # Front-end Móvel
 
-Este documento apresenta a documentação completa da aplicação móvel/web do **FoodTrack**, um sistema ERP voltado para restaurantes. O aplicativo é desenvolvido em **React Native** com **Expo** e suporta execução em **iOS, Android e Web** através da mesma base de código. A solução proporciona uma experiência intuitiva e eficiente para os usuários do sistema (atendentes, cozinha, caixa e gerentes) em múltiplas plataformas.
+**⚠️ IMPORTANTE:** Este documento é a **documentação principal** da aplicação FoodTrack. O código em `src/foodtrack/` é **React Native cross-platform** que executa em iOS, Android e Web. O documento [Frontend Web](frontend-web.md) descreve a mesma aplicação sob a perspectiva de uso em navegadores/desktop.
+
+Este documento apresenta a documentação completa da aplicação móvel/web do **FoodTrack**, um sistema ERP voltado para restaurantes. O aplicativo é desenvolvido em **React Native** com **Expo** e suporta execução em **iOS, Android e Web** através da mesma base de código.
 
 ---
 
 ## 📚 Documentação Relacionada
+
+### Frontend
+- **🖥️ Versão Web:** [Frontend Web](frontend-web.md) - Mesma aplicação na perspectiva desktop/navegador
 
 ### Arquitetura e Backend
 - [Arquitetura de Microserviços](backend/arquitetura-microservicos.md) - Visão completa do sistema
@@ -56,10 +61,12 @@ O FoodTrack utiliza **React Native** com **Expo** e suporta execução multiplat
 
 **Tecnologias Utilizadas:**
 - React Native 0.81.5
-- Expo 54.0.20
-- React Native Web 0.21.0
+- Expo ~54.0.20
+- React Native Web ~0.21.0
+- React 19.1.0
+- React DOM 19.1.0 (para renderização web)
 - TypeScript 5.9.2
-- Expo Router 6.0.13 (navegação file-based)
+- Expo Router ~6.0.13 (navegação file-based)
 
 ### 2.2. Telas Implementadas
 
@@ -373,7 +380,7 @@ Atualizado em: 30/11/2025
 
 | Responsável          | Atividades Realizadas                                                                                      | Status |
 | :------------------- | :--------------------------------------------------------------------------------------------------------- | :----: |
-| Isabela Gomes        | Configuração inicial React Native + Expo (02/11), criação da estrutura frontend, implementação de telas  | ✔️ |
+| Isabela Gomes        | Configuração React Native + Expo + React Native Web (02/11), criação completa da estrutura frontend, implementação de TODAS as 7 telas (Login, Dashboard, Funcionários, Pedidos, KDS, Pagamento, Relatórios), desenvolvimento dos 3 componentes reutilizáveis (pedidoCard, pedidosKdsCard, itemPagamentoCard), implementação dos 5 serviços de integração (funcionariosService, pedidosService, relatoriosService, api.ts, authHelper.ts), configuração authContext, implementação final (27/11), ajustes de documentação (28/11) | ✔️ |
 | Guilherme Lanza      | Revisão de documentação frontend-web.md (02/11) | ✔️ |
 | Maria Eduarda        | Documentação completa da etapa 4 (30/11) | ✔️ |
 | Warley Martins       | Documentação técnica completa da etapa 4 (30/11) | ✔️ |

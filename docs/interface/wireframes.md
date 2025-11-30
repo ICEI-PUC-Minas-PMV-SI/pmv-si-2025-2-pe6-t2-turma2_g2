@@ -12,9 +12,8 @@ Este documento apresenta os wireframes detalhados das telas da aplicação web d
 ## 3. Telas Principais
 
 ### 3.1. Login (T01)
-```
-[Inserir wireframe: img/web/wireframe-login.png]
-```
+
+![Wireframe Login](../img/web/wireframe-login.png)
 
 **Elementos:**
 - Logo centralizada
@@ -26,9 +25,8 @@ Este documento apresenta os wireframes detalhados das telas da aplicação web d
 ---
 
 ### 3.2. Dashboard - Mesas (T02)
-```
-[Inserir wireframe: img/web/wireframe-mesas.png]
-```
+
+![Wireframe Dashboard - Mesas](../img/web/wireframe-mesas.png)
 
 **Elementos:**
 - Header com menu de navegação
@@ -39,9 +37,8 @@ Este documento apresenta os wireframes detalhados das telas da aplicação web d
 ---
 
 ### 3.3. Comanda - Pedido (T03)
-```
-[Inserir wireframe: img/web/wireframe-comanda.png]
-```
+
+![Wireframe Comanda - Pedido](../img/web/wireframe-comanda.png)
 
 **Elementos:**
 - Barra lateral: categorias de produtos
@@ -52,9 +49,8 @@ Este documento apresenta os wireframes detalhados das telas da aplicação web d
 ---
 
 ### 3.4. KDS - Cozinha (T04)
-```
-[Inserir wireframe: img/web/wireframe-kds.png]
-```
+
+![Wireframe KDS - Cozinha](../img/web/wireframe-kds.png)
 
 **Elementos:**
 - Colunas Kanban: Pendentes | Em Preparo | Prontos
@@ -65,9 +61,8 @@ Este documento apresenta os wireframes detalhados das telas da aplicação web d
 ---
 
 ### 3.5. Pagamento (T05)
-```
-[Inserir wireframe: img/web/wireframe-pagamento.png]
-```
+
+![Wireframe Pagamento](../img/web/wireframe-pagamento.png)
 
 **Elementos:**
 - Resumo da comanda
@@ -79,9 +74,8 @@ Este documento apresenta os wireframes detalhados das telas da aplicação web d
 ---
 
 ### 3.6. Relatórios (T06)
-```
-[Inserir wireframe: img/web/wireframe-relatorios.png]
-```
+
+![Wireframe Relatórios](../img/web/wireframe-relatorios.png)
 
 **Elementos:**
 - Filtros no topo
@@ -92,9 +86,8 @@ Este documento apresenta os wireframes detalhados das telas da aplicação web d
 ---
 
 ### 3.7. Usuários (T07)
-```
-[Inserir wireframe: img/web/wireframe-usuarios.png]
-```
+
+![Wireframe Usuários](../img/web/wireframe-usuarios.png)
 
 **Elementos:**
 - Lista de usuários

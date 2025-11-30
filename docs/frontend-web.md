@@ -1,16 +1,18 @@
 # Front-end Web
 
-Este projeto tem como objetivo desenvolver a interface web de um sistema de gerenciamento de comandas para restaurantes, com diferentes perfis de usuário (atendente, cozinha, caixa e gerente).  
-O MVP visa digitalizar o fluxo de atendimento e preparo, desde a abertura da comanda até o fechamento e emissão de relatórios, garantindo controle, agilidade e integração entre as áreas do estabelecimento.
+**⚠️ IMPORTANTE:** Este documento descreve a versão **Web** da aplicação FoodTrack. O mesmo código-base React Native/Expo em `src/foodtrack/` executa tanto em navegadores web quanto em dispositivos móveis. Para detalhes sobre a versão mobile, processos BPMN e testes de integração, consulte [Frontend Mobile](frontend-mobile.md).
+
+Este projeto desenvolve a interface web/desktop de um sistema de gerenciamento de comandas para restaurantes, com diferentes perfis de usuário (atendente, cozinha, caixa e gerente). O MVP digitaliza o fluxo de atendimento e preparo, desde a abertura da comanda até o fechamento e emissão de relatórios.
 
 ---
 
 ## 📚 Documentação Relacionada
 
-- **Design:** [Wireframes Web](interface/wireframes-web.md) - Layout detalhado de todas as 7 telas
+- **📱 Documentação Principal:** [Frontend Mobile](frontend-mobile.md) - Documentação completa com BPMN, processos e testes
+- **Design:** [Wireframes Web](interface/wireframes-web.md) + [Wireframes Mobile](interface/wireframes-mobile.md)
 - **Backend:** [APIs e Web Services](backend-apis.md) - Integração com microserviços
-- **Mobile:** [Frontend Mobile](frontend-mobile.md) - Versão mobile do sistema
-- **Processos:** [Modelagem BPMN](processos/modelagem-bpmn.md) - Fluxos de negócio
+- **Processos:** [Modelagem BPMN](processos/modelagem-bpmn.md) - 10 fluxos de negócio
+- **Testes:** [Testes de Integração](testes/testes-integracao.md) - Backend, Web, Mobile, E2E
 - **Requisitos:** Ver [Contexto](contexto.md#requisitos) - RF e RNF completos
 
 ---
@@ -74,18 +76,19 @@ A aplicação web é dividida em 7 telas principais que atendem aos requisitos f
 
 ### Wireframes
 
-Os wireframes representam a disposição dos elementos principais de cada tela.
+Para wireframes detalhados com layouts, gestos e navegação:
 
-- **T01 - Login:** campos de e-mail e senha, botão "Entrar" e mensagem de erro.  
-- **T02 - Mesas e Comandas:** grade de mesas, botão "Abrir Comanda" e campo de busca.  
-- **T03 - Comanda:** catálogo de produtos, lista de itens, subtotal e botões de envio.  
-- **T04 - Prontos para Entrega:** lista de itens prontos com botão "Marcar como entregue".  
-- **T05 - KDS Cozinha:** cartões de itens com mesa, produto e status, ações de preparo.  
-- **T06 - Pagamento:** resumo de valores, opções de pagamento e botão "Fechar Comanda".  
-- **T07 - Relatórios:** filtros e tabela de resultados com botão "Exportar CSV".  
-- **T08 - Usuários:** lista de usuários e formulário de criação/edição.
+📱 **[Wireframes Mobile](interface/wireframes-mobile.md)** - Versão mobile/tablet (8 telas)
+🖥️ **[Wireframes Web](interface/wireframes-web.md)** - Versão desktop (7 telas)
 
-*(Os wireframes podem ser adicionados como imagens nesta seção.)*
+**Telas Web Implementadas:**
+- **T01 - Login:** Campos usuário e senha, validação JWT
+- **T02 - Dashboard:** Menu com 6 módulos (Funcionários, Pedidos, Pagamento, Comanda, KDS, Relatório)
+- **T03 - Funcionários:** CRUD com modal para criar/editar
+- **T04 - Pedidos:** Gestão de pedidos com edição e cancelamento
+- **T05 - KDS Cozinha:** Fila de pedidos com atualização de status
+- **T06 - Pagamento:** Processamento com 3 formas (Dinheiro, Cartão, PIX)
+- **T07 - Relatórios:** Consulta de vendas por garçom com métricas
 
 ---
 
