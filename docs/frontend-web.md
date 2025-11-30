@@ -75,12 +75,14 @@ A aplicação web é dividida em 7 telas principais que atendem aos requisitos f
 
 **Nota:** A gestão de mesas e comandas planejada (T02 original) está integrada no módulo de Pedidos.
 
+### Prototipagem
+- [Prototipação](interface/prototipo.md) 
+
 ### Wireframes
 
 Para wireframes detalhados com layouts, gestos e navegação:
 
-📱 **[Wireframes Mobile](interface/wireframes-mobile.md)** - Versão mobile/tablet (8 telas)
-🖥️ **[Wireframes Web](interface/wireframes-web.md)** - Versão desktop (7 telas)
+📱 **[Wireframes](interface/wireframes.md)**
 
 **Telas Web Implementadas:**
 - **T01 - Login:** Campos usuário e senha, validação JWT

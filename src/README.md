@@ -29,8 +29,8 @@ Cada documento contém: objetivos, endpoints, instalação, configuração e tes
 ### Frontend
 - [Frontend Mobile](../docs/frontend-mobile.md) - Aplicativo React Native completo
 - [Frontend Web](../docs/frontend-web.md) - Interface web
-- [Wireframes Mobile](../docs/interface/wireframes-mobile.md)
-- [Wireframes Web](../docs/interface/wireframes-web.md)
+- [Wireframes](../docs/interface/wireframes.md)
+- [Prototipação](interface/prototipo.md) 
 
 ### Processos e Testes
 - [Modelagem BPMN](../docs/processos/modelagem-bpmn.md) - 10 processos de negócio
@@ -120,7 +120,8 @@ src/foodtrack/
 ### [0.4.0] - 30/11/2025
 #### Adicionado
 - Documentação completa de microserviços em docs/backend/
-- Wireframes mobile e web
+- Wireframes
+- Prototipação
 - Modelagem BPMN
 - Testes de integração documentados
 - Integração mobile-backend

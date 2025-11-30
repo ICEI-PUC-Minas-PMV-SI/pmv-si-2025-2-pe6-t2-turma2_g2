@@ -412,9 +412,11 @@ Login → Dashboard → [Funcionários | Pedidos | Pagamento | Comanda | KDS | R
 
 ### 4.2. Wireframes das Telas Implementadas
 
-Para visualização completa dos wireframes mobile com layouts detalhados, gestos e navegação, consulte:
+Para visualização completa dos wireframes com layouts detalhados, gestos e navegação, consulte:
 
-📱 **[Wireframes Mobile Completos](interface/wireframes-mobile.md)**
+📱 **[Wireframes Completos](interface/wireframes.md)**
+📱 **[Prototipação](interface/prototipo.md) 
+**
 
 Este documento contém:
 - 8 telas documentadas em wireframe

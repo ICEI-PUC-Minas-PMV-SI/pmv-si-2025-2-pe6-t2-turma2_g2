@@ -61,7 +61,7 @@ O projeto consiste no desenvolvimento de um sistema ERP voltado para restaurante
 
 ### Etapa 4 - Frontend Mobile
 - **Documento principal:** [Frontend Mobile](docs/frontend-mobile.md)
-- **Design:** [Wireframes Mobile](docs/interface/wireframes-mobile.md)
+- **Design:** [Wireframes](docs/interface/wireframes.md)
 - **Processos:** [Modelagem BPMN](docs/processos/modelagem-bpmn.md)
 - **Testes:** [Testes de Integração](docs/testes/testes-integracao.md)
 
@@ -75,8 +75,8 @@ O projeto consiste no desenvolvimento de um sistema ERP voltado para restaurante
 ### Arquitetura e Design
 - [Arquitetura de Microserviços](docs/backend/arquitetura-microservicos.md)
 - [Integração entre Serviços](docs/backend/integracao-servicos.md)
-- [Wireframes Web](docs/interface/wireframes-web.md)
-- [Wireframes Mobile](docs/interface/wireframes-mobile.md)
+- [Wireframes](docs/interface/wireframes.md)
+- [Prototipação](interface/prototipo.md) 
 
 ### Processos de Negócio
 - [Modelagem BPMN Completa](docs/processos/modelagem-bpmn.md) - 10 processos modelados com diagramas
