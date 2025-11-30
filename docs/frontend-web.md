@@ -9,8 +9,8 @@ Este projeto desenvolve a interface web/desktop de um sistema de gerenciamento d
 ## 📚 Documentação Relacionada
 
 - **📱 Documentação Principal:** [Frontend Mobile](frontend-mobile.md) - Documentação completa com BPMN, processos e testes
-- **Design:** [Wireframes](interface/wireframes.md) 
-
+- **Design:** [Wireframes](interface/wireframes.md)
+- **Prototipação:** [Protótipo](interface/prototipo.md)
 - **Backend:** [APIs e Web Services](backend-apis.md) - Integração com microserviços
 - **Processos:** [Modelagem BPMN](processos/modelagem-bpmn.md)
 - **Testes:** [Testes de Integração](testes/testes-integracao.md) - Backend, Web, Mobile, E2E

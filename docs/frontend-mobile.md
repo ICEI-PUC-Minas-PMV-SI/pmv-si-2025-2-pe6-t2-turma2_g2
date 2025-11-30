@@ -14,7 +14,6 @@ Este documento apresenta a documentação completa da aplicação móvel/web do 
 ### Arquitetura e Backend
 - [Arquitetura de Microserviços](backend/arquitetura-microservicos.md) - Visão completa do sistema
 - [APIs e Web Services](backend-apis.md) - Endpoints e integração
-- [Integração entre Serviços](backend/integracao-servicos.md) - Comunicação entre microserviços
 
 ### Design e Interface
 - [Wireframes](interface/wireframes.md) 

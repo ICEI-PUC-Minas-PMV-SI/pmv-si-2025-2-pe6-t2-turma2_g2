@@ -22,9 +22,6 @@ Este documento apresenta a visão geral das APIs REST do **FoodTrack**, um siste
 8. [PainelService](backend/painel-service.md) - Dashboard e métricas em tempo real
 9. [RelatorioService](backend/relatorio-service.md) - Analytics e relatórios gerenciais
 
-### Integração
-- [Integração entre Serviços](backend/integracao-servicos.md) - Comunicação HTTP/REST e padrões
-
 ---
 
 ## Visão Geral do Sistema

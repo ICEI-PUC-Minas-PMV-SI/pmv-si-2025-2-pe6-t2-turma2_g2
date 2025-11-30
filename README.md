@@ -53,11 +53,11 @@ O projeto consiste no desenvolvimento de um sistema ERP voltado para restaurante
   - [NotificacaoService](docs/backend/notificacao-service.md)
   - [PainelService](docs/backend/painel-service.md)
   - [RelatorioService](docs/backend/relatorio-service.md)
-  - [Integração entre Serviços](docs/backend/integracao-servicos.md)
 
 ### Etapa 3 - Frontend Web
 - **Documento principal:** [Frontend Web](docs/frontend-web.md)
-- **Design:** [Wireframes Web](docs/interface/wireframes-web.md)
+- **Design:** [Wireframes](docs/interface/wireframes.md)
+- **Prototipação:** [Protótipo](docs/interface/prototipo.md)
 
 ### Etapa 4 - Frontend Mobile
 - **Documento principal:** [Frontend Mobile](docs/frontend-mobile.md)
@@ -74,9 +74,8 @@ O projeto consiste no desenvolvimento de um sistema ERP voltado para restaurante
 
 ### Arquitetura e Design
 - [Arquitetura de Microserviços](docs/backend/arquitetura-microservicos.md)
-- [Integração entre Serviços](docs/backend/integracao-servicos.md)
 - [Wireframes](docs/interface/wireframes.md)
-- [Prototipação](interface/prototipo.md) 
+- [Prototipação](docs/interface/prototipo.md) 
 
 ### Processos de Negócio
 - [Modelagem BPMN Completa](docs/processos/modelagem-bpmn.md) - 10 processos modelados com diagramas
@@ -101,7 +100,6 @@ Para instruções específicas de instalação, configuração, endpoints e exec
 - **Backend:** Consulte a documentação individual de cada microserviço em [docs/backend/](docs/backend/)
 - **Frontend Mobile:** Ver [docs/frontend-mobile.md](docs/frontend-mobile.md)
 - **Frontend Web:** Ver [docs/frontend-web.md](docs/frontend-web.md)
-- **Integração:** Ver [docs/backend/integracao-servicos.md](docs/backend/integracao-servicos.md)
 
 # Código
 

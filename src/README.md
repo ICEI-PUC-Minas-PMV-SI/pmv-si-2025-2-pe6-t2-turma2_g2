@@ -11,7 +11,6 @@ Este diretório contém o código-fonte completo do **FoodTrack**, incluindo 9 m
 ### Arquitetura e Visão Geral
 - [Voltar ao README Principal](../README.md)
 - [Arquitetura de Microserviços](../docs/backend/arquitetura-microservicos.md) - Visão completa do sistema
-- [Integração entre Serviços](../docs/backend/integracao-servicos.md) - Como os serviços se comunicam
 
 ### Documentação de Cada Microserviço
 Cada documento contém: objetivos, endpoints, instalação, configuração e testes específicos.
@@ -30,7 +29,7 @@ Cada documento contém: objetivos, endpoints, instalação, configuração e tes
 - [Frontend Mobile](../docs/frontend-mobile.md) - Aplicativo React Native completo
 - [Frontend Web](../docs/frontend-web.md) - Interface web
 - [Wireframes](../docs/interface/wireframes.md)
-- [Prototipação](interface/prototipo.md) 
+- [Prototipação](../docs/interface/prototipo.md) 
 
 ### Processos e Testes
 - [Modelagem BPMN](../docs/processos/modelagem-bpmn.md) - 10 processos de negócio
