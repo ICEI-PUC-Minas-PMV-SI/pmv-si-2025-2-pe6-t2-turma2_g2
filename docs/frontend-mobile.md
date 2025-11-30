@@ -754,17 +754,9 @@ Este documento contém:
 - Navegação entre telas: instantânea
 - Renderização de listas (FlatList): fluida com 50+ itens
 
-### 9.3. Testes Pendentes (Futuro)
-
-- [ ] Testes automatizados com Jest e React Native Testing Library
-- [ ] Testes E2E com Detox
-- [ ] Testes de segurança (penetração)
-- [ ] Testes de usabilidade com usuários reais
-- [ ] Testes de acessibilidade (WCAG)
-
 ---
 
-## 11. Referências
+## 10. Referências
 
 - React Native Documentation. Disponível em: https://reactnative.dev/
 - Expo Documentation. Disponível em: https://docs.expo.dev/
@@ -779,22 +771,7 @@ Este documento contém:
 
 ---
 
-## 12. Anexos
-
-### 12.1. Glossário
-
-- **KDS:** Kitchen Display System (Sistema de Display da Cozinha)
-- **ERP:** Enterprise Resource Planning (Planejamento de Recursos Empresariais)
-- **BPMN:** Business Process Model and Notation
-- **JWT:** JSON Web Token
-- **RBAC:** Role-Based Access Control
-- **API:** Application Programming Interface
-- **REST:** Representational State Transfer
-- **Expo:** Plataforma para desenvolvimento React Native
-- **AsyncStorage:** Sistema de armazenamento local assíncrono
-- **FlatList:** Componente React Native para renderização eficiente de listas
-
-### 12.2. Histórico de Versões
+### 11.2. Histórico de Versões
 
 | Responsável          | Atividades Realizadas                                                                                      | Status |
 | :------------------- | :--------------------------------------------------------------------------------------------------------- | :----: |
