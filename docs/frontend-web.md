@@ -463,7 +463,7 @@ Atualizado em: 30/11/2025
 | :------------------- | :--------------------------------------------------------------------------------------------------------- | :----: |
 | Isabela Gomes        | Configuração React Native + Expo + React Native Web (02/11), criação completa da estrutura frontend, implementação de telas (28/11) | ✔️ |
 | Guilherme Lanza      | Revisão de documentação frontend-web.md (02/11) | ✔️ |
-| Maria Eduarda        | Documentação completa da etapa 4, testes end-to-end, criação de wireframes, criação de BPMNs  (30/11) | ✔️ |
+| Maria Eduarda        | 	Documentação completa da etapa 4, testes end-to-end, criação de wireframes web e mobile, criação de BPMNs, criação e atualização prototipagem web e mobile (30/11) | ✔️ |
 | Warley Martins       | Documentação completa da etapa 4, testes end-to-end, criação de wireframes web e mobile, criação de BPMNs, criação e atualização prototipagem web e mobile  (30/11) | ✔️ |
 **Legenda:**
 - ✔️: terminado  
