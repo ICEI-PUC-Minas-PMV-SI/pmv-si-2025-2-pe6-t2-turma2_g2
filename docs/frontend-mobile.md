@@ -17,11 +17,11 @@ Este documento apresenta a documentação completa da aplicação móvel/web do 
 - [Integração entre Serviços](backend/integracao-servicos.md) - Comunicação entre microserviços
 
 ### Design e Interface
-- [Wireframes Mobile](interface/wireframes-mobile.md) - Layout de 8 telas mobile com gestos e navegação
-- [Wireframes Web](interface/wireframes-web.md) - Versão desktop do sistema
+- [Wireframes](interface/wireframes.md) 
+- [Prototipação](interface/prototipo.md) 
 
 ### Processos e Requisitos
-- [Modelagem BPMN](processos/modelagem-bpmn.md) - 10 processos completos com diagramas
+- [Modelagem BPMN](processos/modelagem-bpmn.md) 
 - [Requisitos do Sistema](contexto.md#requisitos) - RF e RNF detalhados
 - [Contexto](contexto.md) - Problema, objetivos, justificativa
 
@@ -795,11 +795,11 @@ Este documento contém:
 
 ### 12.2. Histórico de Versões
 
-| Versão | Data | Autor | Descrição |
-|--------|------|-------|-----------|
-| 1.0 | 30/11/2025 | Isabela Gomes | Documentação completa com funcionalidades reais implementadas |
+| Responsável          | Atividades Realizadas                                                                                      | Status |
+| :------------------- | :--------------------------------------------------------------------------------------------------------- | :----: |
+| Isabela Gomes        | Configuração React Native + Expo + React Native Web (02/11), criação completa da estrutura frontend, implementação de telas (28/11) | ✔️ |
+| Guilherme Lanza      | Revisão de documentação frontend-web.md (02/11) | ✔️ |
+| Maria Eduarda        | Documentação completa da etapa 4, testes end-to-end, criação de wireframes, criação de BPMNs  (30/11) | ✔️ |
+| Warley Martins       | Documentação completa da etapa 4, testes end-to-end, criação de wireframes web e mobile, criação de BPMNs, criação e atualização prototipagem web e mobile  (30/11) | ✔️ |
 
 ---
-
-**Fim do documento**
-

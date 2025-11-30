@@ -9,9 +9,10 @@ Este projeto desenvolve a interface web/desktop de um sistema de gerenciamento d
 ## 📚 Documentação Relacionada
 
 - **📱 Documentação Principal:** [Frontend Mobile](frontend-mobile.md) - Documentação completa com BPMN, processos e testes
-- **Design:** [Wireframes Web](interface/wireframes-web.md) + [Wireframes Mobile](interface/wireframes-mobile.md)
+- **Design:** [Wireframes](interface/wireframes.md) 
+
 - **Backend:** [APIs e Web Services](backend-apis.md) - Integração com microserviços
-- **Processos:** [Modelagem BPMN](processos/modelagem-bpmn.md) - 10 fluxos de negócio
+- **Processos:** [Modelagem BPMN](processos/modelagem-bpmn.md)
 - **Testes:** [Testes de Integração](testes/testes-integracao.md) - Backend, Web, Mobile, E2E
 - **Requisitos:** Ver [Contexto](contexto.md#requisitos) - RF e RNF completos
 
@@ -458,11 +459,10 @@ Atualizado em: 30/11/2025
 
 | Responsável          | Atividades Realizadas                                                                                      | Status |
 | :------------------- | :--------------------------------------------------------------------------------------------------------- | :----: |
-| Isabela Gomes        | Configuração React Native + Expo + React Native Web (02/11), criação completa da estrutura frontend, implementação de TODAS as 7 telas (Login, Dashboard, Funcionários, Pedidos, KDS, Pagamento, Relatórios), desenvolvimento dos 3 componentes reutilizáveis (pedidoCard, pedidosKdsCard, itemPagamentoCard), implementação dos 5 serviços de integração (funcionariosService, pedidosService, relatoriosService, api.ts, authHelper.ts), configuração authContext, implementação final (27/11), ajustes de documentação (28/11) | ✔️ |
+| Isabela Gomes        | Configuração React Native + Expo + React Native Web (02/11), criação completa da estrutura frontend, implementação de telas (28/11) | ✔️ |
 | Guilherme Lanza      | Revisão de documentação frontend-web.md (02/11) | ✔️ |
-| Maria Eduarda        | Documentação completa da etapa 4 (30/11) | ✔️ |
-| Warley Martins       | Documentação técnica completa da etapa 4 (30/11) | ✔️ |
-
+| Maria Eduarda        | Documentação completa da etapa 4, testes end-to-end, criação de wireframes, criação de BPMNs  (30/11) | ✔️ |
+| Warley Martins       | Documentação completa da etapa 4, testes end-to-end, criação de wireframes web e mobile, criação de BPMNs, criação e atualização prototipagem web e mobile  (30/11) | ✔️ |
 **Legenda:**
 - ✔️: terminado  
 - 📝: em execução  
