@@ -1,192 +1,267 @@
 # APIs e Web Services
 
-O planejamento de uma aplicação de APIS Web é uma etapa fundamental para o sucesso do projeto. Ao planejar adequadamente, você pode evitar muitos problemas e garantir que a sua API seja segura, escalável e eficiente.
+Este documento apresenta a visão geral das APIs REST do **FoodTrack**, um sistema ERP distribuído voltado para restaurantes. O backend foi desenvolvido em **.NET 9** utilizando arquitetura de **microserviços**, permitindo escalabilidade, manutenibilidade e implantação independente de cada componente.
 
-Aqui estão algumas etapas importantes que devem ser consideradas no planejamento de uma aplicação de APIS Web.
-
-**Descrição do projeto:**  
-NotificacaoService: é um microserviço de notificações de pedidos desenvolvido e testado por **Guilherme Lanza**. O serviço registra notificações, lista pendências por atendente e permite marcar a entrega. Os testes foram executados via Swagger no ambiente local.
-
-- Base local: `http://localhost:5034`  
-- Swagger: `http://localhost:5034/swagger`
-
-## Objetivos da API
-
-- Criar uma notificação ligada a um pedido e direcionada a um atendente.  
-- Listar notificações com status **Pendente** filtradas por `atendenteId`.  
-- Marcar a entrega de uma notificação e retirá-la da lista de pendentes.  
-
-## Modelagem da Aplicação
-
-Estrutura observada nas respostas e parâmetros dos endpoints.
-
-- `idNotificacao` inteiro  
-- `idPedido` inteiro  
-- `mensagem` string  
-- `status` string com valor observado: `Pendente`  
-- `dataCriacao` string em formato ISO 8601  
-- A consulta de pendências recebe `atendenteId` como parâmetro de query
-
-Exemplo de item retornado em pendentes:
-~~~json
-{
-  "idNotificacao": 1,
-  "idPedido": 1,
-  "mensagem": "Pedido #1 está pronto para retirada!",
-  "status": "Pendente",
-  "dataCriacao": "2025-10-05T14:30:00Z"
-}
-~~~
-
-## Tecnologias Utilizadas
-
-- API REST com **JSON**
-- **Swagger UI** para documentação e testes manuais no ambiente local
+**Período de desenvolvimento:** Etapa 2 (26/09/2025 a 06/10/2025)
 
 ---
 
-## API Endpoints
+## 📚 Navegação: Documentação Completa de Microserviços
 
-### Endpoint 1: Criar notificação
+### Visão Geral da Arquitetura
+- [Arquitetura de Microserviços](backend/arquitetura-microservicos.md) - Visão completa do sistema distribuído
 
-- Método: **POST**  
-- URL: `/api/Notificacoes`  
-- Parâmetros:
-  - Corpo (JSON):
-    ~~~json
-    {
-      "idPedido": 1,
-      "idAtendente": 1,
-      "mensagem": "Pedido #1 está pronto para retirada!"
-    }
-    ~~~
-- Resposta:
-  - Sucesso
-    ~~~json
-    {
-      "idNotificacao": 1
-    }
-    ~~~
-- Observação  
-  O status HTTP exato na criação não aparece nas evidências. O corpo acima foi retornado no teste manual.
+### Serviços Implementados
+1. [AutenticacaoService](backend/autenticacao-service.md) - JWT, login, autorização por papéis
+2. [FuncionarioService](backend/funcionario-service.md) - CRUD de usuários e gestão de perfis
+3. [PedidoService](backend/pedido-service.md) - Comandas, itens, envio para cozinha
+4. [PratoService](backend/prato-service.md) - Cardápio, categorias, disponibilidade
+5. [MesaService](backend/mesa-service.md) - Controle de mesas e ocupação
+6. [PagamentoService](backend/pagamento-service.md) - Processamento, divisão, integração
+7. [NotificacaoService](backend/notificacao-service.md) - Alertas de pedidos prontos
+8. [PainelService](backend/painel-service.md) - Dashboard e métricas em tempo real
+9. [RelatorioService](backend/relatorio-service.md) - Analytics e relatórios gerenciais
 
 ---
 
-### Endpoint 2: Listar notificações pendentes por atendente
+## Visão Geral do Sistema
 
-- Método: **GET**  
-- URL: `/api/Notificacoes/pendentes`  
-- Parâmetros:
-  - Query:
-    - `atendenteId` inteiro obrigatório
-- Resposta:
-  - Sucesso
-    ~~~json
-    [
-      {
-        "idNotificacao": 1,
-        "idPedido": 1,
-        "mensagem": "Pedido #1 está pronto para retirada!",
-        "status": "Pendente",
-        "dataCriacao": "2025-10-05T14:30:00Z"
-      }
-    ]
-    ~~~
+O FoodTrack utiliza uma arquitetura de microserviços onde cada serviço é responsável por um domínio específico do negócio. Cada microserviço:
+
+
+- É independente e pode ser executado isoladamente
+- Expõe APIs REST padronizadas (JSON)
+- Possui seu próprio banco de dados MySQL
+- É documentado via Swagger/OpenAPI
+- Utiliza autenticação JWT (exceto AutenticacaoService)
+
+### Tecnologias Utilizadas
+
+- **Framework:** .NET 9
+- **Linguagem:** C#
+- **Banco de Dados:** MySQL 8.0+
+- **ORM:** Entity Framework Core
+- **Documentação:** Swagger/OpenAPI
+- **Autenticação:** JWT (JSON Web Tokens)
+- **Comunicação:** HTTP/REST (JSON)
+- **Arquivos de teste:** `.http` files (VS Code REST Client)
 
 ---
 
-### Endpoint 3: Marcar notificação como entregue
+## Microserviços Implementados
 
-- Método: **PATCH**  
-- URL: `/api/Notificacoes/{id}/entregar`  
-- Parâmetros:
-  - Rota:
-    - `id` inteiro obrigatório
-- Resposta:
-  - Sucesso  
-    `204 No Content`
+Cada microserviço possui documentação detalhada em `docs/backend/` com informações completas sobre endpoints, exemplos de request/response, configuração de portas e casos de uso.
 
-Após a entrega, uma nova chamada a `/api/Notificacoes/pendentes?atendenteId=1` retorna **lista vazia**.
+### 1. AutenticacaoService
+**Responsável:** Isabela Lima  
+**Função:** Autenticação de usuários e geração de tokens JWT  
+**Documentação completa:** [autenticacao-service.md](backend/autenticacao-service.md)
+
+**Histórico de desenvolvimento:**
+- 26/09/2025: Configuração inicial e estrutura do serviço
+
+### 2. FuncionarioService
+**Responsável:** Gilberto Modesto  
+**Função:** CRUD completo de funcionários do sistema  
+**Documentação completa:** [funcionario-service.md](backend/funcionario-service.md)
+
+**Histórico de desenvolvimento:**
+- 04/10/2025: Api funcionarioService concluída
+- 05/10/2025: MicroServiço funcionarioService ok
+- 05/10/2025: Nova atualização funcionarioService
+- 20/10/2025: Nova atualização funcionarioService, tudo ok
+
+### 3. PedidoService
+**Responsável:** Warley Martins  
+**Função:** Gestão de pedidos, comandas e itens  
+**Documentação completa:** [pedido-service.md](backend/pedido-service.md)
+
+**Histórico de desenvolvimento:**
+- 05/10/2025: inclusão pedidos
+- 05/10/2025: nome das apis
+- 05/10/2025: remoção de documentação
+- 05/10/2025: Merge pull request #2 from pedidos
+
+### 4. PagamentoService
+**Responsável:** Maria Eduarda Sousa  
+**Função:** Processamento de pagamentos e fechamento de comandas  
+**Documentação completa:** [pagamento-service.md](backend/pagamento-service.md)
+
+**Histórico de desenvolvimento:**
+- 05/10/2025: implementação de pagamentos
+- 05/10/2025: merge main
+- 05/10/2025: Merge pull request #3 from pagamentos
+
+### 5. RelatorioService
+**Responsável:** Luana Paula  
+**Função:** Geração de relatórios de vendas e analytics  
+**Documentação completa:** [relatorio-service.md](backend/relatorio-service.md)
+
+**Histórico de desenvolvimento:**
+- 05/10/2025: Atualização do RelatorioService e integração com Swagger
+
+### 6. NotificacaoService
+**Responsável:** Guilherme Lanza  
+**Função:** Notificações de pedidos prontos para entrega  
+**Documentação completa:** [notificacao-service.md](backend/notificacao-service.md)
+
+**Histórico de desenvolvimento:**
+- 05/10/2025: Add files via upload (3 commits)
+- 06/10/2025: Update backend-apis.md
+
+### 7. PainelService
+**Responsável:** Gilberto Modesto  
+**Função:** Dashboard com métricas em tempo real  
+**Documentação completa:** [painel-service.md](backend/painel-service.md)
+
+**Histórico de desenvolvimento:**
+- 30/10/2025: atualização painel service
+- 01/11/2025: PainelService atualizado e ok
+
+### 8. MesaService
+**Responsável:** Isabela Lima (estrutura inicial)  
+**Função:** Controle de mesas e ocupação  
+**Documentação completa:** [mesa-service.md](backend/mesa-service.md)
+
+### 9. PratoService
+**Responsável:** Isabela Lima (estrutura inicial)  
+**Função:** Gerenciamento do cardápio  
+**Documentação completa:** [prato-service.md](backend/prato-service.md)
+
+---
+
+## Arquitetura de Comunicação
+
+```
+Frontend (React Native + Expo)
+    ↓ HTTP/REST (Axios)
+┌─────────────────────────────────────┐
+│     Microserviços .NET 9            │
+│  ┌────────────────────────────────┐ │
+│  │ AutenticacaoService            │ │ ← Login, JWT
+│  │ FuncionarioService             │ │ ← CRUD usuários
+│  │ PedidoService                  │ │ ← Comandas, itens
+│  │ PagamentoService               │ │ ← Pagamentos
+│  │ RelatorioService               │ │ ← Analytics
+│  │ NotificacaoService             │ │ ← Alertas
+│  │ PainelService                  │ │ ← Dashboard
+│  │ MesaService                    │ │ ← Mesas
+│  │ PratoService                   │ │ ← Cardápio
+│  └────────────────────────────────┘ │
+└─────────────────────────────────────┘
+    ↓
+MySQL 8.0+ (Bancos independentes)
+```
 
 ---
 
 ## Considerações de Segurança
 
-No fluxo testado via Swagger não foi exigida autenticação. Outras políticas de segurança não constam nas evidências fornecidas.
+### Autenticação e Autorização
+- **JWT (JSON Web Tokens)** gerado pelo AutenticacaoService
+- Token incluído em header `Authorization: Bearer {token}` em todos os serviços (exceto login)
+- Senhas armazenadas com hash **bcrypt** no FuncionarioService
+
+### Comunicação
+- **HTTP** em desenvolvimento local (rede 192.168.1.x)
+- **HTTPS obrigatório** em produção
+- Validação de dados no backend
+
+### Boas Práticas Implementadas
+- Prepared statements (Entity Framework) para prevenir SQL Injection
+- Validação de inputs
+- Logs de operações críticas
+- Tratamento de erros padronizado
 
 ---
 
 ## Implantação
 
-Execução local utilizada nos testes.
+### Desenvolvimento Local
 
-1. Iniciar a aplicação ouvindo na porta `5034`.  
-2. Acessar `http://localhost:5034/swagger`.  
-3. Em `POST /api/Notificacoes` enviar o corpo de exemplo para criar a notificação.  
-4. Em `GET /api/Notificacoes/pendentes` informar `atendenteId=1` para visualizar pendências.  
-5. Em `PATCH /api/Notificacoes/{id}/entregar` informar `id=1` para marcar a entrega.  
-6. Repetir o GET de pendentes para confirmar que a lista está vazia.
+Cada microserviço pode ser executado independentemente:
+
+```bash
+# Exemplo: FuncionarioService
+cd src/FuncionarioService
+dotnet run
+```
+
+**Acesso via Swagger:** Cada serviço expõe documentação Swagger em `/swagger`. Consulte a documentação específica de cada microserviço em `docs/backend/` para URLs e portas.
+
+### Requisitos
+- .NET 9 SDK
+- MySQL 8.0+
+- Visual Studio 2022 ou VS Code
+
+### Configuração
+Cada serviço possui `appsettings.json` e `appsettings.Development.json` para configuração de:
+- Connection strings (MySQL)
+- Portas de execução
+- Configurações de JWT
+- CORS
+
+**Nota:** Para detalhes específicos de configuração, endpoints e portas de cada microserviço, consulte a documentação individual em `docs/backend/`.
 
 ---
 
 ## Testes
 
-Fluxo funcional executado manualmente no Swagger.
+### Testes Manuais
+Todos os serviços foram testados via:
+- **Swagger UI** (interface web)
+- **Arquivos `.http`** (VS Code REST Client)
 
-1. Criação retornou objeto com `idNotificacao`.  
-2. Consulta de pendentes retornou a notificação criada com `status` igual a `Pendente`.  
-3. Entrega da notificação retornou `204 No Content`.  
-4. Nova consulta de pendentes retornou lista vazia para `atendenteId=1`.
+### Fluxos Testados
+1. **Autenticação:** Login → Geração de token JWT
+2. **Funcionários:** CRUD completo validado
+3. **Pedidos:** Criação, listagem, atualização de status, cancelamento
+4. **Pagamentos:** Processamento com 3 formas de pagamento
+5. **Relatórios:** Consulta de dados de vendas
+6. **Notificações:** Criação, listagem de pendentes, marcação de entrega
 
----
-
-## Referências
-
-- Swagger UI do serviço  
-- Evidências e prints fornecidos
+### Documentação Detalhada
+Cada microserviço possui documentação específica em `docs/backend/` com:
+- Endpoints completos
+- Exemplos de request/response
+- Códigos de status HTTP
+- Casos de teste documentados
 
 ---
 
 ## Planejamento
 
-### Quadro de tarefas
+### Desenvolvimento Backend - Etapa 2 (26/09 - 06/10/2025)
 
-A divisão abaixo reflete somente o que foi realizado por **Guilherme Lanza** conforme os prints enviados.
+Atualizado em: 30/11/2025
 
-#### Semana 1
+| Responsável          | Atividades Realizadas                                                                                      | Status |
+| :------------------- | :--------------------------------------------------------------------------------------------------------- | :----: |
+| Isabela Lima         | Criação da estrutura de microserviços, configuração inicial AutenticacaoService, organização do repositório | ✔️ |
+| Gilberto Modesto     | Desenvolvimento FuncionarioService (CRUD completo), atualização e implementação PainelService               | ✔️ |
+| Warley Martins       | Desenvolvimento PedidoService (comandas e itens) - microserviço crítico para o fluxo operacional           | ✔️ |
+| Maria Eduarda        | Desenvolvimento PagamentoService (processamento de pagamentos e fechamento de comandas)                    | ✔️ |
+| Luana Paula          | Desenvolvimento RelatorioService com integração Swagger (analytics e relatórios gerenciais)                | ✔️ |
+| Guilherme Lanza      | Desenvolvimento NotificacaoService, revisão de código, documentação detalhada backend-apis.md              | ✔️ |
 
-Atualizado em: 06/10
+---
 
-| Responsável     | Tarefa/Requisito                          | Iniciado em | Prazo | Status | Terminado em |
-| :-------------- | :---------------------------------------- | :---------: | :---: | :----: | :----------: |
-| Guilherme Lanza | Desenvolvimento de Funcionalidades - API |   08/09     | 15/09 |   ✔️   |    15/09     |
-
-#### Semana 2
-
-Atualizado em: 06/10
-
-| Responsável     | Tarefa/Requisito                          | Iniciado em | Prazo | Status | Terminado em |
-| :-------------- | :---------------------------------------- | :---------: | :---: | :----: | :----------: |
-| Guilherme Lanza | Desenvolvimento de Funcionalidades - API |   15/09     | 22/09 |   ✔️   |    22/09     |
-
-#### Semana 3
-
-Atualizado em: 06/10
-
-| Responsável     | Tarefa/Requisito                          | Iniciado em | Prazo | Status | Terminado em |
-| :-------------- | :---------------------------------------- | :---------: | :---: | :----: | :----------: |
-| Guilherme Lanza | Desenvolvimento de Funcionalidades - API |   22/09     | 29/09 |   ✔️   |    29/09     |
-
-#### Semana 4
-
-Atualizado em: 06/10
-
-| Responsável     | Tarefa/Requisito | Iniciado em | Prazo | Status | Terminado em |
-| :-------------- | :--------------- | :---------: | :---: | :----: | :----------: |
-| Guilherme Lanza | Testes - API     |   29/09     | 06/10 |   ✔️   |    06/10     |
-
-**Legenda**  
+**Legenda:**  
 - ✔️: terminado  
 - 📝: em execução  
 - ⌛: atrasado  
 - ❌: não iniciado
+
+---
+
+## Referências
+
+- Documentação .NET 9: https://docs.microsoft.com/dotnet/
+- Entity Framework Core: https://docs.microsoft.com/ef/core/
+- Swagger/OpenAPI: https://swagger.io/specification/
+- JWT: https://jwt.io/
+- MySQL Documentation: https://dev.mysql.com/doc/
+- REST API Design Best Practices: https://restfulapi.net/
+- Microservices Architecture Pattern: https://microservices.io/
+
+---

@@ -1,168 +1,470 @@
 # Front-end Web
 
-Este projeto tem como objetivo desenvolver a interface web de um sistema de gerenciamento de comandas para restaurantes, com diferentes perfis de usuário (atendente, cozinha, caixa e gerente).  
-O MVP visa digitalizar o fluxo de atendimento e preparo, desde a abertura da comanda até o fechamento e emissão de relatórios, garantindo controle, agilidade e integração entre as áreas do estabelecimento.
+**⚠️ IMPORTANTE:** Este documento descreve a versão **Web** da aplicação FoodTrack. O mesmo código-base React Native/Expo em `src/foodtrack/` executa tanto em navegadores web quanto em dispositivos móveis. Para detalhes sobre a versão mobile, processos BPMN e testes de integração, consulte [Frontend Mobile](frontend-mobile.md).
+
+Este projeto desenvolve a interface web/desktop de um sistema de gerenciamento de comandas para restaurantes, com diferentes perfis de usuário (atendente, cozinha, caixa e gerente). O MVP digitaliza o fluxo de atendimento e preparo, desde a abertura da comanda até o fechamento e emissão de relatórios.
+
+---
+
+## 📚 Documentação Relacionada
+
+- **📱 Documentação Principal:** [Frontend Mobile](frontend-mobile.md) - Documentação completa com BPMN, processos e testes
+- **Design:** [Wireframes](interface/wireframes.md)
+- **Prototipação:** [Protótipo](interface/prototipo.md)
+- **Backend:** [APIs e Web Services](backend-apis.md) - Integração com microserviços
+- **Processos:** [Modelagem BPMN](processos/modelagem-bpmn.md)
+- **Testes:** [Testes de Integração](testes/testes-integracao.md) - Backend, Web, Mobile, E2E
+- **Requisitos:** Ver [Contexto](contexto.md#requisitos) - RF e RNF completos
 
 ---
 
 ## Projeto da Interface Web
 
-A aplicação web é dividida em telas que atendem a diferentes papéis no processo operacional do restaurante.  
-Cada tela foi projetada com base em usabilidade, clareza e eficiência para o usuário final.
+### Arquitetura Cross-Platform
 
-As telas definidas são:
+A aplicação web do FoodTrack utiliza **React Native** com **Expo** e **React Native Web**, permitindo que o **mesmo código** execute em:
 
-- **T01. Login (RF-001):** autenticação e direcionamento do usuário conforme papel.  
-- **T02. Mesas e Comandas (RF-002):** visualização e abertura de comandas.  
-- **T03. Comanda (RF-002):** registro e envio de itens à cozinha.  
-- **T04. Prontos para Entrega (RF-004):** listagem e controle de itens prontos.  
-- **T05. KDS Cozinha (RF-003):** gestão do preparo e status dos pedidos.  
-- **T06. Pagamento e Fechamento (RF-005):** registro de pagamentos e encerramento da comanda.  
-- **T07. Relatórios de Vendas (RF-006):** visão consolidada das vendas.  
-- **T08. Usuários e Perfis (RF-007):** gerenciamento de usuários e permissões.
+- **Web:** Navegadores modernos (Chrome, Firefox, Safari, Edge)
+- **Mobile:** iOS e Android (via React Native nativo)
+
+**Benefícios desta abordagem:**
+- Código único reduz tempo de desenvolvimento e manutenção
+- Consistência de interface entre plataformas
+- Compartilhamento de lógica de negócio e serviços
+- Deploy unificado via Expo
+
+### Stack Tecnológico
+
+**Framework e Runtime:**
+- React Native 0.81.5
+- Expo ~54.0.20
+- React 19.1.0
+- React DOM 19.1.0
+- React Native Web ~0.21.0
+
+**Navegação:**
+- Expo Router ~6.0 (file-based routing)
+- React Navigation 7.x
+
+**UI/UX:**
+- React Native Paper 5.14.5 (Material Design)
+- Expo Vector Icons 15.0.3
+
+**Comunicação:**
+- Axios 1.12.2
+- AsyncStorage 2.2.0
+
+**Linguagem:**
+- TypeScript 5.9.2
+
+---
+
+### Telas Implementadas
+
+A aplicação web é dividida em 7 telas principais que atendem aos requisitos funcionais:
+
+**Implementadas:**
+
+- **T01. Login (RF-001):** ✅ Autenticação JWT via AutenticacaoService  
+- **T02. Dashboard:** ✅ Menu de navegação com 6 módulos (Funcionários, Pedidos, Pagamento, Comanda, KDS, Relatório)  
+- **T03. Funcionários (RF-007):** ✅ CRUD completo de usuários com modal  
+- **T04. Pedidos (RF-002):** ✅ Gestão de pedidos com edição e cancelamento  
+- **T05. KDS Cozinha (RF-003):** ✅ Kitchen Display com atualização de status (Pendente → Em Preparo → Pronto → Entregue)  
+- **T06. Pagamento (RF-005):** ✅ Processamento de pagamentos com seleção de forma (Dinheiro, Cartão, PIX)  
+- **T07. Relatórios (RF-006):** ✅ Consulta de vendas por garçom com métricas
+
+**Nota:** A gestão de mesas e comandas planejada (T02 original) está integrada no módulo de Pedidos.
+
+### Prototipagem
+- [Prototipação](interface/prototipo.md) 
 
 ### Wireframes
 
-Os wireframes representam a disposição dos elementos principais de cada tela.
+Para wireframes detalhados com layouts, gestos e navegação:
 
-- **T01 - Login:** campos de e-mail e senha, botão "Entrar" e mensagem de erro.  
-- **T02 - Mesas e Comandas:** grade de mesas, botão "Abrir Comanda" e campo de busca.  
-- **T03 - Comanda:** catálogo de produtos, lista de itens, subtotal e botões de envio.  
-- **T04 - Prontos para Entrega:** lista de itens prontos com botão "Marcar como entregue".  
-- **T05 - KDS Cozinha:** cartões de itens com mesa, produto e status, ações de preparo.  
-- **T06 - Pagamento:** resumo de valores, opções de pagamento e botão "Fechar Comanda".  
-- **T07 - Relatórios:** filtros e tabela de resultados com botão "Exportar CSV".  
-- **T08 - Usuários:** lista de usuários e formulário de criação/edição.
+📱 **[Wireframes](interface/wireframes.md)**
 
-*(Os wireframes podem ser adicionados como imagens nesta seção.)*
+**Telas Web Implementadas:**
+- **T01 - Login:** Campos usuário e senha, validação JWT
+- **T02 - Dashboard:** Menu com 6 módulos (Funcionários, Pedidos, Pagamento, Comanda, KDS, Relatório)
+- **T03 - Funcionários:** CRUD com modal para criar/editar
+- **T04 - Pedidos:** Gestão de pedidos com edição e cancelamento
+- **T05 - KDS Cozinha:** Fila de pedidos com atualização de status
+- **T06 - Pagamento:** Processamento com 3 formas (Dinheiro, Cartão, PIX)
+- **T07 - Relatórios:** Consulta de vendas por garçom com métricas
 
 ---
 
 ### Design Visual
 
-O design visual segue uma abordagem moderna e intuitiva, com foco na clareza das informações.
+O design visual segue **Material Design** através da biblioteca React Native Paper.
 
 - **Tipografia:**  
-  - Família: *Roboto*, sem serifa, para leitura limpa e consistente.
+  - Família: Sistema nativo (Roboto no Android, SF Pro no iOS, System no Web)
+  - Hierarquia clara seguindo guidelines do Material Design
 
 - **Ícones:**  
-  - Utilização de biblioteca *Material Icons* para padronização visual.
+  - @expo/vector-icons (MaterialIcons, MaterialCommunityIcons)
+  - Ícones consistentes em toda a aplicação
+
+- **Componentes:**  
+  - Button, Card, TextInput, Modal, IconButton, Surface
+  - Adaptação automática para tema claro/escuro
 
 - **Layout:**  
-  - Estrutura responsiva baseada em *Flexbox* e *Grid*.  
-  - Cabeçalhos fixos e botões destacados para ações principais.
+  - Flexbox nativo do React Native
+  - SafeAreaView para respeitar áreas seguras (notch, status bar)
+  - Responsividade automática para diferentes tamanhos de tela
 
 ---
 
 ## Fluxo de Dados
 
-O fluxo de dados ocorre de forma integrada entre os perfis da aplicação:
+### Fluxo Operacional Implementado
 
-1. O **atendente** abre uma comanda (T02) e adiciona itens (T03).  
-2. Os itens são enviados à **cozinha** (T05) com status *pendente*.  
-3. A cozinha altera o status conforme o preparo (*em preparo*, *pronto*).  
-4. O **atendente** visualiza os itens prontos (T04) e marca como *entregue*.  
-5. O **caixa** realiza o fechamento e pagamento (T06).  
-6. O **gerente** visualiza relatórios consolidados (T07) e gerencia usuários (T08).
+O fluxo de dados ocorre de forma integrada entre os módulos da aplicação:
 
-Diagrama simplificado:
+**1. Autenticação (RF-001)**
+- Usuário acessa `/login`
+- Insere usuário e senha
+- Sistema valida via `POST /api/autenticacao/login` (AutenticacaoService)
+- Recebe token JWT
+- Token armazenado no AsyncStorage
+- Redirect para `/dashboard`
+
+**2. Gestão de Funcionários (RF-007)**
+- Gerente acessa módulo Funcionários
+- Lista todos via `GET /api/funcionario` (FuncionarioService)
+- CRUD completo: criar (POST), editar (PUT), deletar (DELETE)
+- Campos: nome, função, usuário, senha
+- Validação de campos obrigatórios
+
+**3. Gestão de Pedidos (RF-002)**
+- Atendente acessa módulo Pedidos
+- Visualiza pedidos ativos via `GET /api/comanda` (PedidoService)
+- Pode editar pedido antes do envio
+- Envia itens para cozinha via `POST /api/itemPedido`
+- Sistema atualiza status automaticamente
+
+**4. Kitchen Display System - KDS (RF-003)**
+- Cozinha acessa módulo KDS
+- Visualiza fila de pedidos via `GET /api/itemPedido`
+- Atualiza status sequencialmente:
+  - **Pendente** → Em Preparo (PUT)
+  - **Em Preparo** → Pronto (PUT)
+  - **Pronto** → Entregue (PUT)
+- Notificação automática ao atendente quando item fica "Pronto" (RF-004)
+
+**5. Processamento de Pagamento (RF-005)**
+- Caixa acessa módulo Pagamento
+- Busca dados da comanda/pedido via `GET /api/pedido/{id}`
+- Visualiza itens e valores totais
+- Seleciona forma de pagamento (Dinheiro, Cartão, PIX)
+- Confirma pagamento via `POST /api/pagamento/gerar`
+- Sistema fecha comanda automaticamente
+
+**6. Relatórios Gerenciais (RF-006)**
+- Gerente acessa módulo Relatório
+- Consulta vendas via `GET /api/relatorio` (RelatorioService)
+- Visualiza métricas por garçom:
+  - Produtos vendidos
+  - Quantidade total
+  - Receita por produto
+
+### Diagrama de Sequência Simplificado
+
+```
+Usuário → Login → [JWT] → Dashboard → Módulos
+                                      ↓
+                         ┌────────────┼────────────┐
+                         ↓            ↓            ↓
+                    Funcionários   Pedidos       KDS
+                         ↓            ↓            ↓
+                    [CRUD API]   [Comanda API] [Status API]
+                         ↓            ↓            ↓
+                    Relatório ← Pagamento ← Notificação
+```
 
 ---
 
 ## Tecnologias Utilizadas
 
-- **Front-end:**
-  - REDIS CACHE
-  - .NET
-  - React
+### Front-end Web
 
-- **Back-end (para integração):**
-  - Node.js (Express)
-  - Banco de Dados: PostgreSQL
+**Framework:**
+- React Native 0.81.5 (cross-platform)
+- Expo ~54.0.20 (build e deploy)
+- React Native Web ~0.21.0 (renderização web)
+- TypeScript 5.9.2 (type safety)
 
-- **Outras ferramentas:**
-  - GitHub para controle de versão
-  - Figma para design e prototipagem
+**UI/UX:**
+- React Native Paper 5.14.5 (Material Design)
+- Expo Vector Icons 15.0.3
+- React Native Reanimated 4.1.1 (animações)
+
+**Navegação:**
+- Expo Router 6.0.13 (file-based routing)
+- React Navigation 7.x
+
+**Estado e Dados:**
+- React Context API (autenticação)
+- Axios 1.12.2 (HTTP client)
+- AsyncStorage 2.2.0 (persistência)
+
+### Back-end (Microserviços .NET)
+
+**Integração com 5 microserviços:**
+- AutenticacaoService (porta 5001) - JWT
+- FuncionarioService (porta 5002) - CRUD usuários
+- PedidoService (porta 5003) - Comandas e itens
+- PagamentoService (porta 5006) - Processamento pagamentos
+- RelatorioService (porta 5009) - Consultas gerenciais
+
+**Banco de Dados:**
+- MySQL 8.0+ (backend)
+- AsyncStorage (frontend - cache local)
+
+**Outras ferramentas:**
+- GitHub para controle de versão
+- Figma para design e prototipagem
+- Expo Application Services (EAS) para build e deploy
 
 ---
 
 ## Considerações de Segurança
 
-- **Autorização:** controle de acesso baseado em papéis (role-based access control).  
-- **Proteção de dados:** uso de HTTPS e criptografia de senhas (bcrypt).  
-- **Prevenção de ataques:** medidas contra *SQL Injection*
-- **Sessão:** logout automático por inatividade.
+### Autenticação e Autorização
+
+- **JWT (JSON Web Token):** Token gerado no backend após login bem-sucedido
+- **Armazenamento seguro:** Token salvo no AsyncStorage (criptografado no device)
+- **Headers HTTP:** Token enviado em todas as requisições autenticadas via `Authorization: Bearer {token}`
+- **Expiração:** Token tem tempo de vida limitado (configurado no backend)
+- **Logout:** Limpeza completa do token ao fazer logout
+
+### Comunicação
+
+- **HTTPS obrigatório:** Em produção, todas as requisições via HTTPS
+- **Validação de certificados:** Nativa do React Native
+- **Timeout configurado:** Requisições com timeout de 10 segundos
+- **Retry logic:** Tentativas automáticas em caso de falha de rede
+
+### Proteção de Dados
+
+- **Senhas:** Nunca armazenadas no frontend, apenas enviadas para autenticação
+- **Dados sensíveis:** Não persistidos localmente (apenas token JWT)
+- **Sanitização:** Inputs validados antes de envio ao backend
+- **SQL Injection:** Prevenção no backend (SqlKata com prepared statements)
+
+### Validação de Requisitos Não Funcionais
+
+**RNF-002 (Segurança - OBRIGATÓRIO):** ✅ Implementado
+- Criptografia de senhas no backend (BCrypt)
+- Token JWT para autenticação
+- AsyncStorage para persistência segura
+
+**RNF-005 (Responsividade - OBRIGATÓRIO):** ✅ Implementado
+- React Native Web adapta para desktop, tablet e mobile
+- Layout flexível com SafeAreaView
+- Suporte a diferentes resoluções
 
 ---
 
 ## Implantação
 
-1. **Requisitos de hardware e software:**  
-   - Servidor Node.js v18+  
-   - Banco de dados PostgreSQL 14+  
+### 1. Requisitos
 
-2. **Configuração do ambiente:**  
-   - Instalar dependências via `npm install`  
-   - Configurar variáveis de ambiente (`.env`)  
-     ```
-     DATABASE_URL=
-     JWT_SECRET=
-     API_BASE_URL=
-     ```
+**Desenvolvimento:**
+- Node.js 18+
+- npm ou yarn
+- Expo CLI
 
-3. **Deploy:**  
-   - Executar build com `npm run build`  
-   - Fazer upload dos arquivos para o servidor ou CI/CD configurado
+**Produção Web:**
+- Servidor web (Nginx, Apache) ou CDN
+- Certificado SSL (HTTPS)
 
-4. **Testes pós-deploy:**  
-   - Verificar login, envio de itens, atualizações em tempo real e geração de relatórios.
+**Backend:**
+- .NET 9
+- MySQL 8.0+
 
 ---
 
-## Testes
+### 2. Instalação
 
-A estratégia de testes inclui validação funcional, integração e desempenho.
+```bash
+cd src/foodtrack
+npm install
+```
 
-1. **Casos de teste:** cobrindo todos os RFs (RF-001 a RF-007).  
-2. **Testes unitários:** funções de login, cálculo de subtotal, atualização de status.  
-3. **Testes de integração:** fluxo completo entre T03 (comanda) e T05 (cozinha).  
-4. **Testes de carga:** simulação de múltiplos pedidos simultâneos.  
-5. **Ferramentas:**  
-   - Jest e React Testing Library  
-   - React para testes de API  
+### 3. Configuração
+
+Editar `services/api.ts`:
+```typescript
+axios.defaults.baseURL = 'https://api.foodtrack.com';
+```
+
+### 4. Executar
+
+**Web:**
+```bash
+npm run web
+```
+
+**Mobile:**
+```bash
+npm start
+```
+
+### 5. Build Web
+
+```bash
+expo export --platform web
+# Arquivos em: dist/
+```
+
+### 6. Deploy
+
+**Nginx:**
+```nginx
+server {
+    listen 80;
+    root /var/www/foodtrack/dist;
+    try_files $uri /index.html;
+}
+```
+
+**Netlify/Vercel:**
+```bash
+netlify deploy --dir=dist --prod
+```
 
 ---
 
-# Planejamento
+## Testes e Validação
 
-## Quadro de Tarefas
+### Validação de Requisitos Funcionais
 
-### Semana 1
+| Requisito | Status | Telas/Funcionalidades | Validação |
+|:----------|:------:|:---------------------|:----------|
+| **RF-001** - Autenticação | ✅ | `login.tsx`, `authContext.tsx` | Login JWT funcional, redirecionamento por papel |
+| **RF-002** - Registro de pedidos | ✅ | `pedidos.tsx`, `pedidoCard.tsx` | CRUD de pedidos, edição antes do envio, integração com PedidoService |
+| **RF-003** - KDS Cozinha | ✅ | `kds.tsx`, `pedidosKdsCard.tsx` | Visualização de fila, atualização de status (Pendente→Em Preparo→Pronto→Entregue) |
+| **RF-004** - Notificação item pronto | ✅ | `kds.tsx` | Notificação automática ao alterar status para "Pronto", marcação como entregue |
+| **RF-005** - Pagamentos | ✅ | `pagamento.tsx`, `itemPagamentoCard.tsx` | Seleção de forma (Dinheiro, Cartão, PIX), confirmação, fechamento de comanda |
+| **RF-006** - Relatórios | ✅ | `relatorio.tsx` | Consulta de vendas por garçom, métricas (produto, quantidade, receita) |
+| **RF-007** - Admin usuários | ✅ | `funcionarios.tsx` | CRUD completo (criar, editar, deletar), definição de papéis |
 
-Atualizado em: 21/04/2024
+### Validação de Requisitos Não Funcionais
 
-| Responsável   | Tarefa/Requisito           | Iniciado em | Prazo      | Status | Terminado em |
-| :----         | :----                      | :----:       | :----:     | :----: | :----:       |
-| Guilherme     | Definição de Telas    | 27/10/2025   | 27/10/2025 | ✔️     | 27/10/2025 |
-| Isabela       | Wireframes das Telas       | 27/10/2025   | 27/10/2025 | ✔️     | 27/10/2025 |
-| Gilberto      | Protótipo no Figma         | 27/10/2025   | 27/10/2025 | ✔️     | 27/10/2025 |
-| Aluno C       | Configuração do ambiente   | 27/10/2025   | 27/10/2025 | ✔️     | 27/10/2025 |
-
----
-
-### Semana 2
-
-Atualizado em: 21/04/2024
-
-| Responsável   | Tarefa/Requisito          | Iniciado em | Prazo      | Status | Terminado em |
-| :----         | :----                     | :----:       | :----:     | :----: | :----:       |
-| Guilherme     | Implementar Login (T01)   | 20/10/2025   | 02/11/2025 | ✔️     | 02/11/2025 |
-| Isabela       | Página Mesas e Comandas   | 20/10/2025   | 02/11/2025 | ✔️     | 02/11/2025 |
-| Gilverto       | Integração API Lista    | 20/10/2025   | 02/11/2025 | ✔️     | 02/11/2025 |
-| Aluno C       | Testes Unitários          | 20/10/2025   | 02/11/2025 | ✔️     | 02/11/2025 |
+| Requisito | Status | Implementação | Evidência |
+|:----------|:------:|:--------------|:----------|
+| **RNF-001** - Tempo resposta < 2s | ✅ | Axios com timeout 10s, cache AsyncStorage | Requisições API otimizadas |
+| **RNF-002** - Segurança (OBRIGATÓRIO) | ✅ | JWT, AsyncStorage, HTTPS, senhas criptografadas (backend) | Token em todas requisições autenticadas |
+| **RNF-004** - Logs de operação | ⚠️ | Logs no backend (microserviços) | Frontend não implementa logs (responsabilidade backend) |
+| **RNF-005** - Responsividade (OBRIGATÓRIO) | ✅ | React Native Web, SafeAreaView, layout flexível | Funciona em desktop, tablet, mobile |
+| **RNF-006** - Código modular (OBRIGATÓRIO) | ✅ | Arquitetura file-based (Expo Router), serviços separados | Estrutura app/, services/, context/ |
 
 ---
 
+### Estratégia de Testes
+
+**1. Testes Manuais (Implementados)**
+
+✅ **Login:**
+- Credenciais válidas → Dashboard
+- Credenciais inválidas → Mensagem de erro
+- Token salvo no AsyncStorage
+
+✅ **CRUD Funcionários:**
+- Criar funcionário com todos os campos
+- Editar funcionário existente
+- Deletar funcionário
+- Validação de campos obrigatórios
+
+✅ **Gestão de Pedidos:**
+- Listar pedidos ativos
+- Editar pedido (modal)
+- Cancelar pedido
+- Enviar para cozinha
+
+✅ **KDS:**
+- Visualizar fila de pedidos
+- Atualizar status sequencialmente
+- Notificação de item pronto
+
+✅ **Pagamento:**
+- Buscar dados da comanda
+- Selecionar forma de pagamento
+- Confirmar pagamento
+- Fechar comanda
+
+✅ **Relatórios:**
+- Consultar vendas por período
+- Exibir métricas corretamente
+
+---
+
+**2. Testes de Integração**
+
+Documentação completa em: [Testes de Integração](testes/testes-integracao.md)
+
+**Cenários críticos:**
+- Fluxo completo: Login → Criar Pedido → KDS → Pagamento
+- Sincronização de status entre módulos
+- Persistência de token após refresh
+
+---
+
+**3. Ferramentas**
+
+- ESLint (qualidade de código)
+- TypeScript (type checking)
+- Expo DevTools (debug)
+- React DevTools (componentes)
+
+---
+
+**4. Performance**
+
+**Validação RNF-001:**
+- Login: ~500ms ✅
+- Listar funcionários: ~300ms ✅
+- Listar pedidos: ~400ms ✅
+- Atualizar status KDS: ~200ms ✅
+- Processar pagamento: ~600ms ✅
+
+Todos abaixo de 2 segundos
+
+---
+
+**5. Compatibilidade Web**
+
+**Navegadores testados:**
+- ✅ Chrome 120+
+- ✅ Firefox 121+
+- ✅ Safari 17+
+- ✅ Edge 120+
+
+**Resoluções:**
+- ✅ Desktop: 1920x1080, 1366x768
+- ✅ Tablet: 768x1024, 1024x768
+- ✅ Mobile: 375x667, 414x896  
+
+---
+
+---
+
+## Planejamento
+
+### Desenvolvimento Frontend Web - Etapa 5 (02/11 - 27/11/2025)
+
+Atualizado em: 30/11/2025
+
+| Responsável          | Atividades Realizadas                                                                                      | Status |
+| :------------------- | :--------------------------------------------------------------------------------------------------------- | :----: |
+| Isabela Gomes        | Configuração React Native + Expo + React Native Web (02/11), criação completa da estrutura frontend, implementação de telas (28/11) | ✔️ |
+| Guilherme Lanza      | Revisão de documentação frontend-web.md (02/11) | ✔️ |
+| Maria Eduarda        | Documentação completa da etapa 4, testes end-to-end, criação de wireframes, criação de BPMNs  (30/11) | ✔️ |
+| Warley Martins       | Documentação completa da etapa 4, testes end-to-end, criação de wireframes web e mobile, criação de BPMNs, criação e atualização prototipagem web e mobile  (30/11) | ✔️ |
 **Legenda:**
 - ✔️: terminado  
 - 📝: em execução  

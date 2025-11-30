@@ -2,6 +2,18 @@
 
  Com o avanço da tecnologia e a busca constante por praticidade, o setor de alimentação tem investido em soluções digitais para otimizar operações e fidelizar clientes. Imagine a cena: o cliente chega ao restaurante, faz o pedido com o garçom e essa informação precisa ser repassada à cozinha de forma rápida e precisa. Se houver falhas nessa comunicação, o prato pode atrasar, vir errado ou não ser registrado corretamente no caixa. Situações como essa evidenciam que a agilidade no atendimento, o controle eficiente dos processos e a integração entre salão, cozinha e caixa se tornaram fatores decisivos para a competitividade dos restaurantes. Nesse contexto, a adoção de sistemas de gestão integrados (ERP) surge como uma estratégia essencial. O aplicativo/site proposto centraliza todas as etapas do atendimento em uma única plataforma — da abertura da comanda ao pagamento — oferecendo maior eficiência, redução de falhas, insights gerenciais e uma experiência mais satisfatória para o cliente.
 
+---
+
+## 📚 Documentação Relacionada
+
+- **Backend:** [APIs e Web Services](backend-apis.md) - Arquitetura de microserviços
+- **Frontend Web:** [Aplicação Web](frontend-web.md) - Interface para desktop
+- **Frontend Mobile:** [Aplicação Mobile](frontend-mobile.md) - App React Native
+- **Processos:** [Modelagem BPMN](processos/modelagem-bpmn.md) - 10 processos documentados
+- **Apresentação:** [Resultados da Solução](../presentation/README.md)
+
+---
+
 ## Problema
  Muitos restaurantes ainda enfrentam dificuldades operacionais por utilizarem processos manuais ou sistemas não integrados. Entre os principais problemas estão:
   * Falta de integração entre salão, cozinha e caixa, resultando em atrasos nos pedidos.
@@ -127,7 +139,7 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 
 Definição de como o software é estruturado em termos dos componentes que fazem parte da solução e do ambiente de hospedagem da aplicação.
 
-![Arquitetura](img/Diagrama-Arquitetura2.png)
+![Arquitetura](img/arquitetura/Diagrama-Arquitetura2.png)
 
 ## Tecnologias Utilizadas
 
@@ -137,42 +149,32 @@ O FoodTrack é composto por um backend em .NET 9 (APIs REST), um frontend em Rea
 
 O ERP será hospedado na Amazon Web Services (AWS), utilizando serviços gerenciados para garantir escalabilidade, disponibilidade e segurança.
 
+---
+
 # Planejamento
 
-##  Quadro de tarefas
+O planejamento detalhado do projeto está distribuído nos documentos específicos de cada etapa:
 
-> Apresente a divisão de tarefas entre os membros do grupo e o acompanhamento da execução, conforme o exemplo abaixo.
+- **Etapa 2 - Backend:** Ver [backend-apis.md - Planejamento](backend-apis.md#planejamento)
+- **Etapa 3 - Frontend Web:** Ver [frontend-web.md - Planejamento](frontend-web.md#planejamento)
+- **Etapa 4 - Frontend Mobile:** Ver [frontend-mobile.md - Planejamento](frontend-mobile.md#102-planejamento---desenvolvimento-mobile)
 
-### Semana 1
+## Contribuições Gerais da Equipe
 
-Atualizado em: 24/08/2025
+| Responsável       | Atividades Realizadas | Status |
+| :----             | :----                 | :----: |
+| Gilberto Modesto  | Documentação inicial, prototipagem, FuncionarioService, PainelService | ✔️ |
+| Guilherme Lanza   | Documentação inicial, definição de processos, revisão de código backend, documentação backend-apis.md, revisão documentação frontend-web.md | ✔️ |
+| Isabela Gomes     | Definição de tecnologias, revisão e organização da documentação no GitHub, criação estrutura de microserviços, configuração React Native + Expo, implementação COMPLETA do frontend (7 telas + 3 componentes + 5 serviços + authContext), ajustes finais de documentação | ✔️ |
+| Luana Paula       | Documentação inicial, prototipagem, RelatorioService | ✔️ |
+| Maria Eduarda     | Documentação inicial, definição de processos, PagamentoService, documentação completa da etapa 4 | ✔️ |
+| Victor Antoniel   | Documentação inicial, definição das APIs e arquitetura da solução | ✔️ |
+| Warley Junio      | Documentação inicial, definição das APIs e arquitetura, PedidoService (microserviço crítico), documentação técnica completa da etapa 4 | ✔️ |
 
-| Responsável       | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
-| :----             |    :----         |      :----:    | :----:     | :----: | :----:          |
-| Gilberto Modesto  | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
-| Guilherme Lanza   | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
-| Isabela Gomes     | Definição das linguagens e tecnologias utilizadas, preenchimento e revisão da documentação do projeto, commits e atualização da documentação no GitHub | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
-| Luana Paula       | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
-| Maria Eduarda     | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
-| Victor Antoniel   | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
-| Warley Junio      | Preenchimento da documentação inicial | 18/08/2025  | 31/08/2025 | ✔️ | 24/08/2025 |
-
-#### Semana 2
-
-Atualizado em: 29/08/2025
-
-| Responsável       | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
-| :----             |    :----         |      :----:    | :----:     | :----: | :----:          |
-| Gilberto Modesto  | Criação do protótipo da solução | 24/08/2025  | 31/08/2024 | ✔️ | 29/08/2025 |
-| Guilherme Lanza   | Definição dos processos e funcionalidades essenciais para o desenvolvimento da solução | 24/08/2025  | 31/08/2024 | ✔️ | 29/08/2025 |
-| Isabela Gomes     | Revisão e ajustes da documentação no GitHub, organização do grupo para a próxima etapa, definição das APIs e arquitetura da solução | 29/08/2025  | 31/08/2025 | ✔️ | 29/08/2025 |
-| Luana Paula       | Criação do protótipo da solução | 24/08/2025  | 31/08/2005 | ✔️ | 29/08/2025 |
-| Maria Eduarda     | Definição dos processos e funcionalidades essenciais para o desenvolvimento da solução | 24/08/2025  | 31/08/2005 | ✔️ | 29/08/2025 |
-| Victor Antoniel   | Definição das APIs e arquitetura da solução | 24/08/2025  | 31/08/2005 | ✔️ | 29/08/2025 |
-| Warley Junio      | Definição das APIs e arquitetura da solução | 24/08/2025  | 31/08/2005 | ✔️ | 29/08/2025 |
-
-Legenda:
+**Legenda:**
 - ✔️: terminado
 - 📝: em execução
 - ⌛: atrasado
 - ❌: não iniciado
+
+---
