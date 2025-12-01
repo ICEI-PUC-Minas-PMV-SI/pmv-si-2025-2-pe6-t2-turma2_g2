@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Pedidos() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
@@ -48,10 +49,10 @@ export default function Pedidos() {
     }, [])
   );
 
-  const renderPedido = ({ item }: { item: Pedido }) => (
+  const renderPedido = ({ item }: { item: Pedido }) => (    
     <View style={styles.card}>
       <View style={styles.headerCard}>
-        <Text style={styles.cliente}>Comanda {item.comanda} / Mesa {item.numeroMesa}</Text>
+        <Text style={styles.cliente}>Comanda {item.comanda} #{item.numeroComanda} / Mesa {item.numeroMesa}</Text>
         <Text
           style={[
             styles.status,
@@ -68,14 +69,6 @@ export default function Pedidos() {
         </Text>
       </View>
 
-      <View style={styles.itensContainer}>
-        {item.itens.map((i) => (
-          <Text key={i.idProduto} style={styles.itemTexto}>
-            {i.nome} x{i.quantidade} — R$ {(i.precoUnitario * i.quantidade).toFixed(2)}
-          </Text>
-        ))}
-      </View>
-
       <View style={styles.footerCard}>
         <Text style={styles.valorTotal}>
           Total: R$ {item.valorTotal.toFixed(2)}
@@ -89,7 +82,7 @@ export default function Pedidos() {
             style={[styles.botao, styles.botaoEditar]}
             onPress={() => router.push({
               pathname: "/pedidos/adicionar",
-              params: { pedidoId: item.id },
+              params: { pedidoId: item.idPedido },
             })}
           >
             <Text style={styles.textoBotao}>Editar</Text>
@@ -99,7 +92,7 @@ export default function Pedidos() {
         {item.status !== "Cancelado" && item.status !== "Pago" && (
           <TouchableOpacity
             style={[styles.botao, styles.botaoCancelar]}
-            onPress={() => handleCancelar(item.id)}
+            onPress={() => handleCancelar(item.idPedido)}
           >
             <Text style={styles.textoBotao}>Cancelar</Text>
           </TouchableOpacity>
@@ -108,41 +101,48 @@ export default function Pedidos() {
     </View>
   );
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.botaoVoltar}
-        onPress={() => router.replace("/dashboard")}
-      >
-        <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
-      </TouchableOpacity>
-      
-      <Text style={styles.titulo}>Pedidos</Text>
+  return (    
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.botaoVoltar}
+          onPress={() => router.replace("/dashboard")}
+        >
+          <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
+        </TouchableOpacity>
+        
+        <Text style={styles.titulo}>Pedidos</Text>
 
-      <TouchableOpacity
-        style={styles.botaoNovo}
-        onPress={() => router.push("/pedidos/adicionar")}
-      >
-        <Text style={styles.botaoNovoTexto}>+ Novo Pedido</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoNovo}
+          onPress={() => router.push("/pedidos/adicionar")}
+        >
+          <Text style={styles.botaoNovoTexto}>+ Novo Pedido</Text>
+        </TouchableOpacity>
 
-      {loading ? (
-        <ActivityIndicator size="large" color="#d46a00" />
-      ) : pedidos.length === 0 ? (
-        <Text style={styles.vazio}>Nenhum pedido encontrado</Text>
-      ) : (
-        <FlatList
-          data={pedidos}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderPedido}
-          contentContainerStyle={{ paddingBottom: 40 }}
-        />
-      )}
-    </View>
+        {loading ? (
+          <ActivityIndicator size="large" color="#d46a00" />
+        ) : pedidos.length === 0 ? (
+          <Text style={styles.vazio}>Nenhum pedido encontrado</Text>
+        ) : (
+          <FlatList
+            data={pedidos}
+            keyExtractor={(item) => item.idPedido.toString()}
+            renderItem={renderPedido}
+            contentContainerStyle={{ paddingBottom: 40 }}
+          />
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "#F97316",
+    padding: 16,
+  },
   container: { flex: 1, backgroundColor: "#fff9f4", padding: 16 },
   titulo: {
     fontSize: 22,
@@ -171,8 +171,6 @@ const styles = StyleSheet.create({
   statusPronto: { color: "green" },
   statusPago: { color: "blue" },
   statusCancelado: { color: "red" },
-  itensContainer: { marginBottom: 6 },
-  itemTexto: { color: "#555", fontSize: 14 },
   footerCard: {
     flexDirection: "row",
     justifyContent: "space-between",

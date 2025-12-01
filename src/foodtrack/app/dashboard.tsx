@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Tela {
   key: string;
@@ -13,8 +14,12 @@ const telas: Tela[] = [
   { key: 'produtos', nome: 'Produtos', route: '/produtos' },
   { key: 'pedidos', nome: 'Pedidos', route: '/pedidos' },
   { key: 'kds', nome: 'KDS - Estações', route: '/kds' },
-  { key: 'relatorio', nome: 'Relatório de Vendas', route: '/relatorio' },
-  { key: 'pagamento', nome: 'Pagamentos', route: '/pagamento' }
+  { key: 'pagamento', nome: 'Pagamentos', route: '/pagamento' },
+  //{ key: 'relatorio', nome: 'Relatório de Vendas', route: '/relatorio-vendas' },
+  //{ key: 'relatorio', nome: 'Relatório de Itens Mais Vendidos', route: '/relatorio-itens-mais-vendidos' },
+  //{ key: 'relatorio', nome: 'Relatório de Itens Menos Vendidos', route: '/relatorio-itens-menos-vendidos' },
+  //{ key: 'relatorio', nome: 'Relatório de Pedidos por Forma de Pagamento', route: '/relatorio-pedidos-forma-pagamento' },
+  //{ key: 'relatorio', nome: 'Relatório de Cancelamentos', route: '/relatorio-cancelamentos' }
 ];
 
 export default function Dashboard() {
@@ -30,19 +35,26 @@ export default function Dashboard() {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Dashboard</Text>
-      <FlatList
-        data={telas}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.key}
-        contentContainerStyle={{ paddingBottom: 50 }}
-      />
-    </View>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Dashboard</Text>
+        <FlatList
+          data={telas}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.key}
+          contentContainerStyle={{ paddingBottom: 50 }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "#F97316",
+    padding: 16,
+  },
   container: {
     flex: 1,
     padding: 20,

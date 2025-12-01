@@ -1,9 +1,12 @@
-import { ItemPedido } from "@/mocks/pedidosMock";
-import { criarPedido, getPedidos, Pedido, updatePedido } from "@/services/pedidosService";
+import { criarPedido, getItensByPedido, getPedidoById, ItemPedido, Pedido, updatePedido } from "@/services/pedidosService";
+import { getProdutos, Produto } from "@/services/produtosService";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { Produto, produtosMock } from "../../mocks/produtosMock";
+//import { Produto, produtosMock } from "../../mocks/produtosMock";
+//import { ItemPedido } from "@/mocks/pedidosMock";
+//import { criarPedido, getPedidos, Pedido, updatePedido } from "@/services/pedidosService";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AdicionarPedido() {
   const router = useRouter();
@@ -14,32 +17,49 @@ export default function AdicionarPedido() {
   const [itens, setItens] = useState<{ produto: Produto; quantidade: number }[]>([]);
   const { pedidoId } = useLocalSearchParams();
 
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const carregarPedido = async () => {
-      if (pedidoId) {
-        const pedidos = await getPedidos();
-        const pedido = pedidos.find((p) => p.id === Number(pedidoId));
-        if (pedido) {
-          setNumeroMesa(pedido.numeroMesa);
-          setComanda(pedido.comanda);
-          setObservacao(pedido.observacao || "");
-          setItens(
-            pedido.itens.map((i: ItemPedido) => ({
-              produto: {
-                idProduto: i?.idProduto ?? i.idProduto,
-                nome: i?.nome ?? i.nome,
-                precoUnitario: i?.precoUnitario ?? i.precoUnitario,
-                estacao: i?.estacao ?? i.estacao ?? "",
-                status: i?.status ?? i.status,
-              },
-              quantidade: i.quantidade,
-            }))
-          );
+    const carregar = async () => {
+      try {
+        const dados = await getProdutos();
+        setProdutos(dados);
+
+        if (pedidoId) {
+          const pedido = await getPedidoById(Number(pedidoId));
+          if (pedido) {
+            const itens = await getItensByPedido(Number(pedidoId));
+
+            setNumeroMesa(pedido.numeroMesa);
+            setComanda(pedido.comanda);
+            setObservacao(pedido.observacao || "");
+            setItens(
+              itens.map((i: ItemPedido) => ({
+                produto: {
+                  idProduto: i?.idProduto ?? i.idProduto,
+                  nome: i?.nome ?? i.nome,
+                  precoUnitario: i?.precoUnitario ?? i.precoUnitario,
+                  estacao: i?.estacao ?? i.estacao ?? "",
+                  status: i?.status ?? i.status,
+                },
+                quantidade: i.quantidade,
+              }))
+            );
+          }
         }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
       }
     };
-    carregarPedido();
+    carregar();
   }, [pedidoId]);
+
+  if (loading) {
+    return <Text>Carregando...</Text>;
+  }
 
   const adicionarItem = (produto: Produto) => {
     setItens((prev) => {
@@ -84,16 +104,7 @@ export default function AdicionarPedido() {
     const pedidoData = {
       numeroMesa,
       comanda,
-      itens: itens.map((i) => ({
-        idProduto: i.produto.idProduto,
-        nome: i.produto.nome,
-        quantidade: i.quantidade,
-        precoUnitario: i.produto.precoUnitario,
-        estacao: i.produto.estacao,
-        status: "Pendente"
-      })),
       valorTotal,
-      status: "Pendente",
       observacao,
       data: new Date()
     } as Pedido;
@@ -109,77 +120,92 @@ export default function AdicionarPedido() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Novo Pedido</Text>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.botaoVoltar}
+          onPress={() => router.replace("/pedidos")}
+        >
+          <Text style={styles.botaoVoltarTexto}>← Voltar aos Pedidos</Text>
+        </TouchableOpacity>
 
-      <TextInput
-        placeholder="Nome da comanda"
-        value={comanda}
-        onChangeText={setComanda}
-        style={styles.input}
-      />
+        <Text style={styles.titulo}>Novo Pedido</Text>
 
-      <TextInput
-        style={[styles.input]}
-        placeholder="Número da mesa"
-        keyboardType="numeric"
-        value={numeroMesa !== null ? numeroMesa.toString() : ""}
-        onChangeText={(text) => {
-          setNumeroMesa(text ? Number(text) : null);
-        }}
-      />
+        <TextInput
+          placeholder="Nome da comanda"
+          value={comanda}
+          onChangeText={setComanda}
+          style={styles.input}
+        />
 
-      <TextInput
-        style={[styles.input, styles.observacaoInput]}
-        placeholder="Observações (ex: sem cebola, sem picles...)"
-        value={observacao}
-        onChangeText={setObservacao}
-        multiline
-        numberOfLines={3}
-      />
+        <TextInput
+          style={[styles.input]}
+          placeholder="Número da mesa"
+          keyboardType="numeric"
+          value={numeroMesa !== null ? numeroMesa.toString() : ""}
+          onChangeText={(text) => {
+            setNumeroMesa(text ? Number(text) : null);
+          }}
+        />
 
-      <FlatList
-        data={produtosMock}
-        keyExtractor={(item) => item.idProduto.toString()}
-        renderItem={({ item }) => {
-          const selecionado = itens.find((i) => i.produto.idProduto === item.idProduto);
-          return (
-            <View style={styles.produtoLinha}>
-              <Text style={styles.produtoNome}>
-                {item.nome} - R$ {item.precoUnitario.toFixed(2)}
-              </Text>
-              <View style={styles.qtdContainer}>
-                <TouchableOpacity
-                  style={styles.qtdBtn}
-                  onPress={() => removerItem(item.idProduto)}
-                >
-                  <Text style={styles.qtdTexto}>-</Text>
-                </TouchableOpacity>
-                <Text style={styles.qtdValor}>
-                  {selecionado?.quantidade || 0}
+        <TextInput
+          style={[styles.input, styles.observacaoInput]}
+          placeholder="Observações (ex: sem cebola, sem picles...)"
+          value={observacao}
+          onChangeText={setObservacao}
+          multiline
+          numberOfLines={3}
+        />
+
+        <FlatList
+          //data={produtosMock}
+          data={produtos}
+          keyExtractor={(item) => item.idProduto.toString()}
+          renderItem={({ item }) => {
+            const selecionado = itens.find((i) => i.produto.idProduto === item.idProduto);
+            return (
+              <View style={styles.produtoLinha}>
+                <Text style={styles.produtoNome}>
+                  {item.nome} - R$ {item.precoUnitario.toFixed(2)}
                 </Text>
-                <TouchableOpacity
-                  style={styles.qtdBtn}
-                  onPress={() => adicionarItem(item)}
-                >
-                  <Text style={styles.qtdTexto}>+</Text>
-                </TouchableOpacity>
+                <View style={styles.qtdContainer}>
+                  <TouchableOpacity
+                    style={styles.qtdBtn}
+                    onPress={() => removerItem(item.idProduto)}
+                  >
+                    <Text style={styles.qtdTexto}>-</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.qtdValor}>
+                    {selecionado?.quantidade || 0}
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.qtdBtn}
+                    onPress={() => adicionarItem(item)}
+                  >
+                    <Text style={styles.qtdTexto}>+</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          );
-        }}
-      />
+            );
+          }}
+        />
 
-      <Text style={styles.total}>Total: R$ {valorTotal.toFixed(2)}</Text>
+        <Text style={styles.total}>Total: R$ {valorTotal.toFixed(2)}</Text>
 
-      <TouchableOpacity style={styles.botaoSalvar} onPress={salvarPedido}>
-        <Text style={styles.botaoSalvarTexto}>Salvar Pedido</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={styles.botaoSalvar} onPress={salvarPedido}>
+          <Text style={styles.botaoSalvarTexto}>Salvar Pedido</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "#F97316",
+    padding: 16,
+  },
   container: { flex: 1, backgroundColor: "#fff9f4", padding: 16 },
   titulo: { fontSize: 22, fontWeight: "bold", color: "#d46a00", marginBottom: 10 },
   input: {
@@ -192,7 +218,7 @@ const styles = StyleSheet.create({
   },
   observacaoInput: {
     height: 80,
-    textAlignVertical: "top", // ✅ garante alinhamento correto do texto
+    textAlignVertical: "top",
   },
   produtoLinha: {
     flexDirection: "row",
@@ -220,4 +246,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   botaoSalvarTexto: { color: "#fff", fontWeight: "bold", fontSize: 16 },
+  botaoVoltar: {
+    alignSelf: "flex-start",
+    backgroundColor: "#E67E22",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+  botaoVoltarTexto: {
+    color: "#FFF8F1",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
 });

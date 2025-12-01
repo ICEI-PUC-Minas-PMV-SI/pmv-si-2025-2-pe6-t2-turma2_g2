@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import React from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Estacao {
   key: string;
@@ -30,29 +31,36 @@ export default function KdsMain() {
   );
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.botaoVoltar}
-        onPress={() => router.replace("/dashboard")}
-      >
-        <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
-      </TouchableOpacity>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.botaoVoltar}
+          onPress={() => router.replace("/dashboard")}
+        >
+          <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
+        </TouchableOpacity>
 
-      <Text style={styles.titulo}>KDS - Estações</Text>
+        <Text style={styles.titulo}>KDS - Estações</Text>
 
-      <FlatList
-        data={estacoes}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.key}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        contentContainerStyle={{ paddingBottom: 40 }}
-      />
-    </View>
+        <FlatList
+          data={estacoes}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.key}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          contentContainerStyle={{ paddingBottom: 40 }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({  
+  screen: {
+    flex: 1,
+    backgroundColor: "#F97316",
+    padding: 16,
+  },
   container: { flex: 1, backgroundColor: "#FFF8F1", padding: 20 },
   titulo: {
     fontSize: 26,

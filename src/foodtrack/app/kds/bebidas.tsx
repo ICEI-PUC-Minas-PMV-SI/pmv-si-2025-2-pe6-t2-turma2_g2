@@ -1,8 +1,9 @@
-import { getPedidos, updateItemPedido } from "@/services/pedidosService";
+import { getPedidos, Pedido, updateItemPedido } from "@/services/pedidosService";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Pedido } from "../../mocks/pedidosMock";
+//import { Pedido } from "../../mocks/pedidosMock";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function KdsChapa() {
   const router = useRouter();
@@ -14,12 +15,12 @@ export default function KdsChapa() {
 
     const pendentes = lista
       .filter(
-        (p) =>
+        (p: Pedido) =>
           p.itens.some(
             (i) => i.estacao === ESTACAO && i.status === "Pendente"
           )
       )
-      .map((p) => ({
+      .map((p: Pedido) => ({
         ...p,
         itens: p.itens.filter(
           (i) => i.estacao === ESTACAO && i.status === "Pendente"
@@ -50,7 +51,7 @@ export default function KdsChapa() {
             <Text style={styles.item}>{i.quantidade}x {i.nome}</Text>
             <TouchableOpacity
               style={styles.botaoPronto}
-              onPress={() => marcarItemComoPronto(item.id, i.idProduto)}
+              onPress={() => marcarItemComoPronto(item.idPedido, i.idProduto)}
             >
               <Text style={styles.botaoTexto}>Pronto</Text>
             </TouchableOpacity>
@@ -60,26 +61,33 @@ export default function KdsChapa() {
   );
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.botaoVoltar}
-        onPress={() => router.replace("/kds")}
-      >
-        <Text style={styles.botaoVoltarTexto}>← Voltar</Text>
-      </TouchableOpacity>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.botaoVoltar}
+          onPress={() => router.replace("/kds")}
+        >
+          <Text style={styles.botaoVoltarTexto}>← Voltar</Text>
+        </TouchableOpacity>
 
-      <Text style={styles.titulo}>KDS - {ESTACAO}</Text>
+        <Text style={styles.titulo}>KDS - {ESTACAO}</Text>
 
-      <FlatList
-        data={pedidos}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderPedido}
-      />
-    </View>
+        <FlatList
+          data={pedidos}
+          keyExtractor={(item) => item.idPedido.toString()}
+          renderItem={renderPedido}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "#F97316",
+    padding: 16,
+  },
   container: { flex: 1, backgroundColor: "#FFF8F1", padding: 20 },
   titulo: { fontSize: 22, fontWeight: "bold", color: "#E67E22", marginBottom: 10 },
   card: {

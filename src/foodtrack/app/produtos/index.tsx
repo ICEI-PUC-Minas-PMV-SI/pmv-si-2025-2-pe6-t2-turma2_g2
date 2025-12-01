@@ -1,8 +1,9 @@
-import { deleteProduto, getProdutos } from "@/services/produtosService";
+import { deleteProduto, getProdutos, Produto } from "@/services/produtosService";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Produto } from "../../mocks/produtosMock";
+import { SafeAreaView } from "react-native-safe-area-context";
+//import { Produto } from "../../mocks/produtosMock";
 
 export default function ProdutosScreen() {
   const router = useRouter();
@@ -54,34 +55,41 @@ export default function ProdutosScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.botaoVoltar}
-        onPress={() => router.replace("/dashboard")}
-      >
-        <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
-      </TouchableOpacity>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.botaoVoltar}
+          onPress={() => router.replace("/dashboard")}
+        >
+          <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
+        </TouchableOpacity>
 
-      <Text style={styles.titulo}>Produtos</Text>
+        <Text style={styles.titulo}>Produtos</Text>
 
-      <TouchableOpacity
-        style={styles.botaoNovo}
-        onPress={() => router.push("/produtos/adicionar")}
-      >
-        <Text style={styles.botaoNovoTexto}>+ Novo Produto</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoNovo}
+          onPress={() => router.push("/produtos/adicionar")}
+        >
+          <Text style={styles.botaoNovoTexto}>+ Novo Produto</Text>
+        </TouchableOpacity>
 
-      <FlatList
-        data={produtos}
-        keyExtractor={(item) => item.idProduto.toString()}
-        renderItem={renderItem}
-        contentContainerStyle={{ paddingBottom: 30 }}
-      />
-    </View>
+        <FlatList
+          data={produtos}
+          keyExtractor={(item) => item.idProduto.toString()}
+          renderItem={renderItem}
+          contentContainerStyle={{ paddingBottom: 30 }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "#F97316",
+    padding: 16,
+  },
   container: { flex: 1, backgroundColor: "#FFF8F1", padding: 20 },
   titulo: { fontSize: 24, fontWeight: "bold", color: "#E67E22", marginBottom: 10 },
   card: {

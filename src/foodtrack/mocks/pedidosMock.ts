@@ -11,10 +11,9 @@ export type StatusPedido = "Pendente" | "Pronto" | "Cancelado" | "Pago";
 export type FormaPagamento = "Pix" | "Cartão" | "Dinheiro";
 
 export interface Pedido {
-  id: number;
+  idPedido: number;
   numeroMesa: number;
   comanda: string;
-  cliente?: string;
   itens: ItemPedido[];
   valorTotal: number;
   status: StatusPedido;
@@ -27,7 +26,7 @@ const hoje = new Date();
 
 export const pedidosMock: Pedido[] = [
   {
-    id: 1,
+    idPedido: 1,
     numeroMesa: 5,
     comanda: "Jéssica",
     itens: [
@@ -40,7 +39,7 @@ export const pedidosMock: Pedido[] = [
     data: new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 1),
   },
   {
-    id: 2,
+    idPedido: 2,
     numeroMesa: 3,
     comanda: "Ricardo",
     itens: [
@@ -53,7 +52,7 @@ export const pedidosMock: Pedido[] = [
     data: new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 2),
   },
   {
-    id: 3,
+    idPedido: 3,
     numeroMesa: 1,
     comanda: "Thiago",
     itens: [
@@ -66,7 +65,7 @@ export const pedidosMock: Pedido[] = [
     data: new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 3),
   },
   {
-    id: 4,
+    idPedido: 4,
     numeroMesa: 7,
     comanda: "Andressa",
     itens: [
@@ -79,7 +78,7 @@ export const pedidosMock: Pedido[] = [
     data: new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 4),
   },
   {
-    id: 5,
+    idPedido: 5,
     numeroMesa: 4,
     comanda: "Andressa",
     itens: [
@@ -91,7 +90,7 @@ export const pedidosMock: Pedido[] = [
     data: new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 5),
   },
   {
-    id: 6,
+    idPedido: 6,
     numeroMesa: 9,
     comanda: "Andressa",
     itens: [
@@ -104,7 +103,7 @@ export const pedidosMock: Pedido[] = [
     data: new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 6),
   },
   {
-    id: 7,
+    idPedido: 7,
     numeroMesa: 2,
     comanda: "Andressa",
     itens: [
@@ -117,7 +116,7 @@ export const pedidosMock: Pedido[] = [
     data: new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 7),
   },
   {
-    id: 8,
+    idPedido: 8,
     numeroMesa: 10,
     comanda: "Andressa",
     itens: [
@@ -130,7 +129,7 @@ export const pedidosMock: Pedido[] = [
     data: new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 8),
   },
   {
-    id: 9,
+    idPedido: 9,
     numeroMesa: 6,
     comanda: "Gabriel",
     itens: [
@@ -143,7 +142,7 @@ export const pedidosMock: Pedido[] = [
     data: new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 9),
   },
   {
-    id: 10,
+    idPedido: 10,
     numeroMesa: 8,
     comanda: "Thais",
     itens: [

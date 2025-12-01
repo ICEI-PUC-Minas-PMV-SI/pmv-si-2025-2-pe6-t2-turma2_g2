@@ -18,7 +18,7 @@ namespace AutenticacaoService.Controllers
         {
             var client = httpClientFactory.CreateClient("FuncionarioService");
 
-            var response = await client.GetAsync($"api/funcionario/usuario/{request.Usuario}");
+            var response = await client.GetAsync($"api/funcionario/login/{request.Usuario}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -27,7 +27,7 @@ namespace AutenticacaoService.Controllers
 
             var usuario = await response.Content.ReadFromJsonAsync<FuncionarioDto>();
 
-            if (usuario == null || usuario.Senha != request.Senha)
+            if (usuario == null || usuario.SenhaHash != request.Senha)
             {
                 return Unauthorized("Usuário ou senha inválidos");
             }
@@ -44,8 +44,7 @@ namespace AutenticacaoService.Controllers
             {
                 Subject = new ClaimsIdentity(
                 [
-                    new Claim(ClaimTypes.Name, user.Usuario),
-                    new Claim(ClaimTypes.Role, user.Funcao)
+                    new Claim(ClaimTypes.Name, user.Login)
                 ]),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(

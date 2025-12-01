@@ -6,7 +6,7 @@ using SqlKata.Execution;
 namespace PedidoService.Controllers
 {
     [ApiController]
-    [Route("api/itempedido")]
+    [Route("api/itemPedido")]
     [Authorize]
     public class ItemPedidoController(QueryFactory db) : ControllerBase
     {
@@ -18,9 +18,9 @@ namespace PedidoService.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetByIdPedido(int idPedido)
         {
-            var item = db.Query("ItemPedido").Where("Id", id).FirstOrDefault<ItemPedido>();
+            var item = db.Query("ItemPedido").Where("Id", idPedido).FirstOrDefault<ItemPedido>();
             if (item == null) return NotFound();
             return Ok(item);
         }
@@ -28,10 +28,12 @@ namespace PedidoService.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] ItemPedido item)
         {
-            var prato = db.Query("pratos").Where("id", item.PratoId).FirstOrDefault();
-            if (prato == null)
+            var produto = db.Query("pratos").Where("id", item.PratoId).FirstOrDefault();
+
+            if (produto == null)
                 return BadRequest("Prato não encontrado.");
-            item.Valor = prato.preco;
+
+            item.Valor = produto.preco;
 
             var id = db.Query("ItemPedido").InsertGetId<int>(new
             {
@@ -43,7 +45,7 @@ namespace PedidoService.Controllers
                 item.ComandaId
             });
             item.Id = id;
-            return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
+            return CreatedAtAction("", item);
         }
 
         [HttpPut("{id}")]

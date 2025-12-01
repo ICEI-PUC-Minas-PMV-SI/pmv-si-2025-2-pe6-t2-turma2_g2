@@ -6,10 +6,8 @@
 
         public string Nome { get; set; }
 
-        public string Usuario { get; set; }
+        public string Login { get; set; }
 
-        public string Senha { get; set; }
-
-        public string Funcao { get; set; }
+        public string SenhaHash { get; set; }
     }
 }

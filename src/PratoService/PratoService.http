@@ -1,6 +1,0 @@
-@PedidoService_HostAddress = http://localhost:5014
-
-GET {{PedidoService_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

@@ -6,7 +6,7 @@ using SqlKata.Execution;
 namespace PedidoService.Controllers
 {
     [ApiController]
-    [Route("api/statuspedido")]
+    [Route("api/statusPedido")]
     [Authorize]
     public class StatusPedidoController(QueryFactory db) : ControllerBase
     {

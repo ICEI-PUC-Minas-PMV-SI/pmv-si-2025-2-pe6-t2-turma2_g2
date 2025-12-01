@@ -1,5 +1,5 @@
-import { FormaPagamento, Pedido } from "@/mocks/pedidosMock";
-import { getPedidos, updatePedido } from "@/services/pedidosService";
+//import { FormaPagamento, Pedido } from "@/mocks/pedidosMock";
+import { FormaPagamento, getPedidos, Pedido, updatePedido } from "@/services/pedidosService";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Pagamento() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function Pagamento() {
   const carregarPedidos = async () => {
     const lista = await getPedidos();
     const pendentes = lista.filter(
-      (p) => p.status === "Pronto" || p.status === "Pendente"
+      (p: Pedido) => p.status === "Pronto" || p.status === "Pendente"
     );
     setPedidosPendentes(pendentes);
   };
@@ -46,7 +47,7 @@ export default function Pagamento() {
       return;
     }
 
-    await updatePedido(pedidoSelecionado.id, {
+    await updatePedido(pedidoSelecionado.idPedido, {
       formaPagamento: formaPagamento as FormaPagamento,
       status: "Pago",
     });
@@ -58,86 +59,93 @@ export default function Pagamento() {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.botaoVoltar}
-        onPress={() => router.replace("/dashboard")}
-      >
-        <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
-      </TouchableOpacity>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.botaoVoltar}
+          onPress={() => router.replace("/dashboard")}
+        >
+          <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
+        </TouchableOpacity>
 
-      <Text style={styles.titulo}>💳 Pagamentos</Text>
+        <Text style={styles.titulo}>💳 Pagamentos</Text>
 
-      <Text style={styles.subtitulo}>Pedidos pendentes:</Text>
-      <FlatList
-        data={pedidosPendentes}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={[
-              styles.cardPedido,
-              pedidoSelecionado?.id === item.id && styles.cardSelecionado,
-            ]}
-            onPress={() => selecionarPedido(item)}
-          >
-            <Text style={styles.cliente}>Comanda {item.comanda} / Mesa {item.numeroMesa}</Text>
-            <Text style={styles.valor}>R$ {item.valorTotal.toFixed(2)}</Text>
-            <Text style={styles.status}>Status: {item.status}</Text>
-          </TouchableOpacity>
-        )}
-        ListEmptyComponent={
-          <Text style={{ color: "#7F5539" }}>
-            Nenhum pedido pendente no momento.
-          </Text>
-        }
-        contentContainerStyle={{ paddingBottom: 40 }}
-      />
+        <Text style={styles.subtitulo}>Pedidos pendentes:</Text>
+        <FlatList
+          data={pedidosPendentes}
+          keyExtractor={(item) => item.idPedido.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={[
+                styles.cardPedido,
+                pedidoSelecionado?.idPedido === item.idPedido && styles.cardSelecionado,
+              ]}
+              onPress={() => selecionarPedido(item)}
+            >
+              <Text style={styles.cliente}>Comanda {item.comanda} / Mesa {item.numeroMesa}</Text>
+              <Text style={styles.valor}>R$ {item.valorTotal.toFixed(2)}</Text>
+              <Text style={styles.status}>Status: {item.status}</Text>
+            </TouchableOpacity>
+          )}
+          ListEmptyComponent={
+            <Text style={{ color: "#7F5539" }}>
+              Nenhum pedido pendente no momento.
+            </Text>
+          }
+          contentContainerStyle={{ paddingBottom: 40 }}
+        />
 
-      {pedidoSelecionado && (
-        <View style={styles.pagamentoContainer}>
-          <Text style={styles.infoPedido}>
-            Pedido selecionado: {pedidoSelecionado.numeroMesa}
-          </Text>
-          <Text style={styles.valorTotal}>
-            Total: R$ {pedidoSelecionado.valorTotal.toFixed(2)}
-          </Text>
+        {pedidoSelecionado && (
+          <View style={styles.pagamentoContainer}>
+            <Text style={styles.infoPedido}>
+              Pedido selecionado: {pedidoSelecionado.numeroMesa}
+            </Text>
+            <Text style={styles.valorTotal}>
+              Total: R$ {pedidoSelecionado.valorTotal.toFixed(2)}
+            </Text>
 
-          <Text style={styles.subtitulo}>Forma de pagamento:</Text>
-          <View style={styles.botoesPagamento}>
-            {["Pix", "Cartão", "Dinheiro"].map((forma) => (
-              <TouchableOpacity
-                key={forma}
-                style={[
-                  styles.botaoForma,
-                  formaPagamento === forma && styles.botaoFormaSelecionado,
-                ]}
-                onPress={() => setFormaPagamento(forma)}
-              >
-                <Text
+            <Text style={styles.subtitulo}>Forma de pagamento:</Text>
+            <View style={styles.botoesPagamento}>
+              {["Pix", "Cartão", "Dinheiro"].map((forma) => (
+                <TouchableOpacity
+                  key={forma}
                   style={[
-                    styles.textoForma,
-                    formaPagamento === forma && styles.textoFormaSelecionado,
+                    styles.botaoForma,
+                    formaPagamento === forma && styles.botaoFormaSelecionado,
                   ]}
+                  onPress={() => setFormaPagamento(forma)}
                 >
-                  {forma}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+                  <Text
+                    style={[
+                      styles.textoForma,
+                      formaPagamento === forma && styles.textoFormaSelecionado,
+                    ]}
+                  >
+                    {forma}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
 
-          <TouchableOpacity
-            style={styles.botaoConfirmar}
-            onPress={confirmarPagamento}
-          >
-            <Text style={styles.textoConfirmar}>Confirmar Pagamento</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
+            <TouchableOpacity
+              style={styles.botaoConfirmar}
+              onPress={confirmarPagamento}
+            >
+              <Text style={styles.textoConfirmar}>Confirmar Pagamento</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "#F97316",
+    padding: 16,
+  },
   container: { flex: 1, backgroundColor: "#FFF8F1", padding: 20 },
   titulo: { fontSize: 24, fontWeight: "bold", color: "#E67E22", marginBottom: 10 },
   subtitulo: { fontSize: 16, fontWeight: "600", color: "#4A3F35", marginVertical: 10 },

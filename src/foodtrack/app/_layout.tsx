@@ -1,5 +1,5 @@
 import { AuthProvider } from "@/context/authContext";
-import { initPedidos } from "@/services/pedidosService";
+//import { initPedidos } from "@/services/pedidosService";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { Slot } from "expo-router";
@@ -9,7 +9,7 @@ export default function App() {
   const [expoPushToken, setExpoPushToken] = useState<string | null>(null);
 
   useEffect(() => {
-    initPedidos();
+    //initPedidos();
     async function registerForPushNotifications() {
       if (Device.isDevice) {
         const { status: existingStatus } = await Notifications.getPermissionsAsync();

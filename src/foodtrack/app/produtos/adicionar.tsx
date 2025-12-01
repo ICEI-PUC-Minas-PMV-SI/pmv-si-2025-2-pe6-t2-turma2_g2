@@ -1,85 +1,104 @@
-import { criarProduto, getProdutoById, updateProduto } from "@/services/produtosService";
+import { criarProduto, getProdutoById, Produto, updateProduto } from "@/services/produtosService";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { Produto } from "../../mocks/produtosMock";
+import { SafeAreaView } from "react-native-safe-area-context";
+//import { Produto } from "../../mocks/produtosMock";
 
 export default function AdicionarProduto() {
   const router = useRouter();
   const { idProduto } = useLocalSearchParams();
-  const [produto, setProduto] = useState<Partial<Produto>>({
-    nome: "",
-    precoUnitario: 0,
-    estacao: "",
-  });
+  const [nomeProduto, setNomeProduto] = useState("");
+  const [precoUnitario, setPrecoUnitario] = useState<number | null>(null);
+  const [estacao, setEstacao] = useState("");
 
   useEffect(() => {
-    if (idProduto) {
-      const carregarProduto = async () => {
-        const prod = await getProdutoById(Number(idProduto));
-        if (prod) setProduto(prod);
-      };
-      carregarProduto();
-    }
+    const carregar = async () => {
+      const produto = await getProdutoById(Number(idProduto));
+
+      setNomeProduto(produto.nome);
+      setPrecoUnitario(produto.precoUnitario);
+      setEstacao(produto.estacao);
+    };
+    carregar();
   }, [idProduto]);
 
   const salvar = async () => {
-    if (!produto.nome || !produto.precoUnitario) {
+    if (precoUnitario) {
       Alert.alert("Atenção", "Preencha todos os campos.");
       return;
     }
 
+    const nome = nomeProduto;
+
+    const produtoData = {
+      nome,
+      precoUnitario,
+      estacao
+    } as Produto;
+
     if (idProduto) {
-      await updateProduto(Number(idProduto), produto);
+      await updateProduto(Number(idProduto), produtoData);
       Alert.alert("Sucesso", "Produto atualizado!");
     } else {
-      await criarProduto(produto);
+      await criarProduto(produtoData);
       Alert.alert("Sucesso", "Produto criado!");
     }
     router.replace("/produtos" as any);
   };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>{idProduto ? "Editar Produto" : "Novo Produto"}</Text>
+  return (    
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={styles.titulo}>{idProduto ? "Editar Produto" : "Novo Produto"}</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Nome do produto"
-        value={produto.nome}
-        onChangeText={(t) => setProduto({ ...produto, nome: t })}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Nome do produto"
+          value={nomeProduto}
+          onChangeText={(text) => {
+            setNomeProduto(text);
+          }}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Preço (R$)"
-        keyboardType="numeric"
-        value={produto.precoUnitario?.toString() || ""}
-        onChangeText={(t) => setProduto({ ...produto, precoUnitario: parseFloat(t) })}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Preço (R$)"
+          keyboardType="decimal-pad"
+          value={precoUnitario !== null ? precoUnitario.toString() : ""}
+          onChangeText={(text) => {
+            setPrecoUnitario(text ? Number(text) : null);
+          }}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Estação (Chapa, Fritadeira, Forno, Bebidas)"
-        value={produto.estacao}
-        onChangeText={(t) => setProduto({ ...produto, estacao: t as any })}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Estação (Chapa, Fritadeira, Forno, Bebidas)"
+          value={estacao}
+          onChangeText={(t) => setEstacao(estacao)}
+        />
 
-      <TouchableOpacity style={styles.botaoSalvar} onPress={salvar}>
-        <Text style={styles.botaoSalvarTexto}>Salvar</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.botaoSalvar} onPress={salvar}>
+          <Text style={styles.botaoSalvarTexto}>Salvar</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.botaoVoltar}
-        onPress={() => router.replace("/produtos" as any)}
-      >
-        <Text style={styles.botaoVoltarTexto}>← Voltar</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          style={styles.botaoVoltar}
+          onPress={() => router.replace("/produtos" as any)}
+        >
+          <Text style={styles.botaoVoltarTexto}>← Voltar</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({  
+  screen: {
+    flex: 1,
+    backgroundColor: "#F97316",
+    padding: 16,
+  },
   container: { flex: 1, backgroundColor: "#FFF8F1", padding: 20 },
   titulo: { fontSize: 24, fontWeight: "bold", color: "#E67E22", marginBottom: 20 },
   input: {
