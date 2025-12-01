@@ -1,4 +1,6 @@
+using FuncionarioService.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MySqlConnector;
@@ -22,6 +24,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(key)
         };
     });
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    var cs = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseMySql(cs, ServerVersion.AutoDetect(cs));
+});
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -51,7 +59,6 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var connection = new MySqlConnection(connectionString);
@@ -87,3 +94,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

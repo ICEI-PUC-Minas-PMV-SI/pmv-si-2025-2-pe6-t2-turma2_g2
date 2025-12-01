@@ -34,8 +34,10 @@ namespace MesaService.Controllers
                 mesa.Lugares,
                 mesa.Ocupada
             });
+
             mesa.Id = id;
-            return CreatedAtAction(nameof(GetById), new { id = mesa.Id }, mesa);
+
+            return Ok(mesa);
         }
 
         [HttpPut("{id}")]

@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Tela {
   key: string;
@@ -10,11 +11,15 @@ interface Tela {
 
 const telas: Tela[] = [
   { key: 'funcionarios', nome: 'Funcionários', route: '/funcionarios' },
+  { key: 'produtos', nome: 'Produtos', route: '/produtos' },
   { key: 'pedidos', nome: 'Pedidos', route: '/pedidos' },
-  { key: 'pagamento', nome: 'Pagamento', route: '/pagamento' },
-  { key: 'comanda', nome: 'Comanda', route: '/comanda' },
-  { key: 'kds', nome: 'KDS', route: '/kds' },
-  { key: 'relatorio', nome: 'Relatório Financeiro', route: '/relatorio' }
+  { key: 'kds', nome: 'KDS - Estações', route: '/kds' },
+  { key: 'pagamento', nome: 'Pagamentos', route: '/pagamento' },
+  //{ key: 'relatorio', nome: 'Relatório de Vendas', route: '/relatorio-vendas' },
+  //{ key: 'relatorio', nome: 'Relatório de Itens Mais Vendidos', route: '/relatorio-itens-mais-vendidos' },
+  //{ key: 'relatorio', nome: 'Relatório de Itens Menos Vendidos', route: '/relatorio-itens-menos-vendidos' },
+  //{ key: 'relatorio', nome: 'Relatório de Pedidos por Forma de Pagamento', route: '/relatorio-pedidos-forma-pagamento' },
+  //{ key: 'relatorio', nome: 'Relatório de Cancelamentos', route: '/relatorio-cancelamentos' }
 ];
 
 export default function Dashboard() {
@@ -23,26 +28,33 @@ export default function Dashboard() {
   const renderItem = ({ item }: { item: typeof telas[0] }) => (
     <Pressable
       style={styles.card}
-      onPress={() => router.push(item.route)}
+      onPress={() => router.push(item.route as any)}
     >
       <Text style={styles.cardText}>{item.nome}</Text>
     </Pressable>
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Dashboard</Text>
-      <FlatList
-        data={telas}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.key}
-        contentContainerStyle={{ paddingBottom: 50 }}
-      />
-    </View>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Dashboard</Text>
+        <FlatList
+          data={telas}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.key}
+          contentContainerStyle={{ paddingBottom: 50 }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "#F97316",
+    padding: 16,
+  },
   container: {
     flex: 1,
     padding: 20,

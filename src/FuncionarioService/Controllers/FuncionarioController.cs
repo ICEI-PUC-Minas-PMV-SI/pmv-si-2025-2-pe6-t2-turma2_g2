@@ -36,14 +36,14 @@ namespace FuncionarioService.Controllers
             return Ok(funcionario);
         }
 
-        [HttpGet("usuario/{usuario}")]
+        [HttpGet("login/{login}")]
         [AllowAnonymous]
         public IActionResult GetByUsername(
-            string usuario)
+            string login)
         {
             var funcionario = db
                 .Query("funcionario")
-                .Where("Usuario", usuario)
+                .Where("Login", login)
                 .FirstOrDefault<Funcionario>();
 
             if (funcionario == null)
@@ -58,15 +58,17 @@ namespace FuncionarioService.Controllers
         public IActionResult Create(
             [FromBody] Funcionario funcionario)
         {
+            funcionario.Ativo = true;
+
             var id = db
                 .Query("Funcionario")
                 .InsertGetId<int>(
                     new
                     {
                         funcionario.Nome,
-                        funcionario.Usuario,
-                        funcionario.Senha,
-                        funcionario.Funcao
+                        funcionario.Login,
+                        funcionario.SenhaHash,
+                        funcionario.Ativo
                     });
 
             funcionario.IdFuncionario = id;
@@ -99,9 +101,9 @@ namespace FuncionarioService.Controllers
                     new
                     {
                         funcionario.Nome,
-                        funcionario.Usuario,
-                        funcionario.Senha,
-                        funcionario.Funcao
+                        funcionario.Login,
+                        funcionario.SenhaHash,
+                        funcionario.Ativo
                     });
 
             return NoContent();

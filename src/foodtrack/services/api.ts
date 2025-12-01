@@ -2,14 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosInstance } from 'axios';
 
 export const API_URLS = {
-  autenticacao: 'http://192.168.1.4:5180/api/autenticacao',
-  funcionarios: 'http://192.168.1.4:5099/api/funcionario',
-  pedidos: 'http://192.168.1.4:5013/api/pedido',
-  mesa: 'http://192.168.1.4:5015/api/mesa',
-  pagamentos: 'http://192.168.1.4:5157/api/pagamento',
-  kds: 'http://192.168.1.4:5157/api/kds',
-  prato: 'http://192.168.1.4:5014/api/prato',
-  relatorios: 'http://192.168.1.4:5093/api/funcionario',
+  autenticacao: 'http://192.168.1.8:5180/api/autenticacao',
+  funcionarios: 'http://192.168.1.8:5099/api/funcionario',
+  produtos: 'http://192.168.1.8:5203/api/produto',
+  pedidos: 'http://192.168.1.8:5013/api/pedido'
 };
 
 export function getApi(service: keyof typeof API_URLS): AxiosInstance {

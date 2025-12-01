@@ -1,5 +1,4 @@
 import { getApi } from './api';
-
 const api = getApi('funcionarios');
 
 export interface Funcionario {
