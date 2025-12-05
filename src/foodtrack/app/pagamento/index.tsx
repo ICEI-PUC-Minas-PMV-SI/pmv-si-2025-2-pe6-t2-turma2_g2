@@ -1,10 +1,13 @@
-//import { FormaPagamento, Pedido } from "@/mocks/pedidosMock";
-import { FormaPagamento, getPedidos, Pedido, updatePedido } from "@/services/pedidosService";
-import { useRouter } from "expo-router";
+import { FormaPagamento, Pedido } from "@/mocks/pedidosMock";
+//import { FormaPagamento, getPedidos, Pedido, updatePedido } from "@/services/pedidosService";
+import { getPedidos, updatePedido } from "@/mocks/services/pedidosService";
+import { carregarFuncaoStorage } from "@/mocks/storageService";
+import { useNavigation, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,22 +17,35 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Pagamento() {
   const router = useRouter();
+  const navigation = useNavigation();
   const [pedidosPendentes, setPedidosPendentes] = useState<Pedido[]>([]);
   const [pedidoSelecionado, setPedidoSelecionado] = useState<Pedido | null>(
     null
   );
   const [formaPagamento, setFormaPagamento] = useState<string>("");
+  const [funcao, setFuncao] = useState<any>("");
+
+  const carregarFuncao = async () => {
+    const data = await carregarFuncaoStorage();
+    setFuncao(data);
+  };
 
   const carregarPedidos = async () => {
     const lista = await getPedidos();
     const pendentes = lista.filter(
-      (p: Pedido) => p.status === "Pronto" || p.status === "Pendente"
+      (p: Pedido) => p.status === "Pronto"
     );
     setPedidosPendentes(pendentes);
   };
 
   useEffect(() => {
     carregarPedidos();
+    carregarFuncao();
+    
+    if (Platform.OS === "web") {
+      navigation.setOptions({ title: "Pagamentos" });
+      document.title = "Pagamentos";
+    }
   }, []);
 
   const selecionarPedido = (pedido: Pedido) => {
@@ -61,12 +77,14 @@ export default function Pagamento() {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.botaoVoltar}
-          onPress={() => router.replace("/dashboard")}
-        >
-          <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
-        </TouchableOpacity>
+        {funcao === "GERENTE" && (
+          <TouchableOpacity
+            style={styles.botaoVoltar}
+            onPress={() => router.replace("/dashboard")}
+          >
+            <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
+          </TouchableOpacity>
+        )}
 
         <Text style={styles.titulo}>💳 Pagamentos</Text>
 

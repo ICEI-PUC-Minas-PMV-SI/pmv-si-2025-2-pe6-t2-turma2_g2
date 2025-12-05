@@ -1,7 +1,5 @@
 import { Pedido, pedidosMock } from "@/mocks/pedidosMock";
 import { carregarPedidos, salvarPedidos } from "@/mocks/storageService";
-import * as Notifications from "expo-notifications";
-import { Platform } from "react-native";
 
 let pedidos: Pedido[] = [];
 
@@ -26,6 +24,25 @@ export const getPedidos = async () => {
 
   await delay(400);
   return pedidos;
+};
+
+export const getItensByPedido = async (id: number) => {
+  const itens = pedidos.find((p) => p.idPedido === id)!.itens;
+  await delay(400);
+  return itens;
+};
+
+export const getPedidoById = async (id: number) => {
+  const result = pedidos.find((p) => p.idPedido === id);
+  await delay(400);
+  return result;
+};
+
+export async function getUltimoNumeroComanda(): Promise<number> {
+  const ultimoPedido = pedidos.length > 0 ? pedidos[pedidos.length - 1] : null;
+  const numeroComanda = ultimoPedido ? ultimoPedido.numeroComanda : 0;
+  await delay(400);
+  return numeroComanda;
 };
 
 export async function criarPedido(novoPedido: Omit<Pedido, "id" | "data">): Promise<Pedido> {
@@ -66,11 +83,8 @@ export const updateItemPedido = async (
       else if (todosCancelados) novoStatus = "Cancelado";
 
       if (todosProntos) {
-        if (Platform.OS !== "web") {
-          enviarNotificacaoPedidoPronto(pedido);
-        } else {
-          alert(`Pedido ${pedido.comanda} - Mesa ${pedido.numeroMesa} está pronto!`);
-        }
+        enviarNotificacaoPedidoPronto(pedido);
+        alert(`Pedido ${pedido.comanda} - Mesa ${pedido.numeroMesa} está pronto!`);
       }
 
       return {
@@ -86,14 +100,16 @@ export const updateItemPedido = async (
 };
 
 async function enviarNotificacaoPedidoPronto(pedido: any) {
-  await Notifications.scheduleNotificationAsync({
-    content: {
+  const userId = 2;
+
+  await fetch('http://10.0.2.2:5244/push/send-notification', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      userId,
       title: "🍽 Pedido pronto!",
-      body: `Mesa - ${pedido.numeroMesa} / Comanda - ${pedido.comanda} está pronto.`,
-      sound: true,
-      priority: Notifications.AndroidNotificationPriority.HIGH,
-    },
-    trigger: null,
+      body: `Mesa - ${pedido.numeroMesa} / Comanda - ${pedido.comanda} #${pedido.numeroComanda} está pronto.`
+    })
   });
 }
 

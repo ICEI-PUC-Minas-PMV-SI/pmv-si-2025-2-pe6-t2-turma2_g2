@@ -1,39 +1,56 @@
 import { AuthProvider } from "@/context/authContext";
-//import { initPedidos } from "@/services/pedidosService";
-import * as Device from "expo-device";
+import { initPedidos } from "@/mocks/services/pedidosService";
+import Constants from 'expo-constants';
 import * as Notifications from "expo-notifications";
 import { Slot } from "expo-router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Platform } from "react-native";
 
 export default function App() {
   const [expoPushToken, setExpoPushToken] = useState<string | null>(null);
 
   useEffect(() => {
-    //initPedidos();
-    async function registerForPushNotifications() {
-      if (Device.isDevice) {
-        const { status: existingStatus } = await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
+    initPedidos();
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token ?? ""));
+  }, []);
 
-        if (existingStatus !== "granted") {
-          const { status } = await Notifications.requestPermissionsAsync();
-          finalStatus = status;
-        }
+  async function registerForPushNotificationsAsync() {
+    let token;
+    const isEmulatorAndroid = Platform.OS === 'android' && !Constants.isDevice;
 
-        if (finalStatus === "granted") {
-          const token = (await Notifications.getExpoPushTokenAsync()).data;
-          setExpoPushToken(token);
-          console.log("Expo Push Token:", token);
-        }
+    if (isEmulatorAndroid) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
       }
+
+      if (finalStatus !== 'granted') {
+        console.log('Permissão de notificações negada!');
+        return;
+      }
+
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log('Expo Push Token:', token);
+    } else {
+      console.log('Use um dispositivo físico ou emulador com Development Build');
     }
 
-    registerForPushNotifications();
-  }, []);
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+      });
+    }
+
+    return token;
+  }
 
   return (
     <AuthProvider>
-        <Slot />
+      <Slot />
     </AuthProvider>
   );
 }

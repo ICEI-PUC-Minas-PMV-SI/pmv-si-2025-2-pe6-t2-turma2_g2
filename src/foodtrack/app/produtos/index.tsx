@@ -1,12 +1,14 @@
-import { deleteProduto, getProdutos, Produto } from "@/services/produtosService";
-import { useRouter } from "expo-router";
+//import { deleteProduto, getProdutos, Produto } from "@/services/produtosService";
+import { Produto } from "@/mocks/produtosMock";
+import { deleteProduto, getProdutos } from "@/mocks/services/produtosService";
+import { useNavigation, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-//import { Produto } from "../../mocks/produtosMock";
 
 export default function ProdutosScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
   const carregarProdutos = async () => {
@@ -16,6 +18,11 @@ export default function ProdutosScreen() {
 
   useEffect(() => {
     carregarProdutos();
+    
+    if (Platform.OS === "web") {
+      navigation.setOptions({ title: "Produtos" });
+      document.title = "Produtos";
+    }
   }, []);
 
   const excluirProduto = async (id: number) => {

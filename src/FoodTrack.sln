@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PedidoTest", "PedidoTest", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PedidoTest", "PedidoTest\PedidoTest.csproj", "{687D4058-589C-421C-807A-2705B9D93152}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpoPushBackend", "ExpoPushBackend\ExpoPushBackend.csproj", "{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -161,6 +163,18 @@ Global
 		{687D4058-589C-421C-807A-2705B9D93152}.Release|x64.Build.0 = Release|Any CPU
 		{687D4058-589C-421C-807A-2705B9D93152}.Release|x86.ActiveCfg = Release|Any CPU
 		{687D4058-589C-421C-807A-2705B9D93152}.Release|x86.Build.0 = Release|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Debug|x64.Build.0 = Debug|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Debug|x86.Build.0 = Debug|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Release|x64.ActiveCfg = Release|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Release|x64.Build.0 = Release|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Release|x86.ActiveCfg = Release|Any CPU
+		{6E9E291E-A086-43AA-8EC7-DE1C1E54A494}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

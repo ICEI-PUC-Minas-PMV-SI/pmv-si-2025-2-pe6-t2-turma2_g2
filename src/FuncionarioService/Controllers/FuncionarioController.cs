@@ -68,7 +68,8 @@ namespace FuncionarioService.Controllers
                         funcionario.Nome,
                         funcionario.Login,
                         funcionario.SenhaHash,
-                        funcionario.Ativo
+                        funcionario.Ativo,
+                        funcionario.Funcao
                     });
 
             funcionario.IdFuncionario = id;
@@ -103,7 +104,8 @@ namespace FuncionarioService.Controllers
                         funcionario.Nome,
                         funcionario.Login,
                         funcionario.SenhaHash,
-                        funcionario.Ativo
+                        funcionario.Ativo,
+                        funcionario.Funcao
                     });
 
             return NoContent();

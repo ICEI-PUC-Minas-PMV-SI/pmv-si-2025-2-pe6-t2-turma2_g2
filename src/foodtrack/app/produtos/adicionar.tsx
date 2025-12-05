@@ -1,35 +1,35 @@
-import { criarProduto, getProdutoById, Produto, updateProduto } from "@/services/produtosService";
+//import { criarProduto, getProdutoById, Produto, updateProduto } from "@/services/produtosService";
+import { Produto } from "@/mocks/produtosMock";
+import { criarProduto, getProdutoById, updateProduto } from "@/mocks/services/produtosService";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-//import { Produto } from "../../mocks/produtosMock";
 
 export default function AdicionarProduto() {
   const router = useRouter();
   const { idProduto } = useLocalSearchParams();
   const [nomeProduto, setNomeProduto] = useState("");
-  const [precoUnitario, setPrecoUnitario] = useState<number | null>(null);
+  const [preco, setPrecoUnitario] = useState("");
   const [estacao, setEstacao] = useState("");
 
   useEffect(() => {
     const carregar = async () => {
-      const produto = await getProdutoById(Number(idProduto));
+      if (idProduto) {
+        const produto = await getProdutoById(Number(idProduto));
 
-      setNomeProduto(produto.nome);
-      setPrecoUnitario(produto.precoUnitario);
-      setEstacao(produto.estacao);
+        setNomeProduto(produto!.nome);
+        setPrecoUnitario(produto!.precoUnitario.toString());
+        setEstacao(produto!.estacao);
+      }
     };
     carregar();
   }, [idProduto]);
 
   const salvar = async () => {
-    if (precoUnitario) {
-      Alert.alert("Atenção", "Preencha todos os campos.");
-      return;
-    }
-
-    const nome = nomeProduto;
+    const nome = nomeProduto;    
+    const normalized = preco.replace(",", ".");
+    const precoUnitario = Number(normalized ?? 0);
 
     const produtoData = {
       nome,
@@ -64,10 +64,9 @@ export default function AdicionarProduto() {
         <TextInput
           style={styles.input}
           placeholder="Preço (R$)"
-          keyboardType="decimal-pad"
-          value={precoUnitario !== null ? precoUnitario.toString() : ""}
+          value={preco}
           onChangeText={(text) => {
-            setPrecoUnitario(text ? Number(text) : null);
+            setPrecoUnitario(text);
           }}
         />
 
@@ -75,19 +74,23 @@ export default function AdicionarProduto() {
           style={styles.input}
           placeholder="Estação (Chapa, Fritadeira, Forno, Bebidas)"
           value={estacao}
-          onChangeText={(t) => setEstacao(estacao)}
+          onChangeText={(text) => {
+            setEstacao(text)
+          }}
         />
 
-        <TouchableOpacity style={styles.botaoSalvar} onPress={salvar}>
-          <Text style={styles.botaoSalvarTexto}>Salvar</Text>
-        </TouchableOpacity>
+        <View style={styles.linhaBotoes}>
+          <TouchableOpacity style={styles.botaoSalvar} onPress={salvar}>
+            <Text style={styles.botaoSalvarTexto}>Salvar</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.botaoVoltar}
-          onPress={() => router.replace("/produtos" as any)}
-        >
-          <Text style={styles.botaoVoltarTexto}>← Voltar</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.botaoVoltar}
+            onPress={() => router.replace("/produtos" as any)}
+          >
+            <Text style={styles.botaoVoltarTexto}>Cancelar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -108,12 +111,14 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   botaoSalvar: {
+    alignSelf: "center",
+    marginTop: 20,
     backgroundColor: "#E67E22",
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
-  botaoSalvarTexto: { color: "#FFF8F1", fontWeight: "bold", fontSize: 16 },
+  botaoSalvarTexto: { color: "#FFF8F1", fontWeight: "bold" },
   botaoVoltar: {
     alignSelf: "center",
     marginTop: 20,
@@ -123,4 +128,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   botaoVoltarTexto: { color: "#FFF8F1", fontWeight: "bold" },
+  linhaBotoes: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+  },
 });

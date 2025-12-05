@@ -1,6 +1,7 @@
-import { useRouter } from 'expo-router';
-import React from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { logout } from '@/services/authHelper';
+import { useNavigation, useRouter } from 'expo-router';
+import React, { useEffect } from 'react';
+import { FlatList, Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Tela {
@@ -15,15 +16,32 @@ const telas: Tela[] = [
   { key: 'pedidos', nome: 'Pedidos', route: '/pedidos' },
   { key: 'kds', nome: 'KDS - Estações', route: '/kds' },
   { key: 'pagamento', nome: 'Pagamentos', route: '/pagamento' },
-  //{ key: 'relatorio', nome: 'Relatório de Vendas', route: '/relatorio-vendas' },
-  //{ key: 'relatorio', nome: 'Relatório de Itens Mais Vendidos', route: '/relatorio-itens-mais-vendidos' },
-  //{ key: 'relatorio', nome: 'Relatório de Itens Menos Vendidos', route: '/relatorio-itens-menos-vendidos' },
-  //{ key: 'relatorio', nome: 'Relatório de Pedidos por Forma de Pagamento', route: '/relatorio-pedidos-forma-pagamento' },
-  //{ key: 'relatorio', nome: 'Relatório de Cancelamentos', route: '/relatorio-cancelamentos' }
+  { key: 'relatorio-vendas', nome: 'Relatório de Vendas', route: '/relatorio-vendas' },
+  { key: 'relatorio-itens-mais-vendidos', nome: 'Relatório de Itens Mais Vendidos', route: '/relatorio-itens-mais-vendidos' },
+  { key: 'relatorio-itens-menos-vendidos', nome: 'Relatório de Itens Menos Vendidos', route: '/relatorio-itens-menos-vendidos' },
+  { key: 'relatorio-pedidos-forma-pagamento', nome: 'Relatório de Pedidos por Forma de Pagamento', route: '/relatorio-pedidos-forma-pagamento' },
+  { key: 'relatorio-cancelamentos', nome: 'Relatório de Cancelamentos', route: '/relatorio-cancelamentos' }
 ];
 
 export default function Dashboard() {
   const router = useRouter();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (Platform.OS === "web") {      
+      navigation.setOptions({ title: "Dashboard" });
+      document.title = "Dashboard";
+    }
+    }, []);
+
+  const handleDeslogar = async () => {
+    try {
+      await logout();
+      router.push('/login');
+    } catch (e) {
+      console.log("Erro", "Não foi possível deslogar");
+    }
+  };
 
   const renderItem = ({ item }: { item: typeof telas[0] }) => (
     <Pressable
@@ -38,6 +56,19 @@ export default function Dashboard() {
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <Text style={styles.title}>Dashboard</Text>
+        <TouchableOpacity
+          onPress={handleDeslogar}
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            backgroundColor: "red",
+            padding: 10,
+            borderRadius: 5,
+          }}
+        >
+        <Text style={{ color: "white", textAlign: "center" }}>Sair</Text>
+        </TouchableOpacity>
         <FlatList
           data={telas}
           renderItem={renderItem}
@@ -83,5 +114,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     textAlign: 'center',
-  },
+  }
 });

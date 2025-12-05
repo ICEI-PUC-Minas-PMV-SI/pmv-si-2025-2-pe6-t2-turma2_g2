@@ -1,11 +1,12 @@
-import { useRouter } from "expo-router";
+import { logout } from "@/services/authHelper";
+import { useNavigation, useRouter } from "expo-router";
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, FlatList, Modal, Pressable,
-    StyleSheet,
-    Text, TextInput,
-    TouchableOpacity,
-    View
+  Alert, FlatList, Modal, Platform, Pressable,
+  StyleSheet,
+  Text, TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { addFuncionario, deleteFuncionario, Funcionario, getFuncionarios, updateFuncionario } from '../../services/funcionariosService';
@@ -20,6 +21,7 @@ export default function FuncionariosScreen() {
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
   const router = useRouter();
+  const navigation = useNavigation();
 
   const loadFuncionarios = async () => {
     try {
@@ -31,7 +33,13 @@ export default function FuncionariosScreen() {
     }
   };
 
-  useEffect(() => { loadFuncionarios(); }, []);
+  useEffect(() => {
+    if (Platform.OS === "web") {
+      navigation.setOptions({ title: "Funcionários" });
+      document.title = "Funcionários";
+    }
+    
+    loadFuncionarios(); }, []);
 
   const openModal = (func?: Funcionario) => {
     if (func) {
@@ -97,6 +105,15 @@ export default function FuncionariosScreen() {
     }
   };
 
+  const handleDeslogar = async () => {
+    try {
+      await logout();
+      router.push('/login');
+    } catch (e) {
+      console.log("Erro", "Não foi possível deslogar");
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.card}>
@@ -112,6 +129,20 @@ export default function FuncionariosScreen() {
         <Pressable style={styles.botaoNovo} onPress={() => openModal()}>
           <Text style={styles.botaoNovoTexto}>+ Novo Funcionário</Text>
         </Pressable>
+        
+        <TouchableOpacity
+          onPress={handleDeslogar}
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            backgroundColor: "red",
+            padding: 10,
+            borderRadius: 5,
+          }}
+        >
+        <Text style={{ color: "white", textAlign: "center" }}>Sair</Text>
+        </TouchableOpacity>
 
         <FlatList
           data={funcionarios}

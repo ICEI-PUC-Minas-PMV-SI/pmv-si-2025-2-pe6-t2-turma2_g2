@@ -1,6 +1,8 @@
-import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { Alert, Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
+import { salvarFuncao } from '@/mocks/storageService';
+import { getByUsername } from '@/services/funcionariosService';
+import { useNavigation, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { Alert, Platform, Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import { useAuth } from '../context/authContext';
 
 export default function LoginScreen() {
@@ -9,12 +11,40 @@ export default function LoginScreen() {
   const { login } = useAuth();
   const router = useRouter();
   const { width } = useWindowDimensions();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (Platform.OS === "web") {
+      navigation.setOptions({ title: "Login" });
+      document.title = "Login";
+    }
+  }, []);
 
   const handleLogin = async () => {
     if (!usuario || !senha) return Alert.alert('Preencha usuário e senha');
     try {
       await login(usuario, senha);
-      router.push('/dashboard');
+
+      const funcionario = await getByUsername(usuario);
+
+      if (funcionario.funcao == "GERENTE") {
+        router.push('/dashboard');
+      } else if (funcionario.funcao == "CAIXA") {
+        router.push('/pagamento');
+      } else if (funcionario.funcao == "ATENDENTE") {
+        router.push('/pedidos');
+      } else if (funcionario.funcao == "CHAPA") {
+        router.push('/kds/chapa');
+      } else if (funcionario.funcao == "FORNO") {
+        router.push('/kds/forno');
+      } else if (funcionario.funcao == "FRITADEIRA") {
+        router.push('/kds/fritadeira');
+      } else if (funcionario.funcao == "BEBIDAS") {
+        router.push('/kds/bebidas');
+      }
+
+      await salvarFuncao(funcionario.funcao);
+      
     } catch (error) {
       Alert.alert('Erro', 'Usuário ou senha inválidos');
     }

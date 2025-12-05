@@ -25,6 +25,22 @@ export const getFuncionarios = async (): Promise<Funcionario[]> => {
   }
 };
 
+export const getByUsername = async (login: string): Promise<Funcionario> => {
+  try {
+    const response = await api.get(`login/${login}`);
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      console.log('Detalhes:', error.response.status, error.response.data);
+    }
+    else {
+      console.log('Erro sem resposta:', error);
+    }
+    
+    throw error;
+  }
+};
+
 export const addFuncionario = async (func: Funcionario) => {
   const response = await api.post('/', func);
   return response.data;

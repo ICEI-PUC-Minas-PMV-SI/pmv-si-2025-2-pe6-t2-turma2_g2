@@ -1,14 +1,24 @@
-import { getPedidos, Pedido, updateItemPedido } from "@/services/pedidosService";
-import { useRouter } from "expo-router";
+//import { getPedidos, Pedido, updateItemPedido } from "@/services/pedidosService";
+import { Pedido } from "@/mocks/pedidosMock";
+import { getPedidos, updateItemPedido } from "@/mocks/services/pedidosService";
+import { carregarFuncaoStorage } from "@/mocks/storageService";
+import { logout } from "@/services/authHelper";
+import { useNavigation, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-//import { Pedido } from "../../mocks/pedidosMock";
+import { FlatList, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function KdsChapa() {
   const router = useRouter();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const ESTACAO = "Forno";
+  const navigation = useNavigation();
+  const [funcao, setFuncao] = useState<any>("");
+
+  const carregarFuncao = async () => {
+    const data = await carregarFuncaoStorage();
+    setFuncao(data);
+  };
 
   const carregarPedidos = async () => {
     const lista = await getPedidos();
@@ -32,7 +42,14 @@ export default function KdsChapa() {
 
   useEffect(() => {
     carregarPedidos();
+    carregarFuncao();
     const interval = setInterval(carregarPedidos, 5000);
+
+    if (Platform.OS === "web") {
+      navigation.setOptions({ title: "KDS - Forno" });
+      document.title = "KDS - Forno";
+    }
+
     return () => clearInterval(interval);
   }, []);
 
@@ -60,21 +77,47 @@ export default function KdsChapa() {
     </View>
   );
 
+  const handleDeslogar = async () => {
+    try {
+      await logout();
+      router.push('/login');
+    } catch (e) {
+      console.log("Erro", "Não foi possível deslogar");
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.botaoVoltar}
-          onPress={() => router.replace("/kds")}
-        >
-          <Text style={styles.botaoVoltarTexto}>← Voltar</Text>
-        </TouchableOpacity>
+        {funcao === "GERENTE" && (
+          <TouchableOpacity
+            style={styles.botaoVoltar}
+            onPress={() => router.replace("/kds")}
+          >
+            <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
+          </TouchableOpacity>
+        )}
 
         <Text style={styles.titulo}>KDS - {ESTACAO}</Text>
 
+        
+        <TouchableOpacity
+          onPress={handleDeslogar}
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            backgroundColor: "red",
+            padding: 10,
+            borderRadius: 5,
+          }}
+        >
+        <Text style={{ color: "white", textAlign: "center" }}>Sair</Text>
+        </TouchableOpacity>
+
         <FlatList
           data={pedidos}
-          keyExtractor={(item) => item.idPedido.toString()}
+          keyExtractor={(item) => (item.idPedido ?? 0).toString()}
           renderItem={renderPedido}
         />
       </View>

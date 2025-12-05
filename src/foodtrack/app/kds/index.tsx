@@ -1,6 +1,6 @@
-import { useRouter } from "expo-router";
-import React from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation, useRouter } from "expo-router";
+import React, { useEffect } from "react";
+import { FlatList, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Estacao {
@@ -19,6 +19,14 @@ const estacoes: Estacao[] = [
 
 export default function KdsMain() {
   const router = useRouter();
+  const navigation = useNavigation();
+
+  useEffect(() => {    
+    if (Platform.OS === "web") {
+      navigation.setOptions({ title: "KDS" });
+      document.title = "KDS";
+    }
+  }, []);
 
   const renderItem = ({ item }: { item: Estacao }) => (
     <TouchableOpacity

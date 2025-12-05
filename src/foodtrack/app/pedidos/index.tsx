@@ -1,14 +1,13 @@
-import {
-  cancelarPedido,
-  getPedidos,
-  Pedido,
-} from "@/services/pedidosService";
-import { useFocusEffect, useRouter } from "expo-router";
+//import { cancelarPedido, getPedidos, Pedido, } from "@/services/pedidosService";
+import { cancelarPedido, getPedidos, Pedido, } from "@/mocks/services/pedidosService";
+import { carregarFuncaoStorage } from "@/mocks/storageService";
+import { useFocusEffect, useNavigation, useRouter } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
   FlatList,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -19,7 +18,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Pedidos() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(true);
+  const [funcao, setFuncao] = useState<any>("");
   const router = useRouter();
+  const navigation = useNavigation();
+
+  const carregarFuncao = async () => {
+    const data = await carregarFuncaoStorage();
+    setFuncao(data);
+  };
 
   const carregarPedidos = async () => {
     setLoading(true);
@@ -46,6 +52,12 @@ export default function Pedidos() {
   useFocusEffect(
     useCallback(() => {
       carregarPedidos();
+      carregarFuncao();
+
+      if (Platform.OS === "web") {
+        navigation.setOptions({ title: "Pedidos" });
+        document.title = "Pedidos";
+      }
     }, [])
   );
 
@@ -104,12 +116,14 @@ export default function Pedidos() {
   return (    
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.botaoVoltar}
-          onPress={() => router.replace("/dashboard")}
-        >
-          <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
-        </TouchableOpacity>
+        {funcao === "GERENTE" && (
+          <TouchableOpacity
+            style={styles.botaoVoltar}
+            onPress={() => router.replace("/dashboard")}
+          >
+            <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
+          </TouchableOpacity>
+        )}
         
         <Text style={styles.titulo}>Pedidos</Text>
 
@@ -127,7 +141,7 @@ export default function Pedidos() {
         ) : (
           <FlatList
             data={pedidos}
-            keyExtractor={(item) => item.idPedido.toString()}
+            keyExtractor={(item) => String(item.idPedido ?? '')}
             renderItem={renderPedido}
             contentContainerStyle={{ paddingBottom: 40 }}
           />
@@ -151,14 +165,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   card: {
-    backgroundColor: "#fff",
-    borderRadius: 14,
-    padding: 14,
+    backgroundColor: "#F9E4C8",
+    padding: 16,
+    borderRadius: 12,
     marginBottom: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
   },
   headerCard: {
     flexDirection: "row",

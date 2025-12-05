@@ -1,60 +1,53 @@
-//import { Pedido } from "@/mocks/pedidosMock";
-import { getPedidos, Pedido } from "@/services/pedidosService";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { useRouter } from "expo-router";
+import { Pedido } from "@/mocks/pedidosMock";
+import { getPedidos } from "@/mocks/services/pedidosService";
+//import { getPedidos, Pedido } from "@/services/pedidosService";
+import { useNavigation, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-    Dimensions,
-    FlatList,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
-import { BarChart, PieChart } from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Relatorio() {
   const router = useRouter();
+  const navigation = useNavigation();
 
-  const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [formasPagamento, setFormasPagamento] = useState<any[]>([]);
-  const [totalVendas, setTotalVendas] = useState(0);
-  const [ticketMedio, setTicketMedio] = useState(0);
 
-  const [dataInicio, setDataInicio] = useState<Date>(
-    new Date(new Date().setDate(new Date().getDate() - 7))
-  );
-  const [dataFim, setDataFim] = useState<Date>(new Date());
-  const [mostrarInicio, setMostrarInicio] = useState(false);
-  const [mostrarFim, setMostrarFim] = useState(false);
+  const now = new Date();
+  const primeiroDiaDoMes = new Date(now.getFullYear(), now.getMonth(), 1);
+  primeiroDiaDoMes.setHours(3,0,0,0);
+  const fim = new Date();
+  fim.setHours(3,0,0,0);
+
+  const [dataInicio, setDataInicio] = useState<Date>(primeiroDiaDoMes);
+  const [dataFim, setDataFim] = useState<Date>(fim);
 
   const carregarPedidos = async () => {
     const lista = await getPedidos();
 
     const pedidosFiltrados = lista.filter((p: Pedido) => {
       const dataPedido = new Date(p.data);
+
       return (
-        ["Pronto", "Pago"].includes(p.status) &&
+        ["Pago"].includes(p.status) &&
         dataPedido >= dataInicio &&
         dataPedido <= dataFim
       );
     });
 
-    setPedidos(pedidosFiltrados);
-
-    const total = pedidosFiltrados.reduce((acc: number, p: Pedido) => acc + p.valorTotal, 0);
-    setTotalVendas(total);
-    setTicketMedio(
-      pedidosFiltrados.length ? total / pedidosFiltrados.length : 0
-    );
-
     const totalGeral = pedidosFiltrados.reduce(
       (acc: number, p: Pedido) => acc + p.valorTotal,
       0
     );
+
     const resumoFormas = ["Pix", "Cartão", "Dinheiro"].map((forma, i) => {
       const totalForma = pedidosFiltrados
         .filter((p: Pedido) => p.formaPagamento === forma)
@@ -62,7 +55,7 @@ export default function Relatorio() {
       const percentual = totalGeral > 0 ? (totalForma / totalGeral) * 100 : 0;
 
       return {
-        name: `${forma} (${percentual.toFixed(1)}%)`,
+        name: `${forma} (R$ ${totalForma.toFixed(2)})`,
         total: totalForma,
         percentual,
         color: ["#E67E22", "#F2C94C", "#A37B5D"][i],
@@ -70,11 +63,17 @@ export default function Relatorio() {
         legendFontSize: 14,
       };
     });
+
     setFormasPagamento(resumoFormas);
   };
 
   useEffect(() => {
     carregarPedidos();
+        
+    if (Platform.OS === "web") {
+      navigation.setOptions({ title: "Relatório" });
+      document.title = "Relatório";
+    }
   }, [dataInicio, dataFim]);
 
   const chartConfig = {
@@ -101,31 +100,18 @@ export default function Relatorio() {
           <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
         </TouchableOpacity>
 
-        <Text style={styles.titulo}>📊 Relatório de Vendas</Text>
+        <Text style={styles.titulo}>📊 Relatório de Formas de Pagamento</Text>
 
         <View style={styles.filtroContainer}>
           <Text style={styles.subtitulo}>Filtrar por Período</Text>
 
           <TouchableOpacity
             style={styles.botaoData}
-            onPress={() => setMostrarInicio(true)}
           >
             <Text style={styles.textoData}>
-              Início: {dataInicio.toLocaleDateString("pt-BR")}
+              Início:
             </Text>
           </TouchableOpacity>
-
-          {mostrarInicio && Platform.OS !== "web" && (
-            <DateTimePicker
-              value={dataInicio}
-              mode="date"
-              display="default"
-              onChange={(_, date) => {
-                setMostrarInicio(false);
-                if (date) setDataInicio(date);
-              }}
-            />
-          )}
 
           {Platform.OS === "web" && (
             <input
@@ -138,24 +124,11 @@ export default function Relatorio() {
 
           <TouchableOpacity
             style={styles.botaoData}
-            onPress={() => setMostrarFim(true)}
           >
             <Text style={styles.textoData}>
-              Fim: {dataFim.toLocaleDateString("pt-BR")}
+              Fim:
             </Text>
           </TouchableOpacity>
-
-          {mostrarFim && Platform.OS !== "web" && (
-            <DateTimePicker
-              value={dataFim}
-              mode="date"
-              display="default"
-              onChange={(_, date) => {
-                setMostrarFim(false);
-                if (date) setDataFim(date);
-              }}
-            />
-          )}
 
           {Platform.OS === "web" && (
             <input
@@ -171,35 +144,6 @@ export default function Relatorio() {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.resumoContainer}>
-          <Text style={styles.resumoTexto}>💰 Total Vendido: R$ {totalVendas.toFixed(2)}</Text>
-          <Text style={styles.resumoTexto}>📦 Pedidos Finalizados: {pedidos.length}</Text>
-          <Text style={styles.resumoTexto}>📊 Ticket Médio: R$ {ticketMedio.toFixed(2)}</Text>
-        </View>
-
-        {pedidos.length > 0 && (
-          <View style={styles.graficoContainer}>
-            <Text style={styles.subtitulo}>Evolução das Vendas</Text>
-            <BarChart
-              data={{
-                labels: pedidos.map((p) =>
-                  new Date(p.data).toLocaleDateString("pt-BR", {
-                    day: "2-digit",
-                    month: "2-digit",
-                  })
-                ),
-                datasets: [{ data: pedidos.map((p) => p.valorTotal) }],
-              }}
-              width={Dimensions.get("window").width - 40}
-              height={220}
-              yAxisLabel="R$ "
-              yAxisSuffix=""
-              chartConfig={chartConfig}
-              style={styles.grafico}
-            />
-          </View>
-        )}
-
         {formasPagamento.length > 0 && (
           <View style={styles.graficoContainer}>
             <Text style={styles.subtitulo}>Formas de Pagamento</Text>
@@ -214,22 +158,6 @@ export default function Relatorio() {
             />
           </View>
         )}
-
-        <Text style={styles.subtitulo}>Últimos pedidos</Text>
-        <FlatList
-          data={pedidos.slice(-5).reverse()}
-          keyExtractor={(item) => item.idPedido.toString()}
-          scrollEnabled={false}
-          renderItem={({ item }) => (
-            <View style={styles.cardPedido}>
-              <Text style={styles.cliente}>Comanda {item.comanda}</Text>
-              <Text style={styles.valor}>
-                {new Date(item.data).toLocaleDateString("pt-BR")} — R${" "}
-                {item.valorTotal.toFixed(2)} — {item.formaPagamento}
-              </Text>
-            </View>
-          )}
-        />
       </ScrollView>
     </SafeAreaView>
   );

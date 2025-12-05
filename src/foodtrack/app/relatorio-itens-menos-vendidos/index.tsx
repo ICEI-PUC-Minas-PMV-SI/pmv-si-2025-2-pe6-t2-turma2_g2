@@ -1,91 +1,72 @@
-//import { Pedido } from "@/mocks/pedidosMock";
-import { getPedidos, Pedido } from "@/services/pedidosService";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { useRouter } from "expo-router";
+import { ItemPedidoRelatorio, Pedido } from "@/mocks/pedidosMock";
+import { getPedidos } from "@/mocks/services/pedidosService";
+//import { getPedidos, Pedido } from "@/services/pedidosService";
+import { useNavigation, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-    Dimensions,
-    FlatList,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
-import { BarChart, PieChart } from "react-native-chart-kit";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Relatorio() {
   const router = useRouter();
+  const navigation = useNavigation();
 
-  const [pedidos, setPedidos] = useState<Pedido[]>([]);
-  const [formasPagamento, setFormasPagamento] = useState<any[]>([]);
-  const [totalVendas, setTotalVendas] = useState(0);
-  const [ticketMedio, setTicketMedio] = useState(0);
+  const [itens, setItens] = useState<ItemPedidoRelatorio[]>([]);
 
-  const [dataInicio, setDataInicio] = useState<Date>(
-    new Date(new Date().setDate(new Date().getDate() - 7))
-  );
-  const [dataFim, setDataFim] = useState<Date>(new Date());
-  const [mostrarInicio, setMostrarInicio] = useState(false);
-  const [mostrarFim, setMostrarFim] = useState(false);
+  const now = new Date();
+  const primeiroDiaDoMes = new Date(now.getFullYear(), now.getMonth(), 1);
+  primeiroDiaDoMes.setHours(3,0,0,0);
+  const fim = new Date();
+  fim.setHours(3,0,0,0);
+
+  const [dataInicio, setDataInicio] = useState<Date>(primeiroDiaDoMes);
+  const [dataFim, setDataFim] = useState<Date>(fim);
+  const [itensAgrupados, setItensAgrupados] = useState<
+    Array<{ nome: string; quantidade: number }>
+  >([]);
 
   const carregarPedidos = async () => {
     const lista = await getPedidos();
 
     const pedidosFiltrados = lista.filter((p: Pedido) => {
       const dataPedido = new Date(p.data);
-      return (
-        ["Pronto", "Pago"].includes(p.status) &&
-        dataPedido >= dataInicio &&
-        dataPedido <= dataFim
-      );
+      return dataPedido >= dataInicio && dataPedido <= dataFim;
     });
 
-    setPedidos(pedidosFiltrados);
+    const produtoMap = new Map<number, { nome: string; quantidade: number }>();
 
-    const total = pedidosFiltrados.reduce((acc: number, p: Pedido) => acc + p.valorTotal, 0);
-    setTotalVendas(total);
-    setTicketMedio(
-      pedidosFiltrados.length ? total / pedidosFiltrados.length : 0
-    );
-
-    const totalGeral = pedidosFiltrados.reduce(
-      (acc: number, p: Pedido) => acc + p.valorTotal,
-      0
-    );
-    const resumoFormas = ["Pix", "Cartão", "Dinheiro"].map((forma, i) => {
-      const totalForma = pedidosFiltrados
-        .filter((p: Pedido) => p.formaPagamento === forma)
-        .reduce((acc: number, p: Pedido) => acc + p.valorTotal, 0);
-      const percentual = totalGeral > 0 ? (totalForma / totalGeral) * 100 : 0;
-
-      return {
-        name: `${forma} (${percentual.toFixed(1)}%)`,
-        total: totalForma,
-        percentual,
-        color: ["#E67E22", "#F2C94C", "#A37B5D"][i],
-        legendFontColor: "#4A3F35",
-        legendFontSize: 14,
-      };
+    pedidosFiltrados.forEach((pedido) => {
+      pedido.itens.forEach((item) => {
+        if (produtoMap.has(item.idProduto)) {
+          produtoMap.get(item.idProduto)!.quantidade += item.quantidade;
+        } else {
+          produtoMap.set(item.idProduto, { nome: item.nome, quantidade: item.quantidade });
+        }
+      });
     });
-    setFormasPagamento(resumoFormas);
+
+    const produtosAgrupados = Array.from(produtoMap.values())
+      .sort((b, a) => b.quantidade - a.quantidade)
+      .slice(0, 5);
+      
+    setItensAgrupados(produtosAgrupados);
   };
 
   useEffect(() => {
     carregarPedidos();
+        
+    if (Platform.OS === "web") {
+      navigation.setOptions({ title: "Relatório" });
+      document.title = "Relatório";
+    }
   }, [dataInicio, dataFim]);
-
-  const chartConfig = {
-    backgroundColor: "#FFF8F1",
-    backgroundGradientFrom: "#FFF8F1",
-    backgroundGradientTo: "#FFF8F1",
-    decimalPlaces: 2,
-    color: (opacity = 1) => `rgba(230, 126, 34, ${opacity})`,
-    labelColor: () => "#4A3F35",
-    style: { borderRadius: 12 },
-  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -101,31 +82,18 @@ export default function Relatorio() {
           <Text style={styles.botaoVoltarTexto}>← Voltar ao Dashboard</Text>
         </TouchableOpacity>
 
-        <Text style={styles.titulo}>📊 Relatório de Vendas</Text>
+        <Text style={styles.titulo}>📊 Relatório de Itens Menos Vendidos</Text>
 
         <View style={styles.filtroContainer}>
           <Text style={styles.subtitulo}>Filtrar por Período</Text>
 
           <TouchableOpacity
             style={styles.botaoData}
-            onPress={() => setMostrarInicio(true)}
           >
             <Text style={styles.textoData}>
-              Início: {dataInicio.toLocaleDateString("pt-BR")}
+              Início:
             </Text>
           </TouchableOpacity>
-
-          {mostrarInicio && Platform.OS !== "web" && (
-            <DateTimePicker
-              value={dataInicio}
-              mode="date"
-              display="default"
-              onChange={(_, date) => {
-                setMostrarInicio(false);
-                if (date) setDataInicio(date);
-              }}
-            />
-          )}
 
           {Platform.OS === "web" && (
             <input
@@ -138,24 +106,11 @@ export default function Relatorio() {
 
           <TouchableOpacity
             style={styles.botaoData}
-            onPress={() => setMostrarFim(true)}
           >
             <Text style={styles.textoData}>
-              Fim: {dataFim.toLocaleDateString("pt-BR")}
+              Fim:
             </Text>
           </TouchableOpacity>
-
-          {mostrarFim && Platform.OS !== "web" && (
-            <DateTimePicker
-              value={dataFim}
-              mode="date"
-              display="default"
-              onChange={(_, date) => {
-                setMostrarFim(false);
-                if (date) setDataFim(date);
-              }}
-            />
-          )}
 
           {Platform.OS === "web" && (
             <input
@@ -171,65 +126,19 @@ export default function Relatorio() {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.resumoContainer}>
-          <Text style={styles.resumoTexto}>💰 Total Vendido: R$ {totalVendas.toFixed(2)}</Text>
-          <Text style={styles.resumoTexto}>📦 Pedidos Finalizados: {pedidos.length}</Text>
-          <Text style={styles.resumoTexto}>📊 Ticket Médio: R$ {ticketMedio.toFixed(2)}</Text>
-        </View>
-
-        {pedidos.length > 0 && (
-          <View style={styles.graficoContainer}>
-            <Text style={styles.subtitulo}>Evolução das Vendas</Text>
-            <BarChart
-              data={{
-                labels: pedidos.map((p) =>
-                  new Date(p.data).toLocaleDateString("pt-BR", {
-                    day: "2-digit",
-                    month: "2-digit",
-                  })
-                ),
-                datasets: [{ data: pedidos.map((p) => p.valorTotal) }],
-              }}
-              width={Dimensions.get("window").width - 40}
-              height={220}
-              yAxisLabel="R$ "
-              yAxisSuffix=""
-              chartConfig={chartConfig}
-              style={styles.grafico}
-            />
-          </View>
-        )}
-
-        {formasPagamento.length > 0 && (
-          <View style={styles.graficoContainer}>
-            <Text style={styles.subtitulo}>Formas de Pagamento</Text>
-            <PieChart
-              data={formasPagamento}
-              width={Dimensions.get("window").width - 40}
-              height={220}
-              accessor="total"
-              backgroundColor="transparent"
-              chartConfig={chartConfig}
-              paddingLeft="20"
-            />
-          </View>
-        )}
-
-        <Text style={styles.subtitulo}>Últimos pedidos</Text>
-        <FlatList
-          data={pedidos.slice(-5).reverse()}
-          keyExtractor={(item) => item.idPedido.toString()}
-          scrollEnabled={false}
-          renderItem={({ item }) => (
-            <View style={styles.cardPedido}>
-              <Text style={styles.cliente}>Comanda {item.comanda}</Text>
-              <Text style={styles.valor}>
-                {new Date(item.data).toLocaleDateString("pt-BR")} — R${" "}
-                {item.valorTotal.toFixed(2)} — {item.formaPagamento}
-              </Text>
-            </View>
-          )}
-        />
+        <Text style={styles.subtitulo}>Itens</Text>
+          <FlatList
+            data={itensAgrupados}
+            keyExtractor={(item) => item.nome}
+            scrollEnabled={false}
+            renderItem={({ item }) => (
+              <View style={styles.cardPedido}>
+                <Text style={styles.cliente}>
+                  {item.nome} — {item.quantidade} vendidos
+                </Text>
+              </View>
+            )}
+          />
       </ScrollView>
     </SafeAreaView>
   );
@@ -305,4 +214,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   botaoVoltarTexto: { color: "#FFF8F1", fontWeight: "bold", fontSize: 16 },
+  itensContainer: {
+    marginTop: 6,
+    paddingLeft: 8,
+  },
+  itemText: {
+    color: "#7F5539",
+    fontSize: 13,
+    marginTop: 2,
+  },
 });

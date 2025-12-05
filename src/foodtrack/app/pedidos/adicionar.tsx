@@ -1,11 +1,12 @@
-import { criarPedido, getItensByPedido, getPedidoById, ItemPedido, Pedido, updatePedido } from "@/services/pedidosService";
-import { getProdutos, Produto } from "@/services/produtosService";
+//import { criarPedido, getItensByPedido, getPedidoById, ItemPedido, Pedido, updatePedido } from "@/services/pedidosService";
+//import { getProdutos, Produto } from "@/services/produtosService";
+import { ItemPedido } from "@/mocks/pedidosMock";
+import { Produto } from "@/mocks/produtosMock";
+import { criarPedido, getPedidoById, getUltimoNumeroComanda, Pedido, updatePedido } from "@/mocks/services/pedidosService";
+import { getProdutos } from "@/mocks/services/produtosService";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-//import { Produto, produtosMock } from "../../mocks/produtosMock";
-//import { ItemPedido } from "@/mocks/pedidosMock";
-//import { criarPedido, getPedidos, Pedido, updatePedido } from "@/services/pedidosService";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AdicionarPedido() {
@@ -29,13 +30,11 @@ export default function AdicionarPedido() {
         if (pedidoId) {
           const pedido = await getPedidoById(Number(pedidoId));
           if (pedido) {
-            const itens = await getItensByPedido(Number(pedidoId));
-
             setNumeroMesa(pedido.numeroMesa);
             setComanda(pedido.comanda);
             setObservacao(pedido.observacao || "");
             setItens(
-              itens.map((i: ItemPedido) => ({
+              pedido.itens.map((i: ItemPedido) => ({
                 produto: {
                   idProduto: i?.idProduto ?? i.idProduto,
                   nome: i?.nome ?? i.nome,
@@ -101,11 +100,24 @@ export default function AdicionarPedido() {
       return;
     }
 
+    const ultimoNumeroComanda = await getUltimoNumeroComanda();
+    const numeroComanda = ultimoNumeroComanda + 1;
+
     const pedidoData = {
       numeroMesa,
       comanda,
+      itens: itens.map((i) => ({
+        idProduto: i.produto.idProduto,
+        nome: i.produto.nome,
+        quantidade: i.quantidade,
+        precoUnitario: i.produto.precoUnitario,
+        estacao: i.produto.estacao,
+        status: "Pendente"
+      })),
       valorTotal,
+      status: "Pendente",
       observacao,
+      numeroComanda,
       data: new Date()
     } as Pedido;
 
@@ -158,7 +170,6 @@ export default function AdicionarPedido() {
         />
 
         <FlatList
-          //data={produtosMock}
           data={produtos}
           keyExtractor={(item) => item.idProduto.toString()}
           renderItem={({ item }) => {

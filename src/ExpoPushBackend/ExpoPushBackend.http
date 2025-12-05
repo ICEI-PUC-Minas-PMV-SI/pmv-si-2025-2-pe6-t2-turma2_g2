@@ -1,0 +1,6 @@
+@ExpoPushBackend_HostAddress = http://10.0.2.2:5244
+
+GET {{ExpoPushBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
