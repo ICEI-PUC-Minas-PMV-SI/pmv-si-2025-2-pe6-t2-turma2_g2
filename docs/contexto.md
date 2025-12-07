@@ -139,7 +139,7 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 
 Definição de como o software é estruturado em termos dos componentes que fazem parte da solução e do ambiente de hospedagem da aplicação.
 
-![Arquitetura](img/arquitetura/Diagrama-Arquitetura2.png)
+<img width="1920" height="1080" alt="arquiteturasolucao" src="https://github.com/user-attachments/assets/ca4f6ecf-60ce-4e5c-a37b-341384a971cd" />
 
 ## Tecnologias Utilizadas
 
